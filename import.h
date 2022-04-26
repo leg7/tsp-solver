@@ -1,5 +1,5 @@
 #include <string>
-#include <fsteam>
+#include <fstream>
 
 struct point
 {
