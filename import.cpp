@@ -22,7 +22,6 @@ void build_matrix(double **m, unsigned int n)
 unsigned int get_tsp_size(std::string file)
 {
 	std::ifstream f(file);
-
 	if (f.good())
 	{
 		std::string target1 = "DIMENSION:";
@@ -55,7 +54,6 @@ double** import_tsp_matrice(std::string file);
 double** import_tsp(std::string file)
 {
 	std::ifstream f(file);
-
 	if (f.good())
 	{
 		std::string target = "NODE_COORD_SECTION";
