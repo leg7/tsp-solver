@@ -11,13 +11,6 @@ struct point
 	unsigned int y;
 };
 
-/*
- * Cette fonction retourne la distance entre deux points @a et @b
- * Elle sert a creer une matrice d'adjacence si l'instance passé en paramètre
- * n'en possède deja pas une
- */
-double distance(point a, point b);
-
 /* Fonction qui retourne une matrie d'adjacence @m vide de taille @n */
 double** build_matrix(double **m, unsigned int n);
 
@@ -27,6 +20,13 @@ double** build_matrix(double **m, unsigned int n);
  * Le paramètre s'agit du nom du fichier de l'instance
  */
 unsigned int get_tsp_size(std::string file);
+
+/*
+ * Cette fonction retourne la distance entre deux points @a et @b
+ * Elle sert a creer une matrice d'adjacence si l'instance passé en paramètre
+ * n'en possède deja pas une
+ */
+double distance(point a, point b);
 
 /*
  * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir

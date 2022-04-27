@@ -1,10 +1,5 @@
 #include "import.h"
 
-double distance(point a, point b)
-{
-    return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
-}
-
 /* testé ok */
 double** build_matrix(unsigned int n)
 {
@@ -19,6 +14,7 @@ double** build_matrix(unsigned int n)
 
 	return m;
 }
+
 /* testé ok */
 unsigned int get_tsp_size(std::string file)
 {
@@ -47,8 +43,16 @@ unsigned int get_tsp_size(std::string file)
 	return 0;
 }
 
+/* testé ok */
+double distance(point a, point b)
+{
+    return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
+}
+
+/* à faire */
 double** import_tsp_cord(std::string file);
 
+/* testé ok */
 double** import_tsp_matrice(std::string file)
 {
 	unsigned int size = get_tsp_size(file);
