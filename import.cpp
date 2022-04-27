@@ -6,9 +6,9 @@ double distance(point a, point b)
 }
 
 /* testé ok */
-void build_matrix(double **m, unsigned int n)
+double** build_matrix(unsigned int n)
 {
-	m = new double*[n];
+	double **m = new double*[n];
 
 	unsigned int x = n - 1;
 	for (unsigned int i = 0; i < n; ++i)
@@ -16,8 +16,9 @@ void build_matrix(double **m, unsigned int n)
 		m[i] = new double[x];
 		--x;
 	}
-}
 
+	return m;
+}
 /* testé ok */
 unsigned int get_tsp_size(std::string file)
 {

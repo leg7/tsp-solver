@@ -18,8 +18,8 @@ struct point
  */
 double distance(point a, point b);
 
-/* Procedure qui construit une matrie d'adjacence @m vide de taille @n */
-void build_matrix(double **m, unsigned int n);
+/* Fonction qui retourne une matrie d'adjacence @m vide de taille @n */
+double** build_matrix(double **m, unsigned int n);
 
 /*
  * Fonction qui retourne la taille d'une instance pour pouvoir créer une
