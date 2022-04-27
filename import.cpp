@@ -14,13 +14,17 @@ double** import_tsp(std::string file)
 {
 	std::ifstream f(file);
 
-	if (f.is_open())
+	if (f.good())
 	{
 		std::string target = "NODE_COORD_SECTION";
 		std::string line;
 		bool match = false;
 		unsigned int i = 0;
 
+		/*
+		 * on considère que les informations de l'instance ne dépassent
+		 * pas les 10 lignes
+		 */
 		while (i < 10 and match == false)
 		{
 			std::getline(f,line);
