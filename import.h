@@ -19,6 +19,13 @@ struct point
 double distance(point a, point b);
 
 /*
+ * Fonction qui retourne la taille d'une instance pour pouvoir créer une
+ * matrcie de taille adapté.
+ * Le paramètre s'agit du nom du fichier de l'instance
+ */
+unsigned int get_tsp_size(std::string file);
+
+/*
  * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir
  * d'une instance decrite en coordonées.
  * Le paramètre @file est le nom du fichier de l'instance.

@@ -5,6 +5,34 @@ double distance(point a, point b)
     return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
 }
 
+unsigned int get_tsp_size(std::string file)
+{
+	std::ifstream f(file);
+
+	if (f.good())
+	{
+		std::string target1 = "DIMENSION:";
+		std::string target2 = "DIMENSION";
+		std::string word;
+		bool found = false;
+
+		while (not found and !f.eof())
+		{
+			f >> word;
+			if (word == target1 or word == target2)
+			{
+				found = true;
+				f >> word;
+
+				if (word == ":")
+					f >> word;
+			}
+		}
+		return std::stoi(word);
+	}
+	return 0;
+}
+
 double** import_tsp_cord(std::string file);
 
 double** import_tsp_matrice(std::string file);
