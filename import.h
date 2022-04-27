@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <cmath>
 #include <fstream>
@@ -18,21 +19,22 @@ struct point
 double distance(point a, point b);
 
 /*
- * Cette procedure construit rempli une matrice d'adjacence
- * dynamique avec la fonction distance
+ * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir
+ * d'une instance decrite en coordonées.
+ * Le paramètre @file est le nom du fichier de l'instance.
  */
-void import_fic_cord(double **t, std::string file);
-
-
-/*
- * Cette procedure rempli une matrice d'adjacence dynamique avec les données
- * fouries par l'instance à resoudre
- */
-void import_fic_matrice(double **t, std::string file);
+double** import_tsp_cord(std::string file);
 
 /*
- * Cette procedure determine quelle type d'instance est passé en paramètre
- * Soit une instance avec une matrice d'adjacence déja fournie ou une
- * instance de coordonées pour ensuite appeler la fonction d'import aproprié
+ * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir
+ * d'une instance decrite par une matrice d'adjacence.
+ * Le paramètre @file est le nom du fichier de l'instance.
  */
-void import(std::string file);
+double** import_tsp_matrice(std::string file);
+
+/*
+ * Cette fonction détermine le format du fichier de l'instance passé en param.
+ * Une fois le format déterminé (matrice d'adjacence ou coordonées de points)
+ * la fonction appelle la fonction d'import aproprié
+ */
+double** import_tsp(std::string file);
