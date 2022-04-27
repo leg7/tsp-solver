@@ -1,4 +1,7 @@
+#pragma once
+
 #include <string>
+#include <cmath>
 #include <fstream>
 
 struct point
