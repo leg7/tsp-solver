@@ -5,6 +5,20 @@ double distance(point a, point b)
     return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
 }
 
+/* testé ok */
+void build_matrix(double **m, unsigned int n)
+{
+	m = new double*[n];
+
+	unsigned int x = n - 1;
+	for (unsigned int i = 0; i < n; ++i)
+	{
+		m[i] = new double[x];
+		--x;
+	}
+}
+
+/* testé ok */
 unsigned int get_tsp_size(std::string file)
 {
 	std::ifstream f(file);
