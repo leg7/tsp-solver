@@ -49,7 +49,39 @@ unsigned int get_tsp_size(std::string file)
 
 double** import_tsp_cord(std::string file);
 
-double** import_tsp_matrice(std::string file);
+double** import_tsp_matrice(std::string file)
+{
+	unsigned int size = get_tsp_size(file);
+	double **m = build_matrix(size);
+
+	std::ifstream f(file);
+	if (f.good())
+	{
+		/* on se place au niveau des données de la matrice */
+		std::string line;
+		do
+		{
+			std::getline(f,line);
+		}
+		while(line != "EDGE_WEIGHT_SECTION" and !f.eof());
+
+		/* on remplit la matrice d'adjacence */
+		unsigned int x = size - 1;
+		for (unsigned int i = 0; i < size; ++i)
+		{
+			for (unsigned int j = 0; j < x; ++j)
+			{
+				std::string num;
+				f >> num;
+				m[i][j] = std::stoi(num);
+			}
+			--x;
+		}
+		return m;
+	}
+	else
+		return nullptr;
+}
 
 /* pas testé */
 double** import_tsp(std::string file)
