@@ -3,9 +3,13 @@
 
 int main()
 {
-	std::string instance = "tsp/att48.tsp";
-	double **m;
-	m = import_tsp(instance);
-	print_matrix(m, get_tsp_size(instance));
+	/* std::string instance = "tsp/att48.tsp"; */
+	std::string instance = "tsp/bayg29.tsp";
+
+	matrix tsp;
+	build_matrix(tsp,instance);
+	import_tsp(tsp,instance);
+	print_matrix(tsp);
+
 	return 0;
 }
