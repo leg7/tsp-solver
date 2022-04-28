@@ -14,6 +14,13 @@ struct matrix
 	unsigned int n;
 };
 
+/*
+ * Fonction qui retourne la taille d'une instance pour pouvoir créer une
+ * matrcie de taille adapté.
+ * Le paramètre s'agit du nom du fichier de l'instance
+ */
+int get_tsp_size(std::string filename);
+
 /* Fonction qui retourne une matrie d'adjacence @m vide de taille @n */
 double** build_matrix(double **m, unsigned int n);
 
@@ -22,13 +29,6 @@ double** build_matrix(double **m, unsigned int n);
  * pour une instance de taille @n
  */
 void print_matrix(double **m, unsigned int n);
-
-/*
- * Fonction qui retourne la taille d'une instance pour pouvoir créer une
- * matrcie de taille adapté.
- * Le paramètre s'agit du nom du fichier de l'instance
- */
-unsigned int get_tsp_size(std::string filename);
 
 /*
  * Cette fonction retourne la distance entre deux points @a et @b

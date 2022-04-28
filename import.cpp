@@ -5,6 +5,34 @@
 #include <fstream>
 
 /* testé ok */
+int get_tsp_size(std::string filename)
+{
+	std::ifstream file(filename);
+	if (file.good())
+	{
+		std::string word;
+		bool found = false;
+
+		/* si i >= 30 on considère que dimension est absent */
+		unsigned int i = 0;
+		while (not found and i < 30)
+		{
+			file >> word;
+			if (word == "DIMENSION:" or word == "DIMENSION")
+			{
+				found = true;
+
+				file >> word;
+				if (word == ":")
+					file >> word;
+			}
+		}
+		return std::stoi(word);
+	}
+	return 0;
+}
+
+/* testé ok */
 double** build_matrix(unsigned int n)
 {
 	double **m = new double*[n];
@@ -30,34 +58,6 @@ void print_matrix(double **m, unsigned int n)
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
-}
-
-/* testé ok */
-unsigned int get_tsp_size(std::string filename)
-{
-	std::ifstream file(filename);
-	if (file.good())
-	{
-		std::string target1 = "DIMENSION:";
-		std::string target2 = "DIMENSION";
-		std::string word;
-		bool found = false;
-
-		while (not found and !file.eof())
-		{
-			file >> word;
-			if (word == target1 or word == target2)
-			{
-				found = true;
-				file >> word;
-
-				if (word == ":")
-					file >> word;
-			}
-		}
-		return std::stoi(word);
-	}
-	return 0;
 }
 
 /* testé ok */
