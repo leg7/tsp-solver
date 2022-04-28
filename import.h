@@ -21,8 +21,11 @@ struct matrix
  */
 int get_tsp_size(std::string filename);
 
-/* Fonction qui retourne une matrie d'adjacence @m vide de taille @n */
-double** build_matrix(double **m, unsigned int n);
+/* Procedure qui construit une matrice d'adjacence vide passé en paramètere
+ * (@tsp). Cette fonction determine le taille de la matrice grâce a la fonction
+ * get_tsp_size ci dessus.
+ */
+void build_matrix(matrix &tsp, std::string filename);
 
 /*
  * Procedure qui affiche une matrice d'adjacence @m

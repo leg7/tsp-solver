@@ -33,18 +33,23 @@ int get_tsp_size(std::string filename)
 }
 
 /* testé ok */
-double** build_matrix(unsigned int n)
+void build_matrix(matrix &tsp, std::string filename)
 {
-	double **m = new double*[n];
-
-	unsigned int x = n - 1;
-	for (unsigned int i = 0; i < n; ++i)
+	tsp.n = get_tsp_size(filename);
+	if (tsp.n > 0)
 	{
-		m[i] = new double[x];
-		--x;
-	}
+		tsp.m = new double*[tsp.n];
 
-	return m;
+		unsigned int x = tsp.n - 1;
+		for (unsigned int i = 0; i < tsp.n; ++i)
+		{
+			tsp.m[i] = new double[x];
+			--x;
+		}
+	}
+	else
+		std::cout << "Erreur critique : la taille de votre instance "
+			<< "est <= 0 donc la matrice n'as pas été faite.\n";
 }
 
 void print_matrix(double **m, unsigned int n)
