@@ -58,8 +58,9 @@ void import_tsp_cord(matrix &tsp, std::string filename);
 void import_tsp_matrice(matrix &tsp, std::string filename);
 
 /*
- * Cette fonction détermine le format du fichier de l'instance passé en param.
- * Une fois le format déterminé (matrice d'adjacence ou coordonées de points)
- * la fonction appelle la fonction d'import aproprié
+ * Procedure qui determine le format des données de l'instance tsp et appelle
+ * la procedure de creation de matrice approprié.
+ * Cette procedure depend de toutes les autres fonctions et procedure du
+ * fichier apart print_matrix
  */
-double** import_tsp(std::string filename);
+void import_tsp(matrix &tsp, std::string filename);

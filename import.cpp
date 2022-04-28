@@ -167,7 +167,7 @@ void import_tsp_matrice(matrix &tsp, std::string filename)
 }
 
 /* pas testé */
-double** import_tsp(std::string filename)
+void import_tsp(matrix &tsp, std::string filename)
 {
 	std::ifstream file(filename);
 	if (file.good())
@@ -192,14 +192,11 @@ double** import_tsp(std::string filename)
 		}
 
 		if (match)
-			return import_tsp_cord(filename);
+			return import_tsp_cord(tsp, filename);
 		else
-			return import_tsp_matrice(filename);
+			return import_tsp_matrice(tsp, filename);
 	}
 	else
-	{
 		std::cout << "Erreur : le fichier " << filename
 			<< "n'as pas pu être lu" << std::endl;
-		return nullptr;
-	}
 }
