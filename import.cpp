@@ -52,13 +52,14 @@ void build_matrix(matrix &tsp, std::string filename)
 			<< "est <= 0 donc la matrice n'as pas été faite.\n";
 }
 
-void print_matrix(double **m, unsigned int n)
+/* testé ok */
+void print_matrix(matrix tsp)
 {
-	unsigned int x = n - 1;
-	for (unsigned int i = 0; i < n; ++i)
+	unsigned int x = tsp.n - 1;
+	for (unsigned int i = 0; i < tsp.n; ++i)
 	{
 		for (unsigned int j = 0; j < x;  ++j)
-			std::cout << m[i][j] << ' ';
+			std::cout << tsp.m[i][j] << ' ';
 		--x;
 		std::cout << std::endl;
 	}
