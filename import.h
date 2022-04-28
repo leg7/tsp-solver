@@ -4,8 +4,8 @@
 
 struct point
 {
-	unsigned int x;
-	unsigned int y;
+	int x;
+	int y;
 };
 
 /* Fonction qui retourne une matrie d'adjacence @m vide de taille @n */
