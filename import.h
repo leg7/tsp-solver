@@ -52,11 +52,10 @@ double distance(point a, point b);
 void import_tsp_cord(matrix &tsp, std::string filename);
 
 /*
- * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir
- * d'une instance decrite par une matrice d'adjacence.
- * Le paramètre @file est le nom du fichier de l'instance.
+ * Procedure qui rempli une matrice d'adjacence @tsp
+ * avec les données d'une instance @filename
  */
-double** import_tsp_matrice(std::string filename);
+void import_tsp_matrice(matrix &tsp, std::string filename);
 
 /*
  * Cette fonction détermine le format du fichier de l'instance passé en param.

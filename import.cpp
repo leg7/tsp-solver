@@ -144,34 +144,26 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 }
 
 /* testé ok */
-double** import_tsp_matrice(std::string filename)
+void import_tsp_matrice(matrix &tsp, std::string filename)
 {
 	std::ifstream file(filename);
 	if (file.good())
 	{
-		unsigned int size = get_tsp_size(filename);
-		double **m = build_matrix(size);
-
-		/* on se place au niveau des données de la matrice */
-		std::string target = "EDGE_WEIGHT_SECTION";
-		file = go_to(filename,target,0);
+		file = go_to("EDGE_WEIGHT_SECTION", target, 0);
 
 		/* on remplit la matrice d'adjacence */
-		unsigned int x = size - 1;
-		for (unsigned int i = 0; i < size; ++i)
+		unsigned int x = tsp.n - 1;
+		for (unsigned int i = 0; i < tsp.n; ++i)
 		{
 			for (unsigned int j = 0; j < x; ++j)
 			{
 				std::string num;
 				file >> num;
-				m[i][j] = std::stoi(num);
+				tsp.m[i][j] = std::stoi(num);
 			}
 			--x;
 		}
-		return m;
 	}
-	else
-		return nullptr;
 }
 
 /* pas testé */
