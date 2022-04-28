@@ -149,7 +149,7 @@ void import_tsp_matrice(matrix &tsp, std::string filename)
 	std::ifstream file(filename);
 	if (file.good())
 	{
-		file = go_to("EDGE_WEIGHT_SECTION", target, 0);
+		file = go_to(filename, "EDGE_WEIGHT_SECTION", 0);
 
 		/* on remplit la matrice d'adjacence */
 		unsigned int x = tsp.n - 1;
