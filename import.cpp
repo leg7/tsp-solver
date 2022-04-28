@@ -35,24 +35,24 @@ void print_matrix(double **m, unsigned int n)
 /* testé ok */
 unsigned int get_tsp_size(std::string filename)
 {
-	std::ifstream f(filename);
-	if (f.good())
+	std::ifstream file(filename);
+	if (file.good())
 	{
 		std::string target1 = "DIMENSION:";
 		std::string target2 = "DIMENSION";
 		std::string word;
 		bool found = false;
 
-		while (not found and !f.eof())
+		while (not found and !file.eof())
 		{
-			f >> word;
+			file >> word;
 			if (word == target1 or word == target2)
 			{
 				found = true;
-				f >> word;
+				file >> word;
 
 				if (word == ":")
-					f >> word;
+					file >> word;
 			}
 		}
 		return std::stoi(word);
@@ -69,29 +69,29 @@ double distance(point a, point b)
 /* testé ok */
 std::ifstream go_to(std::string filename, std::string target, unsigned int n)
 {
-	std::ifstream f(filename);
-	if (f.good())
+	std::ifstream file(filename);
+	if (file.good())
 	{
 		/* on se place au niveau des coordonnées des points */
 		std::string line;
 		do
 		{
-			std::getline(f,line);
+			std::getline(file,line);
 		}
-		while (line !=  target and !f.eof());
+		while (line !=  target and !file.eof());
 
 		std::string trash;
 		for (;n > 0 ; --n)
-			std::getline(f,trash);
+			std::getline(file,trash);
 	}
-	return f;
+	return file;
 }
 
 /* testé ok */
 double** import_tsp_cord(std::string filename)
 {
-	std::ifstream f(filename);
-	if (f.good())
+	std::ifstream file(filename);
+	if (file.good())
 	{
 		unsigned int size = get_tsp_size(filename);
 		double **m = build_matrix(size);
@@ -103,29 +103,29 @@ double** import_tsp_cord(std::string filename)
 		unsigned int x = size - 1;
 		for (unsigned int i = 0; i < size - 1; ++i)
 		{
-			f = go_to(filename, target, i);
+			file = go_to(filename, target, i);
 
 			std::string coor;
-			f >> coor;
-			f >> coor;
+			file >> coor;
+			file >> coor;
 
 			point a;
 			a.x = std::stoi(coor);
-			f >> coor;
+			file >> coor;
 			a.y = std::stoi(coor);
 
-			f.ignore();
+			file.ignore();
 
 			for (unsigned int j = 0; j < x; ++j)
 			{
-				f >> coor;
+				file >> coor;
 				if (coor == "EOF")
 					break;
 
-				f >> coor;
+				file >> coor;
 				point b;
 				b.x = std::stoi(coor);
-				f >> coor;
+				file >> coor;
 				b.y = std::stoi(coor);
 
 				m[i][j] = distance(a, b);
@@ -140,15 +140,15 @@ double** import_tsp_cord(std::string filename)
 /* testé ok */
 double** import_tsp_matrice(std::string filename)
 {
-	std::ifstream f(filename);
-	if (f.good())
+	std::ifstream file(filename);
+	if (file.good())
 	{
 		unsigned int size = get_tsp_size(filename);
 		double **m = build_matrix(size);
 
 		/* on se place au niveau des données de la matrice */
 		std::string target = "EDGE_WEIGHT_SECTION";
-		f = go_to(filename,target,0);
+		file = go_to(filename,target,0);
 
 		/* on remplit la matrice d'adjacence */
 		unsigned int x = size - 1;
@@ -157,7 +157,7 @@ double** import_tsp_matrice(std::string filename)
 			for (unsigned int j = 0; j < x; ++j)
 			{
 				std::string num;
-				f >> num;
+				file >> num;
 				m[i][j] = std::stoi(num);
 			}
 			--x;
@@ -171,8 +171,8 @@ double** import_tsp_matrice(std::string filename)
 /* pas testé */
 double** import_tsp(std::string filename)
 {
-	std::ifstream f(filename);
-	if (f.good())
+	std::ifstream file(filename);
+	if (file.good())
 	{
 		std::string target = "NODE_COORD_SECTION";
 		std::string line;
@@ -185,7 +185,7 @@ double** import_tsp(std::string filename)
 		 */
 		while (i < 10 and match == false)
 		{
-			std::getline(f,line);
+			std::getline(file,line);
 
 			if (line == target)
 				match = true;
