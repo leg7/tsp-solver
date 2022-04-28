@@ -13,4 +13,4 @@ voyage: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -f voyage ${OBJ}
+	rm -f voyage ${OBJ} *.out
