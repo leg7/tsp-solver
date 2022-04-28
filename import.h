@@ -55,7 +55,7 @@ void import_tsp_cord(matrix &tsp, std::string filename);
  * Procedure qui rempli une matrice d'adjacence @tsp
  * avec les données d'une instance @filename
  */
-void import_tsp_matrice(matrix &tsp, std::string filename);
+void import_tsp_matrix(matrix &tsp, std::string filename);
 
 /*
  * Procedure qui determine le format des données de l'instance tsp et appelle

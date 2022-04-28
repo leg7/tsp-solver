@@ -144,7 +144,7 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 }
 
 /* testé ok */
-void import_tsp_matrice(matrix &tsp, std::string filename)
+void import_tsp_matrix(matrix &tsp, std::string filename)
 {
 	std::ifstream file(filename);
 	if (file.good())
@@ -194,7 +194,7 @@ void import_tsp(matrix &tsp, std::string filename)
 		if (match)
 			import_tsp_cord(tsp, filename);
 		else
-			import_tsp_matrice(tsp, filename);
+			import_tsp_matrix(tsp, filename);
 	}
 	else
 		std::cout << "Erreur : le fichier " << filename
