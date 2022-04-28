@@ -192,9 +192,9 @@ void import_tsp(matrix &tsp, std::string filename)
 		}
 
 		if (match)
-			return import_tsp_cord(tsp, filename);
+			import_tsp_cord(tsp, filename);
 		else
-			return import_tsp_matrice(tsp, filename);
+			import_tsp_matrice(tsp, filename);
 	}
 	else
 		std::cout << "Erreur : le fichier " << filename
