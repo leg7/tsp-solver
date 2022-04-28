@@ -67,12 +67,6 @@ void print_matrix(matrix tsp)
 }
 
 /* testé ok */
-double distance(point a, point b)
-{
-    return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
-}
-
-/* testé ok */
 std::ifstream go_to(std::string filename, std::string target, unsigned int n)
 {
 	std::ifstream file(filename);
@@ -91,6 +85,12 @@ std::ifstream go_to(std::string filename, std::string target, unsigned int n)
 			std::getline(file,trash);
 	}
 	return file;
+}
+
+/* testé ok */
+double distance(point a, point b)
+{
+    return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
 }
 
 /* testé ok */

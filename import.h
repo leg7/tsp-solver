@@ -32,19 +32,18 @@ void build_matrix(matrix &tsp, std::string filename);
 void print_matrix(matrix tsp);
 
 /*
- * Cette fonction retourne la distance entre deux points @a et @b
- * Elle sert a creer une matrice d'adjacence si l'instance passé en paramètre
- * n'en possède deja pas une
- */
-double distance(point a, point b);
-
-/*
  * Cette fonction retourne un ifstreamn à la position des paramètres.
  * @file est le nom du fichier.
  * @target est la position de départ.
  * @n est le nombre de lignes à sauter après être arriver à @target.
  */
 std::ifstream go_to(std::string filename, std::string target, unsigned int n);
+
+/*
+ * Cette fonction retourne la distance entre deux points @a et @b
+ * Elle sert a creer une matrice d'adjacence
+ */
+double distance(point a, point b);
 
 /*
  * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir
