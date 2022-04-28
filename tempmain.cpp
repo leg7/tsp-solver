@@ -1,9 +1,11 @@
 /* Ce fichier est une boucle main temporaire pour permettre de complier le code */
 #include "import.h"
 
-
 int main()
 {
-	import_tsp("tsp/att48.tsp");
+	std::string instance = "tsp/att48.tsp";
+	double **m;
+	m = import_tsp(instance);
+	print_matrix(m, get_tsp_size(instance));
 	return 0;
 }
