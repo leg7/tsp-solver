@@ -1,5 +1,9 @@
 #include "import.h"
 
+#include <iostream>
+#include <cmath>
+#include <fstream>
+
 /* testé ok */
 double** build_matrix(unsigned int n)
 {
