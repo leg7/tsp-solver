@@ -140,19 +140,15 @@ double** import_tsp_cord(std::string file)
 /* testé ok */
 double** import_tsp_matrice(std::string file)
 {
-	unsigned int size = get_tsp_size(file);
-	double **m = build_matrix(size);
-
 	std::ifstream f(file);
 	if (f.good())
 	{
+		unsigned int size = get_tsp_size(file);
+		double **m = build_matrix(size);
+
 		/* on se place au niveau des données de la matrice */
-		std::string line;
-		do
-		{
-			std::getline(f,line);
-		}
-		while(line != "EDGE_WEIGHT_SECTION" and !f.eof());
+		std::string target = "EDGE_WEIGHT_SECTION"
+		f = go_to(file,target,0);
 
 		/* on remplit la matrice d'adjacence */
 		unsigned int x = size - 1;
