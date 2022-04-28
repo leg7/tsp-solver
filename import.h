@@ -8,6 +8,12 @@ struct point
 	int y;
 };
 
+struct matrix
+{
+	double **m;
+	unsigned int n;
+};
+
 /* Fonction qui retourne une matrie d'adjacence @m vide de taille @n */
 double** build_matrix(double **m, unsigned int n);
 
