@@ -46,11 +46,10 @@ std::ifstream go_to(std::string filename, std::string target, unsigned int n);
 double distance(point a, point b);
 
 /*
- * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir
- * d'une instance decrite en coordonées.
- * Le paramètre @file est le nom du fichier de l'instance.
+ * Procedure qui importe des données d'une instance tsp sous forme de
+ * coordonées de points dans une matrice @tsp
  */
-double** import_tsp_cord(std::string filename);
+void import_tsp_cord(matrix &tsp, std::string filename);
 
 /*
  * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir
