@@ -15,6 +15,19 @@ double** build_matrix(unsigned int n)
 	return m;
 }
 
+void print_matrix(double **m, unsigned int n)
+{
+	unsigned int x = n - 1;
+	for (unsigned int i = 0; i < n; ++i)
+	{
+		for (unsigned int j = 0; j < x;  ++j)
+			std::cout << m[i][j] << ' ';
+		--x;
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+}
+
 /* testé ok */
 unsigned int get_tsp_size(std::string file)
 {

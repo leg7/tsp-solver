@@ -5,6 +5,7 @@
 #include <cmath>
 #include <fstream>
 
+
 struct point
 {
 	unsigned int x;
@@ -13,6 +14,12 @@ struct point
 
 /* Fonction qui retourne une matrie d'adjacence @m vide de taille @n */
 double** build_matrix(double **m, unsigned int n);
+
+/*
+ * Procedure qui affiche une matrice d'adjacence @m
+ * pour une instance de taille @n
+ */
+void print_matrix(double **m, unsigned int n);
 
 /*
  * Fonction qui retourne la taille d'une instance pour pouvoir créer une
