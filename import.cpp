@@ -78,7 +78,7 @@ std::ifstream go_to(std::string filename, std::string target, unsigned int n)
 		{
 			std::getline(file,line);
 		}
-		while (line !=  target and !file.eof());
+		while (line != target and !file.eof());
 
 		std::string trash;
 		for (;n > 0 ; --n)
