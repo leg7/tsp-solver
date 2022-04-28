@@ -49,8 +49,76 @@ double distance(point a, point b)
     return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
 }
 
-/* à faire */
-double** import_tsp_cord(std::string file);
+/* testé ok */
+std::ifstream go_to(std::string file, std::string target, unsigned int n)
+{
+	std::ifstream f(file);
+	if (f.good())
+	{
+		/* on se place au niveau des coordonnées des points */
+		std::string line;
+		do
+		{
+			std::getline(f,line);
+		}
+		while (line !=  target and !f.eof());
+
+		std::string trash;
+		for (;n > 0 ; --n)
+			std::getline(f,trash);
+	}
+	return f;
+}
+
+/* testé ok */
+double** import_tsp_cord(std::string file)
+{
+	std::ifstream f(file);
+	if (f.good())
+	{
+		unsigned int size = get_tsp_size(file);
+		double **m = build_matrix(size);
+
+		/* on se place au niveau des coordonnées des points */
+		std::string target = "NODE_COORD_SECTION";
+
+		/* on remplit la matrice d'adjacence */
+		unsigned int x = size - 1;
+		for (unsigned int i = 0; i < size - 1; ++i)
+		{
+			f = go_to(file, target, i);
+
+			std::string coor;
+			f >> coor;
+			f >> coor;
+
+			point a;
+			a.x = std::stoi(coor);
+			f >> coor;
+			a.y = std::stoi(coor);
+
+			f.ignore();
+
+			for (unsigned int j = 0; j < x; ++j)
+			{
+				f >> coor;
+				if (coor == "EOF")
+					break;
+
+				f >> coor;
+				point b;
+				b.x = std::stoi(coor);
+				f >> coor;
+				b.y = std::stoi(coor);
+
+				m[i][j] = distance(a, b);
+			}
+		}
+		return m;
+	}
+	else
+		return nullptr;
+}
 
 /* testé ok */
 double** import_tsp_matrice(std::string file)

@@ -29,6 +29,14 @@ unsigned int get_tsp_size(std::string file);
 double distance(point a, point b);
 
 /*
+ * Cette fonction retourne un ifstreamn à la position des paramètres.
+ * @file est le nom du fichier.
+ * @target est la position de départ.
+ * @n est le nombre de lignes à sauter après être arriver à @target.
+ */
+std::ifstream go_to(std::string file, std::string target, unsigned int n);
+
+/*
  * Fonction qui renvoie une matrice dynamique d'adjacence créée à partir
  * d'une instance decrite en coordonées.
  * Le paramètre @file est le nom du fichier de l'instance.
