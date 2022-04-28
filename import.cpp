@@ -147,7 +147,7 @@ double** import_tsp_matrice(std::string file)
 		double **m = build_matrix(size);
 
 		/* on se place au niveau des données de la matrice */
-		std::string target = "EDGE_WEIGHT_SECTION"
+		std::string target = "EDGE_WEIGHT_SECTION";
 		f = go_to(file,target,0);
 
 		/* on remplit la matrice d'adjacence */
