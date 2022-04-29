@@ -1,7 +1,3 @@
 #pragma once
 
-#include <vector>
-
-std::vector glouton(double** m);
-
-std::vector fourmis(double** m);
+unsigned int get_min_and_zero(matrix &tsp, unsigned int line);
