@@ -3,6 +3,13 @@
 #include "calcul-itineraire.h"
 #include <iostream>
 
+void delete_matrix(matrix &tsp)
+{
+	for (unsigned int i = 0; i < tsp.n; ++i)
+		delete[] tsp.m[i];
+	delete[] tsp.m;
+}
+
 int main()
 {
 	/* std::string instance = "tsp/att48.tsp"; */
@@ -22,6 +29,9 @@ int main()
 
 	for (unsigned int i = 0; i < tsp.n; ++i)
 		std::cout << t[i]+1 << '\n';
+
+	delete[] t;
+	delete_matrix(tsp);
 
 	return 0;
 }
