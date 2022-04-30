@@ -2,12 +2,12 @@
 
 include config.mk
 
-SRC = import.cpp tempmain.cpp
+SRC = import.cpp tempmain.cpp calcul-itineraire.cpp
 OBJ = ${SRC:.cpp=.o}
 
 all: voyage
 
-${OBJ}: import.h config.mk
+${OBJ}: import.h calcul-itineraire.h config.mk
 
 voyage: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
