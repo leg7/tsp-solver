@@ -8,10 +8,16 @@ struct point
 	int y;
 };
 
+struct matrix_data
+{
+	double distance; // La distance
+	bool    checked; // Si le point à été traité
+};
+
 struct matrix
 {
-	double **m;
-	unsigned int n;
+	matrix_data **m;
+	unsigned int  n;
 };
 
 /*
@@ -29,7 +35,7 @@ int get_tsp_size(std::string filename);
 void build_matrix(matrix &tsp, std::string filename);
 
 /* Procedure qui affiche une matrice d'adjacence @tsp */
-void print_matrix(matrix tsp);
+void print_matrix_distance(matrix tsp);
 
 /*
  * Cette fonction retourne un ifstreamn à la position des paramètres.

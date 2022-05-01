@@ -13,12 +13,12 @@ destination get_greedy_destination(matrix &tsp, unsigned int line)
 		/* k < taille de la ligne */
 		for (unsigned int k = 0; k < tsp.n - 1 - line; ++k)
 		{
-			if (tsp.m[line][k] < d.distance and tsp.m[line][k] != 0)
+			if (tsp.m[line][k].distance < d.distance and tsp.m[line][k].distance != 0)
 			{
-				d.distance = tsp.m[line][k];
+				d.distance = tsp.m[line][k].distance;
 				d.num      = line + k + 1;
 			}
-			tsp.m[line][k] = 0;
+			tsp.m[line][k].distance = 0;
 		}
 	}
 
@@ -29,12 +29,12 @@ destination get_greedy_destination(matrix &tsp, unsigned int line)
 		unsigned int j = 0;
 		while (i != 0)
 		{
-			if (tsp.m[i][j] < d.distance and tsp.m[i][j] != 0)
+			if (tsp.m[i][j].distance < d.distance and tsp.m[i][j].distance != 0)
 			{
-				d.distance = tsp.m[i][j];
+				d.distance = tsp.m[i][j].distance;
 				d.num      = i;
 			}
-			tsp.m[i][j] = 0;
+			tsp.m[i][j].distance = 0;
 
 			--i;
 			++j;

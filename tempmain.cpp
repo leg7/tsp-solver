@@ -29,7 +29,7 @@ int main()
 	matrix tsp;
 	build_matrix(tsp,instance);
 	import_tsp(tsp,instance);
-	/* print_matrix(tsp); */
+	print_matrix_distance(tsp);
 
 	itinerary i;
 	make_greedy_itinerary(tsp,i);

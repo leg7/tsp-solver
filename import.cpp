@@ -38,12 +38,12 @@ void build_matrix(matrix &tsp, std::string filename)
 	tsp.n = get_tsp_size(filename);
 	if (tsp.n > 0)
 	{
-		tsp.m = new double*[tsp.n];
+		tsp.m = new matrix_data*[tsp.n];
 
 		unsigned int x = tsp.n - 1;
 		for (unsigned int i = 0; i < tsp.n; ++i)
 		{
-			tsp.m[i] = new double[x];
+			tsp.m[i] = new matrix_data[x];
 			--x;
 		}
 	}
@@ -53,13 +53,13 @@ void build_matrix(matrix &tsp, std::string filename)
 }
 
 /* testé ok */
-void print_matrix(matrix tsp)
+void print_matrix_distance(matrix tsp)
 {
 	unsigned int x = tsp.n - 1;
 	for (unsigned int i = 0; i < tsp.n; ++i)
 	{
 		for (unsigned int j = 0; j < x;  ++j)
-			std::cout << tsp.m[i][j] << ' ';
+			std::cout << tsp.m[i][j].distance << ' ';
 		--x;
 		std::cout << std::endl;
 	}
@@ -137,7 +137,7 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 				file >> num;
 				b.y = std::stoi(num);
 
-				tsp.m[i][j] = distance(a, b);
+				tsp.m[i][j].distance = distance(a, b);
 			}
 		}
 	}
@@ -159,7 +159,7 @@ void import_tsp_matrix(matrix &tsp, std::string filename)
 			{
 				std::string num;
 				file >> num;
-				tsp.m[i][j] = std::stoi(num);
+				tsp.m[i][j].distance = std::stoi(num);
 			}
 			--x;
 		}
