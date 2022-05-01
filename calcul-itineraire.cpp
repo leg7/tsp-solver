@@ -2,7 +2,7 @@
 #include "calcul-itineraire.h"
 #include <iostream>
 
-unsigned int get_min_and_zero(matrix &tsp, unsigned int line)
+unsigned int get_destination(matrix &tsp, unsigned int line)
 {
 	unsigned int destination = 1000000;
 	double distance = 1000000000;
@@ -51,7 +51,7 @@ unsigned int* glouton(matrix &tsp)
 
 	for (unsigned int i = 1; i < tsp.n; ++i)
 	{
-		t[i] = get_min_and_zero(tsp,t[i-1]);
+		t[i] = get_destination(tsp,t[i-1]);
 		/* print_matrix(tsp); */
 		/* std::cout << t[i] << std::endl << std::endl; */
 	}
