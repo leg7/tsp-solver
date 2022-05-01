@@ -44,17 +44,20 @@ destination get_destination(matrix &tsp, unsigned int line)
 	return d;
 }
 
-destination* glouton(matrix &tsp)
+void glouton(matrix &tsp, itinerary &it)
 {
-	destination *t = new destination[tsp.n];
-	t[0].distance = 0;
-	t[0].num      = 0;
 
-	for (unsigned int i = 1; i < tsp.n; ++i)
+	it.length = 0;
+
+	it.data = new destination[tsp.n];
+	it.data[0].distance = 0;
+	it.data[0].num      = 0;
+
+	for (unsigned int k = 1; k < tsp.n; ++k)
 	{
-		t[i] = get_destination(tsp,t[i-1].num);
+		it.data[k] = get_destination(tsp, it.data[k-1].num);
+		it.length += it.data[k].distance;
 		/* print_matrix(tsp); */
 		/* std::cout << t[i] << std::endl << std::endl; */
 	}
-	return t;
 }
