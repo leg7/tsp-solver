@@ -26,34 +26,40 @@ void print_matrix_status(matrix &tsp)
 	std::cout << std::endl;
 }
 
-destination get_greedy_destination(matrix &tsp, unsigned int line)
+bool is_closest_destination(matrix &tsp, unsigned int i, unsigned int j, destination d)
+{
+	return (tsp.m[i][j].distance < d.distance and
+		tsp.m[i][j].checked == false);
+}
+
+destination get_greedy_destination(matrix &tsp, unsigned int origin)
 {
 	destination d;
 	d.distance = 10000000000;
 
 	/* min line */
-	if (line != tsp.n - 1)
+	if (origin != tsp.n - 1)
 	{
 		/* k < taille de la ligne */
-		for (unsigned int k = 0; k < tsp.n - 1 - line; ++k)
+		for (unsigned int j = 0; j < tsp.n - 1 - origin; ++j)
 		{
-			if (tsp.m[line][k].distance < d.distance and tsp.m[line][k].checked == false)
+			if (is_closest_destination(tsp, origin, j, d))
 			{
-				d.distance = tsp.m[line][k].distance;
-				d.num      = line + k + 1;
+				d.distance = tsp.m[origin][j].distance;
+				d.num      = origin + 1 + j;
 			}
-			tsp.m[line][k].checked = true;
+			tsp.m[origin][j].checked = true;
 		}
 	}
 
 	/* min diagonale */
-	if (line != 0)
+	if (origin != 0)
 	{
-		unsigned int i = line - 1;
+		unsigned int i = origin - 1;
 		unsigned int j = 0;
 		while (i != 0)
 		{
-			if (tsp.m[i][j].distance < d.distance and tsp.m[i][j].checked == false)
+			if (is_closest_destination(tsp, i, j, d))
 			{
 				d.distance = tsp.m[i][j].distance;
 				d.num      = i;
