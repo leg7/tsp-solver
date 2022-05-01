@@ -55,12 +55,6 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 {
 	init_matrix_status(tsp);
 
-	it.length = 0;
-
-	it.data = new destination[it.size];
-	it.data[0].distance = 0;
-	it.data[0].num      = 0;
-
 	for (unsigned int k = 1; k < it.size; ++k)
 	{
 		it.data[k] = get_greedy_destination(tsp, it.data[k-1].num);

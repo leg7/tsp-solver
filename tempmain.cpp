@@ -5,6 +5,17 @@
 
 #include <iostream>
 
+void init_itinerary(itinerary &it, std::string instance)
+{
+	it.length = 0;
+
+	it.size = get_tsp_size(instance);
+
+	it.data = new destination[it.size];
+	it.data[0].distance = 0;
+	it.data[0].num      = 0;
+}
+
 void print_itinerary(matrix tsp, itinerary it)
 {
 	std::cout << "L'itineraire serait d'une longeure de " << it.length
@@ -27,7 +38,7 @@ int main()
 	print_matrix_distance(tsp);
 
 	itinerary i;
-	i.size = get_tsp_size(instance);
+	init_itinerary(i,instance);
 
 	make_greedy_itinerary(tsp,i);
 	print_itinerary(tsp,i);
