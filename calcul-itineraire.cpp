@@ -4,35 +4,37 @@
 
 unsigned int get_min_and_zero(matrix &tsp, unsigned int line)
 {
-	unsigned int lmin = 1000000;
-	unsigned int min = 1000000;
+	unsigned int destination = 1000000;
+	unsigned int distance = 1000000;
 
-	bool exception = false;
-	if (line == tsp.n - 1)
-		exception = true;
-
-	/* init */
-	unsigned int i = line;
-	unsigned int j = 0;
-
-	if (tsp.m[i][j] != 0 and not exception)
+	/* min line */
+	if (line != tsp.n - 1)
 	{
-		min = tsp.m[i][j];
-		lmin = line + 1;
-		tsp.m[i][j] = 0;
-	}
-	--i;
+		unsigned int k = 0;
+		while (k < tsp.n - 1 - line) // k < taille de la ligne
+		{
+			if (tsp.m[line][k] < distance and tsp.m[line][k] != 0)
+			{
+				distance = tsp.m[line][k];
+				destination = line + k + 1;
+			}
+			tsp.m[line][k] = 0;
 
+			++k;
+		}
+	}
 
 	/* min diagonale */
 	if (line != 0)
 	{
+		unsigned int i = line - 1;
+		unsigned int j = 0;
 		while (i != 0)
 		{
-			if (tsp.m[i][j] < min and tsp.m[i][j] != 0)
+			if (tsp.m[i][j] < distance and tsp.m[i][j] != 0)
 			{
-				min = tsp.m[i][j];
-				lmin = i;
+				distance = tsp.m[i][j];
+				destination = i;
 			}
 			tsp.m[i][j] = 0;
 
@@ -41,20 +43,7 @@ unsigned int get_min_and_zero(matrix &tsp, unsigned int line)
 		}
 	}
 
-		/* min line (et donc du tout) */
-	unsigned int k = 1;
-	while (k < tsp.n - 1 - line and not exception)
-	{
-		if (tsp.m[line][k] < min and tsp.m[line][k] != 0)
-		{
-			min = tsp.m[line][k];
-			lmin = line + k + 1;
-		}
-		tsp.m[line][k] = 0;
-		++k;
-	}
-
-	return lmin;
+	return destination;
 }
 
 unsigned int* glouton(matrix &tsp)
