@@ -20,6 +20,12 @@ void init_matrix_status(matrix &tsp);
 void print_matrix_status(matrix &tsp);
 
 /*
+ * Fonction qui renvoie si @tsp.m[i][j] est
+ * la prochaine destination valide la plus proche
+ */
+bool is_closest_destination(matrix &tsp, unsigned int i, unsigned int j, destination d)
+
+/*
  * Cette fonction retourne la destination la plus proche de la ville passé en
  * paramètre @line dans la matrice d'adjacence @tsp. De plus les status
  * des points de la destination trouvés sont mis a jour pour ne pas revenir
