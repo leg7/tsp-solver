@@ -8,11 +8,14 @@
 void build_matrix(matrix &tsp, std::string filename)
 {
 	tsp.n = get_tsp_size(filename);
+
+	--tsp.n;
+
 	if (tsp.n > 0)
 	{
 		tsp.m = new matrix_data*[tsp.n];
 
-		unsigned int x = tsp.n - 1;
+		unsigned int x = tsp.n;
 		for (unsigned int i = 0; i < tsp.n; ++i)
 		{
 			tsp.m[i] = new matrix_data[x];
@@ -26,7 +29,7 @@ void build_matrix(matrix &tsp, std::string filename)
 
 void init_matrix_status(matrix &tsp)
 {
-	unsigned int x = tsp.n - 1;
+	unsigned int x = tsp.n;
 	for (unsigned int i = 0; i < tsp.n; ++i)
 	{
 		for (unsigned int j = 0; j < x; ++j)
@@ -37,7 +40,7 @@ void init_matrix_status(matrix &tsp)
 
 void print_matrix_status(matrix &tsp)
 {
-	unsigned int x = tsp.n - 1;
+	unsigned int x = tsp.n;
 	for (unsigned int i = 0; i < tsp.n; ++i)
 	{
 		for (unsigned int j = 0; j < x; ++j)
@@ -51,7 +54,7 @@ void print_matrix_status(matrix &tsp)
 /* testé ok */
 void print_matrix_distance(matrix tsp)
 {
-	unsigned int x = tsp.n - 1;
+	unsigned int x = tsp.n;
 	for (unsigned int i = 0; i < tsp.n; ++i)
 	{
 		for (unsigned int j = 0; j < x;  ++j)

@@ -16,10 +16,10 @@ destination get_greedy_destination(matrix &tsp, unsigned int origin)
 	d.distance = 10000000000;
 
 	/* min line */
-	if (origin != tsp.n - 1)
+	if (origin != tsp.n + 1)
 	{
 		/* k < taille de la ligne */
-		for (unsigned int j = 0; j < tsp.n - 1 - origin; ++j)
+		for (unsigned int j = 0; j < tsp.n - origin; ++j)
 		{
 			if (is_closest_destination(tsp, origin, j, d))
 			{
