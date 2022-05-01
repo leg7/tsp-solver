@@ -1,14 +1,9 @@
 /* Ce fichier est une boucle main temporaire pour permettre de complier le code */
+#include "matrix.h"
 #include "import.h"
 #include "calcul-itineraire.h"
-#include <iostream>
 
-void delete_matrix(matrix &tsp)
-{
-	for (unsigned int i = 0; i < tsp.n; ++i)
-		delete[] tsp.m[i];
-	delete[] tsp.m;
-}
+#include <iostream>
 
 void print_itinerary(matrix tsp, itinerary it)
 {

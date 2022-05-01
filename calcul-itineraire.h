@@ -1,5 +1,7 @@
 #pragma once
 
+#include "matrix.h"
+
 struct destination
 {
 	unsigned int num; // Le numero de ville de la destination
@@ -13,17 +15,11 @@ struct itinerary
 	double length;      // La longeure de l'itineraire
 };
 
-/* Procedure qui initialise le status de la matrice */
-void init_matrix_status(matrix &tsp);
-
-/* Procedure qui affiche le status de la matrice */
-void print_matrix_status(matrix &tsp);
-
 /*
  * Fonction qui renvoie si @tsp.m[i][j] est
  * la prochaine destination valide la plus proche
  */
-bool is_closest_destination(matrix &tsp, unsigned int i, unsigned int j, destination d)
+bool is_closest_destination(matrix &tsp, unsigned int i, unsigned int j, destination d);
 
 /*
  * Cette fonction retourne la destination la plus proche de la ville passé en

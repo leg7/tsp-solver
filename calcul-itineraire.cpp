@@ -1,30 +1,8 @@
 #include "import.h"
+#include "matrix.h"
 #include "calcul-itineraire.h"
+
 #include <iostream>
-
-void init_matrix_status(matrix &tsp)
-{
-	unsigned int x = tsp.n - 1;
-	for (unsigned int i = 0; i < tsp.n; ++i)
-	{
-		for (unsigned int j = 0; j < x; ++j)
-			tsp.m[i][j].checked = false;
-		--x;
-	}
-}
-
-void print_matrix_status(matrix &tsp)
-{
-	unsigned int x = tsp.n - 1;
-	for (unsigned int i = 0; i < tsp.n; ++i)
-	{
-		for (unsigned int j = 0; j < x; ++j)
-			std::cout << tsp.m[i][j].checked << ' ';
-		--x;
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-}
 
 bool is_closest_destination(matrix &tsp, unsigned int i, unsigned int j, destination d)
 {

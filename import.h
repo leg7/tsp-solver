@@ -1,5 +1,7 @@
 #pragma once
 
+#include "matrix.h"
+
 #include <string>
 
 struct point
@@ -8,34 +10,12 @@ struct point
 	int y;
 };
 
-struct matrix_data
-{
-	double distance; // La distance
-	bool    checked; // Si le point à été traité
-};
-
-struct matrix
-{
-	matrix_data **m;
-	unsigned int  n;
-};
-
 /*
  * Fonction qui retourne la taille d'une instance pour pouvoir créer une
  * matrcie de taille adapté.
  * Le paramètre s'agit du nom du fichier de l'instance
  */
 int get_tsp_size(std::string filename);
-
-/*
- * Procedure qui construit une matrice d'adjacence vide passé en paramètere
- * (@tsp). Cette fonction determine le taille de la matrice grâce a la fonction
- * get_tsp_size ci dessus.
- */
-void build_matrix(matrix &tsp, std::string filename);
-
-/* Procedure qui affiche une matrice d'adjacence @tsp */
-void print_matrix_distance(matrix tsp);
 
 /*
  * Cette fonction retourne un ifstreamn à la position des paramètres.
