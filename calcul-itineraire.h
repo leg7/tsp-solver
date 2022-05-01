@@ -9,6 +9,7 @@ struct destination
 struct itinerary
 {
 	destination *data;  // Un tableau de destination (e.g un itineraire)
+	unsigned int size;  // Le nombre de destinations de l'itineraire
 	double length;      // La longeure de l'itineraire
 };
 

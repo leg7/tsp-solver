@@ -15,7 +15,7 @@ void print_itinerary(matrix tsp, itinerary it)
 	std::cout << "L'itineraire serait d'une longeure de " << it.length
 		<< " : \n\n";
 
-	for (unsigned int k = 0; k < tsp.n; ++k)
+	for (unsigned int k = 0; k < it.size; ++k)
 		std::cout << "\t" << it.data[k].num + 1 << std::endl;
 
 	std::cout << std::endl;
@@ -32,6 +32,8 @@ int main()
 	print_matrix_distance(tsp);
 
 	itinerary i;
+	i.size = get_tsp_size(instance);
+
 	make_greedy_itinerary(tsp,i);
 	print_itinerary(tsp,i);
 
