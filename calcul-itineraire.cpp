@@ -21,6 +21,25 @@ bool is_closest_destination(matrix tsp, unsigned int i, unsigned int j, destinat
 
 }
 
+/* testé ok */
+double get_distance(matrix tsp, unsigned int a, unsigned int b)
+{
+	if (a >= tsp.n + 1 or a < 0 or
+	    b >= tsp.n + 1 or b < 0)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
+	if (b == a)
+		return 0;
+
+	if (b < a)
+	{
+		double temp = b;
+		b = a;
+		a = temp;
+	}
+	return tsp.m[a][b-a-1].distance;
+}
+
 destination get_greedy_destination(matrix &tsp, unsigned int origin)
 {
 	if (origin >= tsp.n + 1 or origin < 0)

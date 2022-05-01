@@ -29,6 +29,13 @@ bool is_valid_destination(matrix tsp, unsigned int i, unsigned int j);
 bool is_closest_destination(matrix tsp, unsigned int i, unsigned int j, destination d);
 
 /*
+ * Fonction qui trouve et renvoie la distance entre deux villes @a et @b
+ * dans la matrice d'adjacence.
+ * Cette fonction sert a determiner si un opt-swap est judicieux
+ */
+double get_distance(matrix tsp, unsigned int a, unsigned int b);
+
+/*
  * Cette fonction retourne la destination la plus proche de la ville passé en
  * paramètre @line dans la matrice d'adjacence @tsp. De plus les status
  * des points de la destination trouvés sont mis a jour pour ne pas revenir
