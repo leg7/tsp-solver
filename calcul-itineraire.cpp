@@ -2,6 +2,30 @@
 #include "calcul-itineraire.h"
 #include <iostream>
 
+void init_matrix_status(matrix &tsp)
+{
+	unsigned int x = tsp.n - 1;
+	for (unsigned int i = 0; i < tsp.n; ++i)
+	{
+		for (unsigned int j = 0; j < x; ++j)
+			tsp.m[i][j].checked = false;
+		--x;
+	}
+}
+
+void print_matrix_status(matrix &tsp)
+{
+	unsigned int x = tsp.n - 1;
+	for (unsigned int i = 0; i < tsp.n; ++i)
+	{
+		for (unsigned int j = 0; j < x; ++j)
+			std::cout << tsp.m[i][j].checked << ' ';
+		--x;
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+}
+
 destination get_greedy_destination(matrix &tsp, unsigned int line)
 {
 	destination d;
@@ -13,12 +37,12 @@ destination get_greedy_destination(matrix &tsp, unsigned int line)
 		/* k < taille de la ligne */
 		for (unsigned int k = 0; k < tsp.n - 1 - line; ++k)
 		{
-			if (tsp.m[line][k].distance < d.distance and tsp.m[line][k].distance != 0)
+			if (tsp.m[line][k].distance < d.distance and tsp.m[line][k].checked == false)
 			{
 				d.distance = tsp.m[line][k].distance;
 				d.num      = line + k + 1;
 			}
-			tsp.m[line][k].distance = 0;
+			tsp.m[line][k].checked = true;
 		}
 	}
 
@@ -29,12 +53,12 @@ destination get_greedy_destination(matrix &tsp, unsigned int line)
 		unsigned int j = 0;
 		while (i != 0)
 		{
-			if (tsp.m[i][j].distance < d.distance and tsp.m[i][j].distance != 0)
+			if (tsp.m[i][j].distance < d.distance and tsp.m[i][j].checked == false)
 			{
 				d.distance = tsp.m[i][j].distance;
 				d.num      = i;
 			}
-			tsp.m[i][j].distance = 0;
+			tsp.m[i][j].checked = true;
 
 			--i;
 			++j;
@@ -46,6 +70,7 @@ destination get_greedy_destination(matrix &tsp, unsigned int line)
 
 void make_greedy_itinerary(matrix &tsp, itinerary &it)
 {
+	init_matrix_status(tsp);
 
 	it.length = 0;
 
@@ -57,7 +82,7 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 	{
 		it.data[k] = get_greedy_destination(tsp, it.data[k-1].num);
 		it.length += it.data[k].distance;
-		/* print_matrix(tsp); */
+		print_matrix_status(tsp);
 		/* std::cout << t[i] << std::endl << std::endl; */
 	}
 }

@@ -12,11 +12,17 @@ struct itinerary
 	double length;      // La longeure de l'itineraire
 };
 
+/* Procedure qui initialise le status de la matrice */
+void init_matrix_status(matrix &tsp);
+
+/* Procedure qui affiche le status de la matrice */
+void print_matrix_status(matrix &tsp);
+
 /*
  * Cette fonction retourne la destination la plus proche de la ville passé en
- * paramètre @line dans la matrice d'adjacence @tsp. De plus chaque possibilité
- * de la ville est mise a zero pour ne pas pouvoir revenir à cette ville
- * Cette fonction sert a calculer un itineraire de façon gloutonne
+ * paramètre @line dans la matrice d'adjacence @tsp. De plus les status
+ * des points de la destination trouvés sont mis a jour pour ne pas revenir
+ * sur ceux-cis plus tard.
  */
 destination get_greedy_destination(matrix &tsp, unsigned int line);
 
