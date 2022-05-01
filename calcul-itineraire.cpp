@@ -44,7 +44,7 @@ destination get_greedy_destination(matrix &tsp, unsigned int line)
 	return d;
 }
 
-void glouton(matrix &tsp, itinerary &it)
+void make_greedy_itinerary(matrix &tsp, itinerary &it)
 {
 
 	it.length = 0;

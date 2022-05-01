@@ -32,7 +32,7 @@ int main()
 	/* print_matrix(tsp); */
 
 	itinerary i;
-	glouton(tsp,i);
+	make_greedy_itinerary(tsp,i);
 	print_itinerary(tsp,i);
 
 	delete[] i.data;

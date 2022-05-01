@@ -25,4 +25,4 @@ destination get_greedy_destination(matrix &tsp, unsigned int line);
  * fonction get_greedy_destination()
  * L'itineraire @it est calcule à partir d'une matrice d'adjacence @tsp
  */
-void glouton(matrix &tsp, itinerary &it);
+void make_greedy_itinerary(matrix &tsp, itinerary &it);
