@@ -10,8 +10,8 @@ unsigned int get_min_and_zero(matrix &tsp, unsigned int line)
 	/* min line */
 	if (line != tsp.n - 1)
 	{
-		unsigned int k = 0;
-		while (k < tsp.n - 1 - line) // k < taille de la ligne
+		// k < taille de la ligne
+		for (unsigned int k = 0; k < tsp.n - 1 - line; ++k)
 		{
 			if (tsp.m[line][k] < distance and tsp.m[line][k] != 0)
 			{
@@ -19,8 +19,6 @@ unsigned int get_min_and_zero(matrix &tsp, unsigned int line)
 				destination = line + k + 1;
 			}
 			tsp.m[line][k] = 0;
-
-			++k;
 		}
 	}
 
