@@ -5,7 +5,7 @@
 unsigned int get_min_and_zero(matrix &tsp, unsigned int line)
 {
 	unsigned int destination = 1000000;
-	unsigned int distance = 1000000;
+	double distance = 1000000000;
 
 	/* min line */
 	if (line != tsp.n - 1)
