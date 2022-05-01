@@ -10,6 +10,17 @@ void delete_matrix(matrix &tsp)
 	delete[] tsp.m;
 }
 
+void print_itinerary(matrix tsp, itinerary it)
+{
+	std::cout << "L'itineraire serait d'une longeure de " << it.length
+		<< " : \n\n";
+
+	for (unsigned int k = 0; k < tsp.n; ++k)
+		std::cout << "\t" << it.data[k].num + 1 << std::endl;
+
+	std::cout << std::endl;
+}
+
 int main()
 {
 	/* std::string instance = "tsp/att48.tsp"; */
@@ -20,17 +31,11 @@ int main()
 	import_tsp(tsp,instance);
 	/* print_matrix(tsp); */
 
-	/* std::cout << get_min_and_zero(tsp,27) << std::endl << std::endl; */
-	/* std::cout << get_min_and_zero(tsp,2) << std::endl << std::endl; */
-	destination *t = glouton(tsp);
-	/* print_matrix(tsp); */
+	itinerary i;
+	glouton(tsp,i);
+	print_itinerary(tsp,i);
 
-	/* std::cout << std::endl; */
-
-	for (unsigned int i = 0; i < tsp.n; ++i)
-		std::cout << t[i].num+1 << '\n';
-
-	delete[] t;
+	delete[] i.data;
 	delete_matrix(tsp);
 
 	return 0;
