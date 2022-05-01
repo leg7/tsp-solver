@@ -2,21 +2,21 @@
 #include "calcul-itineraire.h"
 #include <iostream>
 
-unsigned int get_destination(matrix &tsp, unsigned int line)
+destination get_destination(matrix &tsp, unsigned int line)
 {
-	unsigned int destination = 1000000;
-	double distance = 1000000000;
+	destination d;
+	d.distance = 10000000000;
 
 	/* min line */
 	if (line != tsp.n - 1)
 	{
-		// k < taille de la ligne
+		/* k < taille de la ligne */
 		for (unsigned int k = 0; k < tsp.n - 1 - line; ++k)
 		{
-			if (tsp.m[line][k] < distance and tsp.m[line][k] != 0)
+			if (tsp.m[line][k] < d.distance and tsp.m[line][k] != 0)
 			{
-				distance = tsp.m[line][k];
-				destination = line + k + 1;
+				d.distance = tsp.m[line][k];
+				d.num      = line + k + 1;
 			}
 			tsp.m[line][k] = 0;
 		}
@@ -29,10 +29,10 @@ unsigned int get_destination(matrix &tsp, unsigned int line)
 		unsigned int j = 0;
 		while (i != 0)
 		{
-			if (tsp.m[i][j] < distance and tsp.m[i][j] != 0)
+			if (tsp.m[i][j] < d.distance and tsp.m[i][j] != 0)
 			{
-				distance = tsp.m[i][j];
-				destination = i;
+				d.distance = tsp.m[i][j];
+				d.num      = i;
 			}
 			tsp.m[i][j] = 0;
 
@@ -41,17 +41,18 @@ unsigned int get_destination(matrix &tsp, unsigned int line)
 		}
 	}
 
-	return destination;
+	return d;
 }
 
-unsigned int* glouton(matrix &tsp)
+destination* glouton(matrix &tsp)
 {
-	unsigned int *t = new unsigned int[tsp.n];
-	t[0] = 0;
+	destination *t = new destination[tsp.n];
+	t[0].distance = 0;
+	t[0].num      = 0;
 
 	for (unsigned int i = 1; i < tsp.n; ++i)
 	{
-		t[i] = get_destination(tsp,t[i-1]);
+		t[i] = get_destination(tsp,t[i-1].num);
 		/* print_matrix(tsp); */
 		/* std::cout << t[i] << std::endl << std::endl; */
 	}

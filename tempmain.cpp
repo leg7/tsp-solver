@@ -22,13 +22,13 @@ int main()
 
 	/* std::cout << get_min_and_zero(tsp,27) << std::endl << std::endl; */
 	/* std::cout << get_min_and_zero(tsp,2) << std::endl << std::endl; */
-	unsigned int *t = glouton(tsp);
+	destination *t = glouton(tsp);
 	/* print_matrix(tsp); */
 
 	/* std::cout << std::endl; */
 
 	for (unsigned int i = 0; i < tsp.n; ++i)
-		std::cout << t[i]+1 << '\n';
+		std::cout << t[i].num+1 << '\n';
 
 	delete[] t;
 	delete_matrix(tsp);

@@ -1,5 +1,11 @@
 #pragma once
 
-unsigned int get_destination(matrix &tsp, unsigned int line);
+struct destination
+{
+	unsigned int num; // Le numero de ville de la destination
+	double  distance; // La distance pour aller à cette ville
+};
 
-unsigned int* glouton(matrix &tsp);
+destination get_destination(matrix &tsp, unsigned int line);
+
+destination* glouton(matrix &tsp);
