@@ -64,7 +64,6 @@ destination get_greedy_destination(matrix &tsp, unsigned int line)
 			++j;
 		}
 	}
-
 	return d;
 }
 
