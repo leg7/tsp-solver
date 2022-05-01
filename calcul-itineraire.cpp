@@ -40,6 +40,28 @@ double get_distance(matrix tsp, unsigned int a, unsigned int b)
 	return tsp.m[a][b-a-1].distance;
 }
 
+void mark_visited(matrix &tsp, unsigned int town)
+{
+	if (town >= tsp.n + 1 or town < 0)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
+	for (unsigned int j = 0; j < tsp.n - town; ++j)
+		tsp.m[town][j].checked = true;
+
+	/* min diagonale */
+	if (town > 0)
+	{
+		unsigned int i = town - 1;
+		unsigned int j = 0;
+		while (i > 0)
+		{
+			tsp.m[i][j].checked = true;
+			--i;
+			++j;
+		}
+	}
+}
+
 destination get_greedy_destination(matrix &tsp, unsigned int origin)
 {
 	if (origin >= tsp.n + 1 or origin < 0)
@@ -58,7 +80,6 @@ destination get_greedy_destination(matrix &tsp, unsigned int origin)
 			d.distance = tsp.m[origin][j].distance;
 			d.num      = origin + 1 + j;
 		}
-		tsp.m[origin][j].checked = true;
 	}
 
 	/* min diagonale */
@@ -73,12 +94,13 @@ destination get_greedy_destination(matrix &tsp, unsigned int origin)
 				d.distance = tsp.m[i][j].distance;
 				d.num      = i;
 			}
-			tsp.m[i][j].checked = true;
 
 			--i;
 			++j;
 		}
 	}
+
+	mark_visited(tsp,origin);
 	return d;
 }
 

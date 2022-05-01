@@ -36,6 +36,11 @@ bool is_closest_destination(matrix tsp, unsigned int i, unsigned int j, destinat
 double get_distance(matrix tsp, unsigned int a, unsigned int b);
 
 /*
+ * Marque une ville comme visité dans la matrice d'adjacence
+ */
+void mark_visited(matrix &tsp, unsigned int town);
+
+/*
  * Cette fonction retourne la destination la plus proche de la ville passé en
  * paramètre @line dans la matrice d'adjacence @tsp. De plus les status
  * des points de la destination trouvés sont mis a jour pour ne pas revenir
