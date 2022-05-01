@@ -18,11 +18,11 @@ struct itinerary
  * de la ville est mise a zero pour ne pas pouvoir revenir à cette ville
  * Cette fonction sert a calculer un itineraire de façon gloutonne
  */
-destination get_destination(matrix &tsp, unsigned int line);
+destination get_greedy_destination(matrix &tsp, unsigned int line);
 
 /*
  * Cette procedure calcule un itineraire de manière gloutonne grâce a la
- * fonction get_destination()
+ * fonction get_greedy_destination()
  * L'itineraire @it est calcule à partir d'une matrice d'adjacence @tsp
  */
 void glouton(matrix &tsp, itinerary &it);

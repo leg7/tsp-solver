@@ -2,7 +2,7 @@
 #include "calcul-itineraire.h"
 #include <iostream>
 
-destination get_destination(matrix &tsp, unsigned int line)
+destination get_greedy_destination(matrix &tsp, unsigned int line)
 {
 	destination d;
 	d.distance = 10000000000;
@@ -55,7 +55,7 @@ void glouton(matrix &tsp, itinerary &it)
 
 	for (unsigned int k = 1; k < tsp.n; ++k)
 	{
-		it.data[k] = get_destination(tsp, it.data[k-1].num);
+		it.data[k] = get_greedy_destination(tsp, it.data[k-1].num);
 		it.length += it.data[k].distance;
 		/* print_matrix(tsp); */
 		/* std::cout << t[i] << std::endl << std::endl; */
