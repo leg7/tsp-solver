@@ -36,11 +36,8 @@ unsigned int get_min_and_zero(matrix &tsp, unsigned int line)
 			}
 			tsp.m[i][j] = 0;
 
-			if (i != 0)
-			{
-				--i;
-				++j;
-			}
+			--i;
+			++j;
 		}
 	}
 
