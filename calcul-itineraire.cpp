@@ -3,39 +3,51 @@
 #include "calcul-itineraire.h"
 
 #include <iostream>
+#include <stdexcept>
 
-bool is_closest_destination(matrix &tsp, unsigned int i, unsigned int j, destination d)
+bool is_valid_destination(matrix tsp, unsigned int i, unsigned int j)
+{
+	if (tsp.m[i][j].checked == false and
+	    i < tsp.n and i >= 0)
+		return true;
+	else
+		return false;
+}
+
+bool is_closest_destination(matrix tsp, unsigned int i, unsigned int j, destination d)
 {
 	return (tsp.m[i][j].distance < d.distance and
-		tsp.m[i][j].checked == false);
+		is_valid_destination(tsp,i,j));
+
 }
 
 destination get_greedy_destination(matrix &tsp, unsigned int origin)
 {
+	if (origin >= tsp.n + 1 or origin < 0)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
 	destination d;
-	d.distance = 10000000000;
+	d.distance = 1000000000;
 
 	/* min line */
-	if (origin != tsp.n + 1)
+
+	/* k < taille de la ligne */
+	for (unsigned int j = 0; j < tsp.n - origin; ++j)
 	{
-		/* k < taille de la ligne */
-		for (unsigned int j = 0; j < tsp.n - origin; ++j)
+		if (is_closest_destination(tsp, origin, j, d))
 		{
-			if (is_closest_destination(tsp, origin, j, d))
-			{
-				d.distance = tsp.m[origin][j].distance;
-				d.num      = origin + 1 + j;
-			}
-			tsp.m[origin][j].checked = true;
+			d.distance = tsp.m[origin][j].distance;
+			d.num      = origin + 1 + j;
 		}
+		tsp.m[origin][j].checked = true;
 	}
 
 	/* min diagonale */
-	if (origin != 0)
+	if (origin > 0)
 	{
 		unsigned int i = origin - 1;
 		unsigned int j = 0;
-		while (i != 0)
+		while (i > 0)
 		{
 			if (is_closest_destination(tsp, i, j, d))
 			{

@@ -16,10 +16,17 @@ struct itinerary
 };
 
 /*
+ * Verifie si le coordonnées @i et @j dans la matrice @tsp
+ * donc tsp[i][j] appartient bien à la matrice pour eviter
+ * de l'undefined behaviour
+ */
+bool is_valid_destination(matrix tsp, unsigned int i, unsigned int j);
+
+/*
  * Fonction qui renvoie si @tsp.m[i][j] est
  * la prochaine destination valide la plus proche
  */
-bool is_closest_destination(matrix &tsp, unsigned int i, unsigned int j, destination d);
+bool is_closest_destination(matrix tsp, unsigned int i, unsigned int j, destination d);
 
 /*
  * Cette fonction retourne la destination la plus proche de la ville passé en
