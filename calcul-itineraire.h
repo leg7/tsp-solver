@@ -62,3 +62,8 @@ destination get_greedy_destination(matrix &tsp, unsigned int line);
  * L'itineraire @it est calcule à partir d'une matrice d'adjacence @tsp
  */
 void make_greedy_itinerary(matrix &tsp, itinerary &it);
+
+/*
+ * Cette procedure fait un échange entre deux villes @villes_1 et @ville_2
+ */
+void opt_swap(itinerary &it, unsigned int ville_1, unsigned int ville_2);

@@ -116,3 +116,10 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 		/* std::cout << t[i] << std::endl << std::endl; */
 	}
 }
+
+void opt_swap(itinerary &it, unsigned int ville_1, unsigned int ville_2)
+{
+	destination aux = it.data[ville_1];
+	it.data[ville_1] = it.data[ville_2];
+	it.data[ville_2] = aux;
+}
