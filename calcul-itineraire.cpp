@@ -115,14 +115,79 @@ void update_itinerary(itinerary &it, matrix tsp)
 	it.data[0].distance = 0;
 	for (unsigned int k = 1; k < it.size; ++k)
 		it.data[k].distance = get_distance(tsp, it.data[k - 1].num , it.data[k].num);
-	
+
+	it.length = 0;
 	for (unsigned int k = 0; k < it.size; ++k)
 		it.length += it.data[k].distance;
 }
 
-void opt_swap(itinerary &it, unsigned int ville_1, unsigned int ville_2)
+itinerary two_opt_swap(itinerary it, unsigned int a, unsigned int b, matrix tsp)
 {
-	destination aux = it.data[ville_1];
-	it.data[ville_1] = it.data[ville_2];
-	it.data[ville_2] = aux;
+	if (a == b)
+		throw std::invalid_argument("ta mère");
+
+	itinerary swapped;
+	swapped.size = it.size;
+	swapped.data = new destination[swapped.size];
+
+	/* On met le debut dans l'ordre */
+	unsigned int i = 0;
+	while (i < a)
+	{
+		swapped.data[i].num = it.data[i].num;
+		++i;
+	}
+
+	/* Une fois arrive à "a" on les mets à l'envers */
+	unsigned int j = b;
+	while (j >= a)
+	{
+		swapped.data[i].num = it.data[j].num;
+
+		if (j == 0)
+		{
+			++i; // cas particulier si l'on inverse l'itineraire
+			break;
+		}
+		--j;
+		++i;
+	}
+
+	/* Puis on mets le reste */
+	while (i < swapped.size)
+	{
+		swapped.data[i].num = it.data[i].num;
+		++i;
+	}
+
+	update_itinerary(swapped,tsp);
+
+	return swapped;
+}
+
+void two_opt_optimize(itinerary &it, matrix tsp)
+{
+	itinerary optimized;
+	optimized.size = it.size;
+	optimized.data = new destination[it.size];
+
+	bool improved = true;
+	while (improved)
+	{
+		improved = false;
+
+		start_over:
+		for (unsigned int i = 0; i <= it.size - 1; ++i)
+			for (unsigned int j = i + 1; j <= it.size; ++j)
+			{
+				optimized = two_opt_swap(it, i, j, tsp);
+
+				if (optimized.length < it.length)
+				{
+					it = optimized;
+					improved = true;
+					goto start_over;
+				}
+			}
+	}
 }

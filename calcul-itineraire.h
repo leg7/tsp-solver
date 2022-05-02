@@ -64,12 +64,11 @@ destination get_greedy_destination(matrix &tsp, unsigned int line);
  */
 void make_greedy_itinerary(matrix &tsp, itinerary &it);
 
-/*
- * Cette procedure met à jour la distance entre tous les points
- */
+/* Procedure qui mets a jour la distance totale d'un itineraire */
 void update_itinerary(itinerary &it, matrix tsp);
 
-/*
- * Cette procedure fait un échange entre deux villes @villes_1 et @ville_2
- */
-void opt_swap(itinerary &it, unsigned int ville_1, unsigned int ville_2);
+ /* Fonction qui retourne un itineraire optimisé par un échange 2-opt */
+itinerary two_opt_swap(itinerary it, unsigned int a, unsigned int b, matrix tsp);
+
+/* optimize un itineraire au maximum avec des echanges 2-opt */
+void two_opt_optimize(itinerary &it, matrix tsp);
