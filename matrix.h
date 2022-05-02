@@ -5,13 +5,13 @@
 struct matrix_data
 {
 	double distance; // La distance
-	bool    checked; // Si le point à été traité
+	bool   visited;   // Si le point à été traité
 };
 
 struct matrix
 {
-	matrix_data **m;
-	size_t n;
+	matrix_data **data;
+	size_t      size;
 };
 
 /* Procedure qui initialise le status de la matrice */

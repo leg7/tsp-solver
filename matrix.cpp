@@ -7,18 +7,18 @@
 /* testé ok */
 void build_matrix(matrix &tsp, std::string filename)
 {
-	tsp.n = get_tsp_size(filename);
+	tsp.size = get_tsp_size(filename);
 
-	--tsp.n;
+	--tsp.size;
 
-	if (tsp.n > 0)
+	if (tsp.size > 0)
 	{
-		tsp.m = new matrix_data*[tsp.n];
+		tsp.data = new matrix_data*[tsp.size];
 
-		size_t x = tsp.n;
-		for (size_t i = 0; i < tsp.n; ++i)
+		size_t x = tsp.size;
+		for (size_t i = 0; i < tsp.size; ++i)
 		{
-			tsp.m[i] = new matrix_data[x];
+			tsp.data[i] = new matrix_data[x];
 			--x;
 		}
 	}
@@ -29,22 +29,22 @@ void build_matrix(matrix &tsp, std::string filename)
 
 void init_matrix_status(matrix &tsp)
 {
-	size_t x = tsp.n;
-	for (size_t i = 0; i < tsp.n; ++i)
+	size_t x = tsp.size;
+	for (size_t i = 0; i < tsp.size; ++i)
 	{
 		for (size_t j = 0; j < x; ++j)
-			tsp.m[i][j].checked = false;
+			tsp.data[i][j].visited = false;
 		--x;
 	}
 }
 
 void print_matrix_status(matrix &tsp)
 {
-	size_t x = tsp.n;
-	for (size_t i = 0; i < tsp.n; ++i)
+	size_t x = tsp.size;
+	for (size_t i = 0; i < tsp.size; ++i)
 	{
 		for (size_t j = 0; j < x; ++j)
-			std::cout << tsp.m[i][j].checked << ' ';
+			std::cout << tsp.data[i][j].visited << ' ';
 		--x;
 		std::cout << std::endl;
 	}
@@ -54,11 +54,11 @@ void print_matrix_status(matrix &tsp)
 /* testé ok */
 void print_matrix_distance(matrix tsp)
 {
-	size_t x = tsp.n;
-	for (size_t i = 0; i < tsp.n; ++i)
+	size_t x = tsp.size;
+	for (size_t i = 0; i < tsp.size; ++i)
 	{
 		for (size_t j = 0; j < x;  ++j)
-			std::cout << tsp.m[i][j].distance << ' ';
+			std::cout << tsp.data[i][j].distance << ' ';
 		--x;
 		std::cout << std::endl;
 	}
@@ -67,7 +67,7 @@ void print_matrix_distance(matrix tsp)
 
 void delete_matrix(matrix &tsp)
 {
-	for (size_t i = 0; i < tsp.n; ++i)
-		delete[] tsp.m[i];
-	delete[] tsp.m;
+	for (size_t i = 0; i < tsp.size; ++i)
+		delete[] tsp.data[i];
+	delete[] tsp.data;
 }

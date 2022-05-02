@@ -6,70 +6,71 @@
 #include <stdexcept>
 
 /* testé ok */
-bool is_valid_path(matrix tsp, size_t origin, size_t town)
+bool is_valid_path(matrix tsp, size_t start, size_t end)
 {
-	if (town > tsp.n or origin > tsp.n)
+	if (end > tsp.size or start > tsp.size)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
-	if (origin == town)
+	if (start == end)
 		return false;
 
-	if (origin > town)
+	if (start > end)
 	{
-		size_t temp = origin;
-		origin = town;
-		town = temp;
+		size_t temp = start;
+		start       = end;
+		end         = temp;
 	}
 
-	if (tsp.m[origin][town-origin-1].checked == false)
+	if (tsp.data[start][end-start-1].visited == false)
 		return true;
 	else
 		return false;
 }
 
 /* testé ok */
-bool is_shortest_valid_path(matrix tsp, size_t origin, size_t town, destination d)
+bool is_shortest_valid_path(matrix tsp, size_t start, size_t end, destination d)
 {
-	return (is_valid_path(tsp,origin,town) and
-		get_distance(tsp,origin,town) < d.distance and
-		get_distance(tsp,origin,town) > 0);
+	return (is_valid_path(tsp, start, end) and
+		get_distance(tsp, start, end) < d.distance and
+		get_distance(tsp, start, end) > 0);
 }
 
 /* testé ok */
-double get_distance(matrix tsp, size_t a, size_t b)
+double get_distance(matrix tsp, size_t start, size_t end)
 {
-	if (a > tsp.n or b > tsp.n)
+	if (start > tsp.size or end > tsp.size)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
-	if (b == a)
+	if (start == end)
 		return 0;
 
-	if (b < a)
+	if (start > end)
 	{
-		double temp = b;
-		b = a;
-		a = temp;
+		double temp = start;
+		start = end;
+		end = temp;
 	}
-	return tsp.m[a][b-a-1].distance;
+
+	return tsp.data[start][end-start-1].distance;
 }
 
 /* testé ok */
-void mark_visited(matrix &tsp, size_t town)
+void mark_visited(matrix &tsp, size_t city)
 {
-	if (town > tsp.n)
+	if (city > tsp.size)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
-	for (size_t j = 0; j < tsp.n - town; ++j)
-		tsp.m[town][j].checked = true;
+	for (size_t j = 0; j < tsp.size - city; ++j)
+		tsp.data[city][j].visited = true;
 
 	/* min diagonale */
-	if (town > 0)
+	if (city > 0)
 	{
-		int i = town - 1;
+		int i = city - 1;
 		int j = 0;
 		while (i >= 0)
 		{
-			tsp.m[i][j].checked = true;
+			tsp.data[i][j].visited = true;
 			--i;
 			++j;
 		}
@@ -77,18 +78,18 @@ void mark_visited(matrix &tsp, size_t town)
 }
 
 /* testé ok */
-destination get_greedy_destination(matrix &tsp, size_t origin)
+destination get_greedy_destination(matrix &tsp, size_t start)
 {
-	if (origin > tsp.n)
+	if (start > tsp.size)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
 	destination d;
 	d.distance = 1000000000;
 
-	for (size_t i = 0; i <= tsp.n; ++i)
-		if (is_shortest_valid_path(tsp,origin,i,d))
+	for (size_t i = 0; i <= tsp.size; ++i)
+		if (is_shortest_valid_path(tsp, start, i, d))
 		{
-			d.distance = get_distance(tsp,origin,i);
+			d.distance = get_distance(tsp, start, i);
 			d.num = i;
 		}
 
@@ -103,10 +104,8 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 	for (size_t k = 1; k < it.size; ++k)
 	{
 		it.data[k] = get_greedy_destination(tsp, it.data[k-1].num);
-		mark_visited(tsp, it.data[k-1].num);
 		it.length += it.data[k].distance;
-		/* print_matrix_status(tsp); */
-		/* std::cout << t[i] << std::endl << std::endl; */
+		mark_visited(tsp, it.data[k-1].num);
 	}
 }
 
@@ -114,7 +113,7 @@ void update_itinerary(itinerary &it, matrix tsp)
 {
 	it.data[0].distance = 0;
 	for (size_t k = 1; k < it.size; ++k)
-		it.data[k].distance = get_distance(tsp, it.data[k - 1].num , it.data[k].num);
+		it.data[k].distance = get_distance(tsp, it.data[k-1].num , it.data[k].num);
 
 	it.length = 0;
 	for (size_t k = 0; k < it.size; ++k)

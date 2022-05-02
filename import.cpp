@@ -68,8 +68,8 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 	if (file.good())
 	{
 		/* on remplit la matrice d'adjacence */
-		size_t x = tsp.n;
-		for (size_t i = 0; i < tsp.n; ++i)
+		size_t x = tsp.size;
+		for (size_t i = 0; i < tsp.size; ++i)
 		{
 			/* on se place au bonne endroit */
 			file = go_to(filename, "NODE_COORD_SECTION", i);
@@ -105,7 +105,7 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 				file >> num;
 				b.y = std::stoi(num);
 
-				tsp.m[i][j].distance = distance(a, b);
+				tsp.data[i][j].distance = distance(a, b);
 			}
 		}
 	}
@@ -120,14 +120,14 @@ void import_tsp_matrix(matrix &tsp, std::string filename)
 		file = go_to(filename, "EDGE_WEIGHT_SECTION", 0);
 
 		/* on remplit la matrice d'adjacence */
-		size_t x = tsp.n;
-		for (size_t i = 0; i < tsp.n; ++i)
+		size_t x = tsp.size;
+		for (size_t i = 0; i < tsp.size; ++i)
 		{
 			for (size_t j = 0; j < x; ++j)
 			{
 				std::string num;
 				file >> num;
-				tsp.m[i][j].distance = std::stoi(num);
+				tsp.data[i][j].distance = std::stoi(num);
 			}
 			--x;
 		}
