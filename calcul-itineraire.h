@@ -11,7 +11,7 @@ struct point
 
 struct destination
 {
-	size_t  num;        // Le numero de ville de la destination
+	size_t  id;        // Le numero de ville de la destination
 	point   coord;      // coordonnées du point
 	double  distance;   // La distance pour aller à cette ville
 };

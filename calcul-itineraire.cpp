@@ -90,7 +90,7 @@ destination get_greedy_destination(matrix &tsp, size_t start)
 		if (is_shortest_valid_path(tsp, start, i, d))
 		{
 			d.distance = get_distance(tsp, start, i);
-			d.num = i;
+			d.id = i;
 		}
 
 	return d;
@@ -103,9 +103,9 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 
 	for (size_t k = 1; k < it.size; ++k)
 	{
-		it.data[k] = get_greedy_destination(tsp, it.data[k-1].num);
+		it.data[k] = get_greedy_destination(tsp, it.data[k-1].id);
 		it.length += it.data[k].distance;
-		mark_visited(tsp, it.data[k-1].num);
+		mark_visited(tsp, it.data[k-1].id);
 	}
 }
 
@@ -113,7 +113,7 @@ void update_itinerary(itinerary &it, matrix tsp)
 {
 	it.data[0].distance = 0;
 	for (size_t k = 1; k < it.size; ++k)
-		it.data[k].distance = get_distance(tsp, it.data[k-1].num , it.data[k].num);
+		it.data[k].distance = get_distance(tsp, it.data[k-1].id , it.data[k].id);
 
 	it.length = 0;
 	for (size_t k = 0; k < it.size; ++k)
@@ -133,7 +133,7 @@ itinerary two_opt_swap(itinerary it, size_t a, size_t b, matrix tsp)
 	size_t i = 0;
 	while (i < a)
 	{
-		swapped.data[i].num = it.data[i].num;
+		swapped.data[i].id = it.data[i].id;
 		++i;
 	}
 
@@ -141,7 +141,7 @@ itinerary two_opt_swap(itinerary it, size_t a, size_t b, matrix tsp)
 	size_t j = b;
 	while (j >= a)
 	{
-		swapped.data[i].num = it.data[j].num;
+		swapped.data[i].id = it.data[j].id;
 
 		if (j == 0)
 		{
@@ -155,7 +155,7 @@ itinerary two_opt_swap(itinerary it, size_t a, size_t b, matrix tsp)
 	/* Puis on mets le reste */
 	while (i < swapped.size)
 	{
-		swapped.data[i].num = it.data[i].num;
+		swapped.data[i].id = it.data[i].id;
 		++i;
 	}
 

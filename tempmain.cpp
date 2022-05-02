@@ -14,7 +14,7 @@ void init_itinerary(itinerary &it, std::string instance)
 
 	it.data = new destination[it.size];
 	it.data[0].distance = 0;
-	it.data[0].num      = 0;
+	it.data[0].id      = 0;
 }
 
 void print_itinerary(itinerary it)
@@ -23,7 +23,7 @@ void print_itinerary(itinerary it)
 		<< " : \n\n";
 
 	for (size_t k = 0; k < it.size; ++k)
-		std::cout << "\t" << it.data[k].num + 1 << std::endl;
+		std::cout << "\t" << it.data[k].id + 1 << std::endl;
 
 	std::cout << std::endl;
 }

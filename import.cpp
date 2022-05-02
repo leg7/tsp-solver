@@ -191,7 +191,7 @@ void get_destination_coord(destination &d, std::string target, std::string filen
 	std::ifstream file(filename);
 	if (file.good())
 	{
-		file = go_to(filename, target, d.num);
+		file = go_to(filename, target, d.id);
 		std::string trash;
 
 		file >> trash;
