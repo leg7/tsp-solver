@@ -1,14 +1,9 @@
 #pragma once
 
 #include "matrix.h"
+#include "calcul-itineraire.h"
 
 #include <string>
-
-struct point
-{
-	int x;
-	int y;
-};
 
 /*
  * Fonction qui retourne la taille d'une instance pour pouvoir créer une
@@ -44,9 +39,25 @@ void import_tsp_cord(matrix &tsp, std::string filename);
 void import_tsp_matrix(matrix &tsp, std::string filename);
 
 /*
+ * Fonction qui renvoie si @target est dans le fichier @filename
+ */
+bool find_target(std::string filename, std::string target);
+
+/*
  * Procedure qui determine le format des données de l'instance tsp et appelle
  * la procedure de creation de matrice approprié.
  * Cette procedure depend de toutes les autres fonctions et procedure du
  * fichier apart print_matrix
  */
 void import_tsp(matrix &tsp, std::string filename);
+
+
+/*
+ * Procedure qui trouve les coordonnées des points d'un itinéraire @it
+ */
+void import_itinerary_coord(itinerary &it, std::string instance);
+
+/*
+ * Procedure qui remplit les coordonnées d'un point
+*/
+void get_destination_coord(destination &d, std::string target, std::string filename);

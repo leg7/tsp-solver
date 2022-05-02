@@ -41,6 +41,7 @@ int main()
 	init_itinerary(i,instance);
 
 	make_greedy_itinerary(tsp,i);
+	import_itinerary_coord(i,instance);
 	print_itinerary(tsp,i);
 
 	delete[] i.data;

@@ -1,5 +1,6 @@
 #include "import.h"
 #include "matrix.h"
+#include "calcul-itineraire.h"
 
 #include <iostream>
 #include <cmath>
@@ -133,32 +134,32 @@ void import_tsp_matrix(matrix &tsp, std::string filename)
 	}
 }
 
+bool find_target(std::string filename, std::string target)
+{
+	std::ifstream file(filename);
+	if (file.good())
+	{
+		std::string line;
+		while (not file.eof())
+		{
+			std::getline(file,line);
+			if (line == target)
+				return true;
+		}
+	}
+	else
+		std::cout << "Erreur : le fichier " << filename
+			<< "n'as pas pu être lu" << std::endl;
+	return false;
+}
+
 /* pas testé */
 void import_tsp(matrix &tsp, std::string filename)
 {
 	std::ifstream file(filename);
 	if (file.good())
 	{
-		std::string target = "NODE_COORD_SECTION";
-		std::string line;
-		bool match = false;
-		unsigned int i = 0;
-
-		/*
-		 * on considère que les informations de l'instance ne dépassent
-		 * pas les 10 lignes
-		 */
-		while (i < 10 and match == false)
-		{
-			std::getline(file,line);
-
-			if (line == target)
-				match = true;
-
-			++i;
-		}
-
-		if (match)
+		if (find_target(filename, "NODE_COORD_SECTION"))
 			import_tsp_cord(tsp, filename);
 		else
 			import_tsp_matrix(tsp, filename);
@@ -166,4 +167,35 @@ void import_tsp(matrix &tsp, std::string filename)
 	else
 		std::cout << "Erreur : le fichier " << filename
 			<< "n'as pas pu être lu" << std::endl;
+}
+
+void import_itinerary_coord(itinerary &it, std::string filename)
+{
+	std::ifstream file(filename);
+	if (file.good())
+	{
+		if (find_target(filename, "NODE_COORD_SECTION"))
+			for (unsigned int i = 0; i < it.size; ++i)
+				get_destination_coord(it.data[i], "NODE_COORD_SECTION", filename);
+		else
+			for (unsigned int i = 0; i < it.size; ++i)
+				get_destination_coord(it.data[i], "DISPLAY_DATA_SECTION", filename);
+	}
+	else
+		std::cout << "Erreur : le fichier " << filename
+			<< "n'as pas pu être lu" << std::endl;
+}
+
+void get_destination_coord(destination &d, std::string target, std::string filename)
+{
+	std::ifstream file(filename);
+	if (file.good())
+	{
+		file = go_to(filename, target, d.num);
+		std::string trash;
+
+		file >> trash;
+		file >> d.p.x;
+		file >> d.p.y;
+	}
 }

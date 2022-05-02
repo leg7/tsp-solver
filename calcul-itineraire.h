@@ -1,10 +1,18 @@
 #pragma once
 
 #include "matrix.h"
+#include "import.h"
+
+struct point
+{
+	double x;
+	double y;
+};
 
 struct destination
 {
 	unsigned int num; // Le numero de ville de la destination
+	point p; // coordonnées du point
 	double  distance; // La distance pour aller à cette ville
 };
 
