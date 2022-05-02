@@ -36,9 +36,9 @@ void export_itinerary(itinerary it, std::string filename)
 	{
 		for (size_t w = 0; w < it.size; ++w)
 		{
-			file << it.data[w].p.x;
+			file << it.data[w].coord.x;
 			file << ' ';
-			file << it.data[w].p.y;
+			file << it.data[w].coord.y;
 			file << std::endl;
 		}
 	}

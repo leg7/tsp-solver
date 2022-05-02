@@ -195,7 +195,7 @@ void get_destination_coord(destination &d, std::string target, std::string filen
 		std::string trash;
 
 		file >> trash;
-		file >> d.p.x;
-		file >> d.p.y;
+		file >> d.coord.x;
+		file >> d.coord.y;
 	}
 }
