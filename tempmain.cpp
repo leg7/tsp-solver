@@ -22,7 +22,7 @@ void print_itinerary(itinerary it)
 	std::cout << "L'itineraire serait d'une longeure de " << it.length
 		<< " : \n\n";
 
-	for (unsigned int k = 0; k < it.size; ++k)
+	for (size_t k = 0; k < it.size; ++k)
 		std::cout << "\t" << it.data[k].num + 1 << std::endl;
 
 	std::cout << std::endl;
@@ -33,7 +33,7 @@ void export_itinerary(itinerary it, std::string filename)
 	std::ofstream file(filename+".out");
 	if (file.good())
 	{
-		for (unsigned int w = 0; w < it.size; ++w)
+		for (size_t w = 0; w < it.size; ++w)
 		{
 			file << it.data[w].p.x;
 			file << ' ';
@@ -58,14 +58,15 @@ int main()
 
 	itinerary i;
 	init_itinerary(i,instance);
+	print_itinerary(i);
 
 	make_greedy_itinerary(tsp,i);
-	import_itinerary_coord(i,instance);
-	print_itinerary(i);
-	two_opt_swap(i,tsp);
-	update_itinerary(i,tsp);
 	print_itinerary(i);
 
+	two_opt_optimize(i,tsp);
+	print_itinerary(i);
+
+	import_itinerary_coord(i,instance);
 	export_itinerary(i,instance);
 
 	delete[] i.data;

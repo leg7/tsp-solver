@@ -15,8 +15,8 @@ void build_matrix(matrix &tsp, std::string filename)
 	{
 		tsp.m = new matrix_data*[tsp.n];
 
-		unsigned int x = tsp.n;
-		for (unsigned int i = 0; i < tsp.n; ++i)
+		size_t x = tsp.n;
+		for (size_t i = 0; i < tsp.n; ++i)
 		{
 			tsp.m[i] = new matrix_data[x];
 			--x;
@@ -29,10 +29,10 @@ void build_matrix(matrix &tsp, std::string filename)
 
 void init_matrix_status(matrix &tsp)
 {
-	unsigned int x = tsp.n;
-	for (unsigned int i = 0; i < tsp.n; ++i)
+	size_t x = tsp.n;
+	for (size_t i = 0; i < tsp.n; ++i)
 	{
-		for (unsigned int j = 0; j < x; ++j)
+		for (size_t j = 0; j < x; ++j)
 			tsp.m[i][j].checked = false;
 		--x;
 	}
@@ -40,10 +40,10 @@ void init_matrix_status(matrix &tsp)
 
 void print_matrix_status(matrix &tsp)
 {
-	unsigned int x = tsp.n;
-	for (unsigned int i = 0; i < tsp.n; ++i)
+	size_t x = tsp.n;
+	for (size_t i = 0; i < tsp.n; ++i)
 	{
-		for (unsigned int j = 0; j < x; ++j)
+		for (size_t j = 0; j < x; ++j)
 			std::cout << tsp.m[i][j].checked << ' ';
 		--x;
 		std::cout << std::endl;
@@ -54,10 +54,10 @@ void print_matrix_status(matrix &tsp)
 /* testé ok */
 void print_matrix_distance(matrix tsp)
 {
-	unsigned int x = tsp.n;
-	for (unsigned int i = 0; i < tsp.n; ++i)
+	size_t x = tsp.n;
+	for (size_t i = 0; i < tsp.n; ++i)
 	{
-		for (unsigned int j = 0; j < x;  ++j)
+		for (size_t j = 0; j < x;  ++j)
 			std::cout << tsp.m[i][j].distance << ' ';
 		--x;
 		std::cout << std::endl;
@@ -67,7 +67,7 @@ void print_matrix_distance(matrix tsp)
 
 void delete_matrix(matrix &tsp)
 {
-	for (unsigned int i = 0; i < tsp.n; ++i)
+	for (size_t i = 0; i < tsp.n; ++i)
 		delete[] tsp.m[i];
 	delete[] tsp.m;
 }

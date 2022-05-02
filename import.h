@@ -10,7 +10,7 @@
  * matrcie de taille adapté.
  * Le paramètre s'agit du nom du fichier de l'instance
  */
-int get_tsp_size(std::string filename);
+size_t get_tsp_size(std::string filename);
 
 /*
  * Cette fonction retourne un ifstreamn à la position des paramètres.
@@ -18,7 +18,7 @@ int get_tsp_size(std::string filename);
  * @target est la position de départ.
  * @n est le nombre de lignes à sauter après être arriver à @target.
  */
-std::ifstream go_to(std::string filename, std::string target, unsigned int n);
+std::ifstream go_to(std::string filename, std::string target, size_t n);
 
 /*
  * Cette fonction retourne la distance entre deux points @a et @b

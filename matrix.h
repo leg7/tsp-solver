@@ -11,7 +11,7 @@ struct matrix_data
 struct matrix
 {
 	matrix_data **m;
-	unsigned int  n;
+	size_t n;
 };
 
 /* Procedure qui initialise le status de la matrice */

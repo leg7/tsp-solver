@@ -7,7 +7,7 @@
 #include <fstream>
 
 /* testé ok */
-int get_tsp_size(std::string filename)
+size_t get_tsp_size(std::string filename)
 {
 	std::ifstream file(filename);
 	if (file.good())
@@ -16,7 +16,7 @@ int get_tsp_size(std::string filename)
 		bool found = false;
 
 		/* si i >= 30 on considère que dimension est absent */
-		unsigned int i = 0;
+		size_t i = 0;
 		while (not found and i < 30)
 		{
 			file >> word;
@@ -35,7 +35,7 @@ int get_tsp_size(std::string filename)
 }
 
 /* testé ok */
-std::ifstream go_to(std::string filename, std::string target, unsigned int n)
+std::ifstream go_to(std::string filename, std::string target, size_t n)
 {
 	std::ifstream file(filename);
 	if (file.good())
@@ -68,8 +68,8 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 	if (file.good())
 	{
 		/* on remplit la matrice d'adjacence */
-		unsigned int x = tsp.n;
-		for (unsigned int i = 0; i < tsp.n; ++i)
+		size_t x = tsp.n;
+		for (size_t i = 0; i < tsp.n; ++i)
 		{
 			/* on se place au bonne endroit */
 			file = go_to(filename, "NODE_COORD_SECTION", i);
@@ -90,7 +90,7 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 			std::getline(file,ignore);
 
 			/* on calcule la distance avec tous les autres points */
-			for (unsigned int j = 0; j < x; ++j)
+			for (size_t j = 0; j < x; ++j)
 			{
 				file >> ignore;
 				if (ignore == "EOF")
@@ -120,10 +120,10 @@ void import_tsp_matrix(matrix &tsp, std::string filename)
 		file = go_to(filename, "EDGE_WEIGHT_SECTION", 0);
 
 		/* on remplit la matrice d'adjacence */
-		unsigned int x = tsp.n;
-		for (unsigned int i = 0; i < tsp.n; ++i)
+		size_t x = tsp.n;
+		for (size_t i = 0; i < tsp.n; ++i)
 		{
-			for (unsigned int j = 0; j < x; ++j)
+			for (size_t j = 0; j < x; ++j)
 			{
 				std::string num;
 				file >> num;
@@ -175,10 +175,10 @@ void import_itinerary_coord(itinerary &it, std::string filename)
 	if (file.good())
 	{
 		if (find_target(filename, "NODE_COORD_SECTION"))
-			for (unsigned int i = 0; i < it.size; ++i)
+			for (size_t i = 0; i < it.size; ++i)
 				get_destination_coord(it.data[i], "NODE_COORD_SECTION", filename);
 		else
-			for (unsigned int i = 0; i < it.size; ++i)
+			for (size_t i = 0; i < it.size; ++i)
 				get_destination_coord(it.data[i], "DISPLAY_DATA_SECTION", filename);
 	}
 	else

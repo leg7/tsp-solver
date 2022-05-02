@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 /* testé ok */
-bool is_valid_path(matrix tsp, unsigned int origin, unsigned int town)
+bool is_valid_path(matrix tsp, size_t origin, size_t town)
 {
 	if (town > tsp.n or town < 0 or origin > tsp.n or town < 0)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
@@ -16,7 +16,7 @@ bool is_valid_path(matrix tsp, unsigned int origin, unsigned int town)
 
 	if (origin > town)
 	{
-		unsigned int temp = origin;
+		size_t temp = origin;
 		origin = town;
 		town = temp;
 	}
@@ -28,7 +28,7 @@ bool is_valid_path(matrix tsp, unsigned int origin, unsigned int town)
 }
 
 /* testé ok */
-bool is_shortest_valid_path(matrix tsp, unsigned int origin, unsigned int town, destination d)
+bool is_shortest_valid_path(matrix tsp, size_t origin, size_t town, destination d)
 {
 	return (is_valid_path(tsp,origin,town) and
 		get_distance(tsp,origin,town) < d.distance and
@@ -36,7 +36,7 @@ bool is_shortest_valid_path(matrix tsp, unsigned int origin, unsigned int town, 
 }
 
 /* testé ok */
-double get_distance(matrix tsp, unsigned int a, unsigned int b)
+double get_distance(matrix tsp, size_t a, size_t b)
 {
 	if (a > tsp.n or a < 0 or b > tsp.n or b < 0)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
@@ -54,12 +54,12 @@ double get_distance(matrix tsp, unsigned int a, unsigned int b)
 }
 
 /* testé ok */
-void mark_visited(matrix &tsp, unsigned int town)
+void mark_visited(matrix &tsp, size_t town)
 {
 	if (town > tsp.n or town < 0)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
-	for (unsigned int j = 0; j < tsp.n - town; ++j)
+	for (size_t j = 0; j < tsp.n - town; ++j)
 		tsp.m[town][j].checked = true;
 
 	/* min diagonale */
@@ -77,7 +77,7 @@ void mark_visited(matrix &tsp, unsigned int town)
 }
 
 /* testé ok */
-destination get_greedy_destination(matrix &tsp, unsigned int origin)
+destination get_greedy_destination(matrix &tsp, size_t origin)
 {
 	if (origin > tsp.n or origin < 0)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
@@ -85,7 +85,7 @@ destination get_greedy_destination(matrix &tsp, unsigned int origin)
 	destination d;
 	d.distance = 1000000000;
 
-	for (unsigned int i = 0; i <= tsp.n; ++i)
+	for (size_t i = 0; i <= tsp.n; ++i)
 		if (is_shortest_valid_path(tsp,origin,i,d))
 		{
 			d.distance = get_distance(tsp,origin,i);
@@ -100,7 +100,7 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 {
 	init_matrix_status(tsp);
 
-	for (unsigned int k = 1; k < it.size; ++k)
+	for (size_t k = 1; k < it.size; ++k)
 	{
 		it.data[k] = get_greedy_destination(tsp, it.data[k-1].num);
 		mark_visited(tsp, it.data[k-1].num);
@@ -113,15 +113,15 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 void update_itinerary(itinerary &it, matrix tsp)
 {
 	it.data[0].distance = 0;
-	for (unsigned int k = 1; k < it.size; ++k)
+	for (size_t k = 1; k < it.size; ++k)
 		it.data[k].distance = get_distance(tsp, it.data[k - 1].num , it.data[k].num);
 
 	it.length = 0;
-	for (unsigned int k = 0; k < it.size; ++k)
+	for (size_t k = 0; k < it.size; ++k)
 		it.length += it.data[k].distance;
 }
 
-itinerary two_opt_swap(itinerary it, unsigned int a, unsigned int b, matrix tsp)
+itinerary two_opt_swap(itinerary it, size_t a, size_t b, matrix tsp)
 {
 	if (a == b)
 		throw std::invalid_argument("ta mère");
@@ -131,7 +131,7 @@ itinerary two_opt_swap(itinerary it, unsigned int a, unsigned int b, matrix tsp)
 	swapped.data = new destination[swapped.size];
 
 	/* On met le debut dans l'ordre */
-	unsigned int i = 0;
+	size_t i = 0;
 	while (i < a)
 	{
 		swapped.data[i].num = it.data[i].num;
@@ -139,7 +139,7 @@ itinerary two_opt_swap(itinerary it, unsigned int a, unsigned int b, matrix tsp)
 	}
 
 	/* Une fois arrive à "a" on les mets à l'envers */
-	unsigned int j = b;
+	size_t j = b;
 	while (j >= a)
 	{
 		swapped.data[i].num = it.data[j].num;
@@ -177,8 +177,8 @@ void two_opt_optimize(itinerary &it, matrix tsp)
 		improved = false;
 
 		start_over:
-		for (unsigned int i = 0; i <= it.size - 1; ++i)
-			for (unsigned int j = i + 1; j <= it.size; ++j)
+		for (size_t i = 0; i <= it.size - 1; ++i)
+			for (size_t j = i + 1; j <= it.size; ++j)
 			{
 				optimized = two_opt_swap(it, i, j, tsp);
 
