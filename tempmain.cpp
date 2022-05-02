@@ -17,7 +17,7 @@ void init_itinerary(itinerary &it, std::string instance)
 	it.data[0].num      = 0;
 }
 
-void print_itinerary(matrix tsp, itinerary it)
+void print_itinerary(itinerary it)
 {
 	std::cout << "L'itineraire serait d'une longeure de " << it.length
 		<< " : \n\n";
@@ -61,7 +61,10 @@ int main()
 
 	make_greedy_itinerary(tsp,i);
 	import_itinerary_coord(i,instance);
-	print_itinerary(tsp,i);
+	print_itinerary(i);
+	two_opt_swap(i,tsp);
+	update_itinerary(i,tsp);
+	print_itinerary(i);
 
 	export_itinerary(i,instance);
 
