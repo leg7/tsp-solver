@@ -117,6 +117,16 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 	}
 }
 
+void update_itinerary(itinerary &it, matrix tsp)
+{
+	it.data[0].distance = 0;
+	for (unsigned int k = 1; k < it.size; ++k)
+		it.data[k].distance = get_distance(tsp, it.data[k - 1].num , it.data[k].num);
+	
+	for (unsigned int k = 0; k < it.size; ++k)
+		it.length += it.data[k].distance;
+}
+
 void opt_swap(itinerary &it, unsigned int ville_1, unsigned int ville_2)
 {
 	destination aux = it.data[ville_1];
