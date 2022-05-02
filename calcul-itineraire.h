@@ -24,17 +24,18 @@ struct itinerary
 };
 
 /*
- * Verifie si le coordonnées @i et @j dans la matrice @tsp
- * donc tsp[i][j] appartient bien à la matrice pour eviter
- * de l'undefined behaviour
+ * Fonction qui verifie si la trajet depuis la ville @origin vers @town
+ * est possible. Utilisé pour construire une solution sans repasser par
+ * une ville plus d'une fois.
  */
-bool is_valid_destination(matrix tsp, unsigned int i, unsigned int j);
+bool is_valid_path(matrix tsp, unsigned int origin, unsigned int town);
 
 /*
- * Fonction qui renvoie si @tsp.m[i][j] est
- * la prochaine destination valide la plus proche
+ * Fonction qui verifie si la trajet depuis @origin vers @town est le tarjet le
+ * plus court possible et valide.
+ * Utilisé pour construite un itineraire glouton.
  */
-bool is_closest_destination(matrix tsp, unsigned int i, unsigned int j, destination d);
+bool is_shortest_valid_path(matrix tsp, unsigned int origin, unsigned int town, destination d);
 
 /*
  * Fonction qui trouve et renvoie la distance entre deux villes @a et @b
