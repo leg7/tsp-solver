@@ -21,10 +21,7 @@ bool is_valid_path(matrix tsp, size_t start, size_t end)
 		end         = temp;
 	}
 
-	if (tsp.data[start][end-start-1].visited == false)
-		return true;
-	else
-		return false;
+	return (tsp.data[start][end-start-1].visited == false);
 }
 
 /* testé ok */

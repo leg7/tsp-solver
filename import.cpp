@@ -31,6 +31,7 @@ size_t get_tsp_size(std::string filename)
 		}
 		return std::stoi(word);
 	}
+
 	return 0;
 }
 
@@ -52,6 +53,7 @@ std::ifstream go_to(std::string filename, std::string target, size_t n)
 		for (;n > 0 ; --n)
 			std::getline(file,trash);
 	}
+
 	return file;
 }
 
@@ -150,6 +152,7 @@ bool find_target(std::string filename, std::string target)
 	else
 		std::cout << "Erreur : le fichier " << filename
 			<< "n'as pas pu être lu" << std::endl;
+
 	return false;
 }
 
