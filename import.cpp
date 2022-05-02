@@ -192,9 +192,9 @@ void get_destination_coord(destination &d, std::string target, std::string filen
 	if (file.good())
 	{
 		file = go_to(filename, target, d.id);
-		std::string trash;
+		std::string ignore;
 
-		file >> trash;
+		file >> ignore;
 		file >> d.coord.x;
 		file >> d.coord.y;
 	}
