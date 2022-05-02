@@ -4,6 +4,7 @@
 #include "calcul-itineraire.h"
 
 #include <iostream>
+#include <fstream>
 
 void init_itinerary(itinerary &it, std::string instance)
 {
@@ -27,6 +28,24 @@ void print_itinerary(matrix tsp, itinerary it)
 	std::cout << std::endl;
 }
 
+void export_itinerary(itinerary it, std::string filename)
+{
+	std::ofstream file(filename+".out");
+	if (file.good())
+	{
+		for (unsigned int w = 0; w < it.size; ++w)
+		{
+			file << it.data[w].p.x;
+			file << ' ';
+			file << it.data[w].p.y;
+			file << std::endl;
+		}
+	}
+	else
+		std::cout << "Erreur : le fichier " << filename
+			<< "n'as pas pu être lu" << std::endl;
+}
+
 int main()
 {
 	/* std::string instance = "tsp/att48.tsp"; */
@@ -43,6 +62,8 @@ int main()
 	make_greedy_itinerary(tsp,i);
 	import_itinerary_coord(i,instance);
 	print_itinerary(tsp,i);
+
+	export_itinerary(i,instance);
 
 	delete[] i.data;
 	delete_matrix(tsp);
