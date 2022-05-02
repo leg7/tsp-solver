@@ -77,14 +77,14 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 			file >> ignore;
 
 			/* on prend le premier numero */
-			std::string num;
-			file >> num;
+			std::string number;
+			file >> number;
 			point a;
-			a.x = std::stoi(num);
+			a.x = std::stoi(number);
 
 			/* le deuxième */
-			file >> num;
-			a.y = std::stoi(num);
+			file >> number;
+			a.y = std::stoi(number);
 
 			/* on passe a la ligne */
 			std::getline(file,ignore);
@@ -97,13 +97,13 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 					break;
 
 				/* on prend le premier numero */
-				file >> num;
+				file >> number;
 				point b;
-				b.x = std::stoi(num);
+				b.x = std::stoi(number);
 
 				/* le deuxième */
-				file >> num;
-				b.y = std::stoi(num);
+				file >> number;
+				b.y = std::stoi(number);
 
 				tsp.data[i][j].distance = distance(a, b);
 			}
@@ -125,9 +125,9 @@ void import_tsp_matrix(matrix &tsp, std::string filename)
 		{
 			for (size_t j = 0; j < x; ++j)
 			{
-				std::string num;
-				file >> num;
-				tsp.data[i][j].distance = std::stoi(num);
+				std::string number;
+				file >> number;
+				tsp.data[i][j].distance = std::stoi(number);
 			}
 			--x;
 		}
