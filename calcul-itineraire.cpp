@@ -8,7 +8,7 @@
 /* testé ok */
 bool is_valid_path(matrix tsp, size_t origin, size_t town)
 {
-	if (town > tsp.n or town < 0 or origin > tsp.n or town < 0)
+	if (town > tsp.n or origin > tsp.n)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
 	if (origin == town)
@@ -38,7 +38,7 @@ bool is_shortest_valid_path(matrix tsp, size_t origin, size_t town, destination 
 /* testé ok */
 double get_distance(matrix tsp, size_t a, size_t b)
 {
-	if (a > tsp.n or a < 0 or b > tsp.n or b < 0)
+	if (a > tsp.n or b > tsp.n)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
 	if (b == a)
@@ -56,7 +56,7 @@ double get_distance(matrix tsp, size_t a, size_t b)
 /* testé ok */
 void mark_visited(matrix &tsp, size_t town)
 {
-	if (town > tsp.n or town < 0)
+	if (town > tsp.n)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
 	for (size_t j = 0; j < tsp.n - town; ++j)
@@ -79,7 +79,7 @@ void mark_visited(matrix &tsp, size_t town)
 /* testé ok */
 destination get_greedy_destination(matrix &tsp, size_t origin)
 {
-	if (origin > tsp.n or origin < 0)
+	if (origin > tsp.n)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
 	destination d;
