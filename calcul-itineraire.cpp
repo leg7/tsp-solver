@@ -123,7 +123,7 @@ void update_itinerary(itinerary &it, matrix tsp)
 
 itinerary two_opt_swap(itinerary it, size_t a, size_t b, matrix tsp)
 {
-	if (a == b)
+	if (a == b or a >= it.size or b >= it.size)
 		throw std::invalid_argument("ta mère");
 
 	itinerary swapped;
@@ -177,8 +177,8 @@ void two_opt_optimize(itinerary &it, matrix tsp)
 		improved = false;
 
 		start_over:
-		for (size_t i = 0; i <= it.size - 1; ++i)
-			for (size_t j = i + 1; j <= it.size; ++j)
+		for (size_t i = 0; i < it.size - 1; ++i)
+			for (size_t j = i + 1; j < it.size; ++j)
 			{
 				optimized = two_opt_swap(it, i, j, tsp);
 
