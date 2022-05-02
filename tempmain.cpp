@@ -28,6 +28,7 @@ void print_itinerary(itinerary it)
 	std::cout << std::endl;
 }
 
+
 void export_itinerary(itinerary it, std::string filename)
 {
 	std::ofstream file(filename+".out");
@@ -58,7 +59,6 @@ int main()
 
 	itinerary i;
 	init_itinerary(i,instance);
-	print_itinerary(i);
 
 	make_greedy_itinerary(tsp,i);
 	print_itinerary(i);
