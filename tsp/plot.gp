@@ -12,10 +12,10 @@ set xtics tc rgb "white"
 set ytics tc rgb "white"
 
 # Labels
-set xlabel "X" tc rgb "green"
-set ylabel "test" tc rgb "green" rotate by 90
+set xlabel "X" tc rgb "purple"
+set ylabel "Y" tc rgb "purple" rotate by 90
 
 # Key
 set key tc rgb "purple"
 
-plot "bayg29.tsp.out" lc rgb "white" w lp 7
+plot "bayg29.tsp.out" lc rgb "white" lt 7 ps 2 w lp
