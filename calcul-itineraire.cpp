@@ -44,29 +44,6 @@ bool is_valid_path(matrix tsp, size_t start, size_t end)
 }
 
 /* testé ok */
-destination get_greedy_destination(matrix &tsp, size_t start)
-{
-	if (start > tsp.size)
-		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
-
-	destination d;
-	d.distance = 1000000000;
-
-	for (size_t i = 0; i <= tsp.size; ++i)
-	{
-		if (is_valid_path(tsp, start, i) and
-		    get_distance(tsp, start, i) < d.distance and
-		    get_distance(tsp, start, i) > 0)
-		{
-			d.distance = get_distance(tsp, start, i);
-			d.id = i;
-		}
-	}
-
-	return d;
-}
-
-/* testé ok */
 void mark_visited(matrix &tsp, size_t city)
 {
 	if (city > tsp.size)
@@ -87,6 +64,29 @@ void mark_visited(matrix &tsp, size_t city)
 			++j;
 		}
 	}
+}
+
+/* testé ok */
+destination get_greedy_destination(matrix &tsp, size_t start)
+{
+	if (start > tsp.size)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
+	destination d;
+	d.distance = 1000000000;
+
+	for (size_t i = 0; i <= tsp.size; ++i)
+	{
+		if (is_valid_path(tsp, start, i) and
+		    get_distance(tsp, start, i) < d.distance and
+		    get_distance(tsp, start, i) > 0)
+		{
+			d.distance = get_distance(tsp, start, i);
+			d.id = i;
+		}
+	}
+
+	return d;
 }
 
 /* testé ok */

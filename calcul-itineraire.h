@@ -42,18 +42,18 @@ double get_distance(matrix tsp, size_t start, size_t end);
 bool is_valid_path(matrix tsp, size_t start, size_t end);
 
 /*
+ * Marque une ville comme visité dans la matrice d'adjacence @tsp pour ne
+ * pas repasser par cette ville ulterieurement
+ */
+void mark_visited(matrix &tsp, size_t city);
+
+/*
  * Cette fonction retourne la destination la plus proche de la ville passé en
  * paramètre @line dans la matrice d'adjacence @tsp. De plus les status
  * des points de la destination trouvés sont mis a jour pour ne pas revenir
  * sur ceux-cis plus tard.
  */
 destination get_greedy_destination(matrix &tsp, size_t start);
-
-/*
- * Marque une ville comme visité dans la matrice d'adjacence @tsp pour ne
- * pas repasser par cette ville ulterieurement
- */
-void mark_visited(matrix &tsp, size_t city);
 
 /*
  * Cette procedure calcule un itineraire de manière gloutonne grâce a la
