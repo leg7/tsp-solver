@@ -19,7 +19,7 @@ void init_itinerary(itinerary &it, std::string instance)
 
 void print_itinerary(itinerary it)
 {
-	std::cout << "L'itineraire serait d'une longeure de " << it.length
+	std::cout << "L'itineraire serait d'une longueur de " << it.length
 		<< " : \n\n";
 
 	for (size_t k = 0; k < it.size; ++k)
