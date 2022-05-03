@@ -5,11 +5,27 @@
 #include <iostream>
 #include <stdexcept>
 
+/* testé ok */
 void swap(auto &a, auto &b)
 {
 	auto temp = a;
 	a = b;
 	b = temp;
+}
+
+/* testé ok */
+double get_distance(matrix tsp, size_t start, size_t end)
+{
+	if (start > tsp.size or end > tsp.size)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
+	if (start == end)
+		return 0;
+
+	if (start > end)
+		swap(start, end);
+
+	return tsp.data[start][end-start-1].distance;
 }
 
 /* testé ok */
@@ -28,26 +44,26 @@ bool is_valid_path(matrix tsp, size_t start, size_t end)
 }
 
 /* testé ok */
-bool is_shortest_valid_path(matrix tsp, size_t start, size_t end, destination d)
+destination get_greedy_destination(matrix &tsp, size_t start)
 {
-	return (is_valid_path(tsp, start, end) and
-		get_distance(tsp, start, end) < d.distance and
-		get_distance(tsp, start, end) > 0);
-}
-
-/* testé ok */
-double get_distance(matrix tsp, size_t start, size_t end)
-{
-	if (start > tsp.size or end > tsp.size)
+	if (start > tsp.size)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
-	if (start == end)
-		return 0;
+	destination d;
+	d.distance = 1000000000;
 
-	if (start > end)
-		swap(start, end);
+	for (size_t i = 0; i <= tsp.size; ++i)
+	{
+		if (is_valid_path(tsp, start, i) and
+		    get_distance(tsp, start, i) < d.distance and
+		    get_distance(tsp, start, i) > 0)
+		{
+			d.distance = get_distance(tsp, start, i);
+			d.id = i;
+		}
+	}
 
-	return tsp.data[start][end-start-1].distance;
+	return d;
 }
 
 /* testé ok */
@@ -74,25 +90,6 @@ void mark_visited(matrix &tsp, size_t city)
 }
 
 /* testé ok */
-destination get_greedy_destination(matrix &tsp, size_t start)
-{
-	if (start > tsp.size)
-		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
-
-	destination d;
-	d.distance = 1000000000;
-
-	for (size_t i = 0; i <= tsp.size; ++i)
-		if (is_shortest_valid_path(tsp, start, i, d))
-		{
-			d.distance = get_distance(tsp, start, i);
-			d.id = i;
-		}
-
-	return d;
-}
-
-/* testé ok */
 void make_greedy_itinerary(matrix &tsp, itinerary &it)
 {
 	init_matrix_status(tsp);
@@ -105,7 +102,7 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 	}
 }
 
-void update_itinerary(itinerary &it, matrix tsp)
+void update_itinerary(matrix tsp, itinerary &it)
 {
 	it.data[0].distance = 0;
 	for (size_t k = 1; k < it.size; ++k)
@@ -116,7 +113,7 @@ void update_itinerary(itinerary &it, matrix tsp)
 		it.length += it.data[k].distance;
 }
 
-itinerary two_opt_swap(itinerary it, size_t a, size_t b, matrix tsp)
+itinerary two_opt_swap(matrix tsp, itinerary it, size_t a, size_t b)
 {
 	if (a == b or a >= it.size or b >= it.size)
 		throw std::invalid_argument("ta mère");
@@ -155,12 +152,12 @@ itinerary two_opt_swap(itinerary it, size_t a, size_t b, matrix tsp)
 		++i;
 	}
 
-	update_itinerary(swapped,tsp);
+	update_itinerary(tsp, swapped);
 
 	return swapped;
 }
 
-void two_opt_optimize(itinerary &it, matrix tsp)
+void two_opt_optimize(matrix tsp, itinerary &it)
 {
 	itinerary optimized;
 	optimized.size = it.size;
@@ -175,7 +172,7 @@ void two_opt_optimize(itinerary &it, matrix tsp)
 		for (size_t i = 0; i < it.size - 1; ++i)
 			for (size_t j = i + 1; j < it.size; ++j)
 			{
-				optimized = two_opt_swap(it, i, j, tsp);
+				optimized = two_opt_swap(tsp, it, i, j);
 
 				if (optimized.length < it.length)
 				{

@@ -49,25 +49,25 @@ void export_itinerary(itinerary it, std::string filename)
 
 int main()
 {
-	/* std::string instance = "tsp/att48.tsp"; */
-	std::string instance = "tsp/bayg29.tsp";
+	std::string instance = "tsp/att48.tsp";
+	/* std::string instance = "tsp/bayg29.tsp"; */
 
 	matrix tsp;
-	build_matrix(tsp,instance);
-	import_tsp(tsp,instance);
+	build_matrix(tsp, instance);
+	import_tsp(tsp, instance);
 	print_matrix_distance(tsp);
 
 	itinerary i;
-	init_itinerary(i,instance);
+	init_itinerary(i, instance);
 
-	make_greedy_itinerary(tsp,i);
+	make_greedy_itinerary(tsp, i);
 	print_itinerary(i);
 
-	two_opt_optimize(i,tsp);
+	two_opt_optimize(tsp, i);
 	print_itinerary(i);
 
-	import_itinerary_coord(i,instance);
-	export_itinerary(i,instance);
+	import_itinerary_coord(i, instance);
+	export_itinerary(i, instance);
 
 	delete[] i.data;
 	delete_matrix(tsp);
