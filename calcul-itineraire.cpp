@@ -5,6 +5,13 @@
 #include <iostream>
 #include <stdexcept>
 
+void swap(auto &a, auto &b)
+{
+	auto temp = a;
+	a = b;
+	b = temp;
+}
+
 /* testé ok */
 bool is_valid_path(matrix tsp, size_t start, size_t end)
 {
@@ -15,11 +22,7 @@ bool is_valid_path(matrix tsp, size_t start, size_t end)
 		return false;
 
 	if (start > end)
-	{
-		size_t temp = start;
-		start       = end;
-		end         = temp;
-	}
+		swap(start, end);
 
 	return (tsp.data[start][end-start-1].visited == false);
 }
@@ -42,11 +45,7 @@ double get_distance(matrix tsp, size_t start, size_t end)
 		return 0;
 
 	if (start > end)
-	{
-		double temp = start;
-		start = end;
-		end = temp;
-	}
+		swap(start, end);
 
 	return tsp.data[start][end-start-1].distance;
 }

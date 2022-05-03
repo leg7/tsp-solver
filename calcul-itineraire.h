@@ -23,6 +23,9 @@ struct itinerary
 	double      length; // La longeure de l'itineraire
 };
 
+/* echange a et b */
+void swap(auto &a, auto &b);
+
 /*
  * Fonction qui verifie si la trajet depuis la ville @start vers @end
  * est possible. Utilisé pour construire une solution sans repasser par
