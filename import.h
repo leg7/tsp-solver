@@ -18,7 +18,7 @@ size_t get_tsp_size(std::string filename);
  * @target est la position de départ.
  * @n est le nombre de lignes à sauter après être arriver à @target.
  */
-std::ifstream go_to(std::string filename, std::string target, size_t n);
+std::ifstream go_to_target(std::string filename, std::string target, size_t n);
 
 /*
  * Cette fonction retourne la distance entre deux points @a et @b

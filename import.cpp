@@ -36,7 +36,7 @@ size_t get_tsp_size(std::string filename)
 }
 
 /* testé ok */
-std::ifstream go_to(std::string filename, std::string target, size_t n)
+std::ifstream go_to_target(std::string filename, std::string target, size_t n)
 {
 	std::ifstream file(filename);
 	if (file.good())
@@ -74,7 +74,7 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 		for (size_t i = 0; i < tsp.size; ++i)
 		{
 			/* on se place au bonne endroit */
-			file = go_to(filename, "NODE_COORD_SECTION", i);
+			file = go_to_target(filename, "NODE_COORD_SECTION", i);
 			std::string ignore;
 			file >> ignore;
 
@@ -119,7 +119,7 @@ void import_tsp_matrix(matrix &tsp, std::string filename)
 	std::ifstream file(filename);
 	if (file.good())
 	{
-		file = go_to(filename, "EDGE_WEIGHT_SECTION", 0);
+		file = go_to_target(filename, "EDGE_WEIGHT_SECTION", 0);
 
 		/* on remplit la matrice d'adjacence */
 		size_t x = tsp.size;
@@ -194,7 +194,7 @@ void get_destination_coord(destination &d, std::string target, std::string filen
 	std::ifstream file(filename);
 	if (file.good())
 	{
-		file = go_to(filename, target, d.id);
+		file = go_to_target(filename, target, d.id);
 		std::string ignore;
 
 		file >> ignore;
