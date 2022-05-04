@@ -30,3 +30,5 @@ void update_itinerary(matrix tsp, itinerary &it);
 void print_itinerary(itinerary it);
 
 void export_itinerary(itinerary it, std::string filename);
+
+void export_append_itinerary(itinerary it, std::string filename);
