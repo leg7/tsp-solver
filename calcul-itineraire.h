@@ -2,26 +2,7 @@
 
 #include "matrix.h"
 #include "import.h"
-
-struct point
-{
-	double x,
-	       y;
-};
-
-struct destination
-{
-	size_t  id;         // Le numero de ville de la destination
-	point   coord;      // coordonnées du point
-	double  distance;   // La distance pour aller à cette ville
-};
-
-struct itinerary
-{
-	destination *data;  // Un tableau de destination (e.g un itineraire)
-	size_t      size;   // Le nombre de destinations de l'itineraire
-	double      length; // La longeure de l'itineraire
-};
+#include "itineraire.h"
 
 /* echange a et b */
 void swap(auto &a, auto &b);
@@ -63,9 +44,6 @@ destination get_greedy_destination(matrix &tsp, size_t start);
 void make_greedy_itinerary(matrix &tsp, itinerary &it);
 
 itinerary find_best_greedy_itinerary(matrix &tsp, std::string instance);
-
-/* Procedure qui mets a jour la distance totale d'un itineraire */
-void update_itinerary(matrix tsp, itinerary &it);
 
  /* Fonction qui retourne un itineraire optimisé par un échange 2-opt */
 itinerary two_opt_swap(matrix tsp, itinerary it, size_t a, size_t b);

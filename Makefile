@@ -2,12 +2,12 @@
 
 include config.mk
 
-SRC = matrix.cpp import.cpp tempmain.cpp calcul-itineraire.cpp
+SRC = matrix.cpp import.cpp calcul-itineraire.cpp itineraire.cpp voyage.cpp
 OBJ = ${SRC:.cpp=.o}
 
 all: voyage
 
-${OBJ}: matrix.h import.h calcul-itineraire.h config.mk
+${OBJ}: matrix.h import.h calcul-itineraire.h itineraire.h config.mk
 
 voyage: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}

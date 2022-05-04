@@ -1,6 +1,7 @@
-#include "import.h"
 #include "matrix.h"
+#include "import.h"
 #include "calcul-itineraire.h"
+#include "itineraire.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -130,17 +131,6 @@ itinerary find_best_greedy_itinerary(matrix &tsp, std::string instance)
 	}
 
 	return best;
-}
-
-void update_itinerary(matrix tsp, itinerary &it)
-{
-	it.data[0].distance = 0;
-	for (size_t k = 1; k < it.size; ++k)
-		it.data[k].distance = get_distance(tsp, it.data[k-1].id , it.data[k].id);
-
-	it.length = 0;
-	for (size_t k = 0; k < it.size; ++k)
-		it.length += it.data[k].distance;
 }
 
 itinerary two_opt_swap(matrix tsp, itinerary it, size_t a, size_t b)
