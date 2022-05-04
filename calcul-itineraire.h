@@ -62,6 +62,8 @@ destination get_greedy_destination(matrix &tsp, size_t start);
  */
 void make_greedy_itinerary(matrix &tsp, itinerary &it);
 
+itinerary find_best_greedy_itinerary(matrix &tsp, std::string instance);
+
 /* Procedure qui mets a jour la distance totale d'un itineraire */
 void update_itinerary(matrix tsp, itinerary &it);
 

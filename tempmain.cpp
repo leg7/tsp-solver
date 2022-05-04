@@ -49,6 +49,14 @@ void export_itinerary(itinerary it, std::string filename)
 			<< "n'as pas pu être lu" << std::endl;
 }
 
+/* void export_append_itinerary(itinerary it, std::string filename) */
+/* { */
+/* 	std::ofstream file(filename+".out", std::ios::app); */
+/* 	if (file.good()) */
+/* 	{ */
+/* 		while */
+/* } */
+
 int main()
 {
 	/* std::string instance = "tsp/att48.tsp"; */
@@ -57,11 +65,11 @@ int main()
 	matrix tsp;
 	build_matrix(tsp, instance);
 	import_tsp(tsp, instance);
+	/* print_matrix_distance(tsp); */
 
 	itinerary i;
 
-	init_itinerary(i, 0, instance);
-	make_greedy_itinerary(tsp, i);
+	i = find_best_greedy_itinerary(tsp, instance);
 	print_itinerary(i);
 
 	two_opt_optimize(tsp, i);

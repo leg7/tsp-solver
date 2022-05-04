@@ -109,6 +109,29 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 	update_itinerary(tsp, it);
 }
 
+/* testé ok */
+itinerary find_best_greedy_itinerary(matrix &tsp, std::string instance)
+{
+	itinerary best;
+
+	init_itinerary(best, 0, instance);
+	make_greedy_itinerary(tsp,best);
+	print_itinerary(best);
+
+	for (size_t i = 1; i < tsp.size + 1; ++i)
+	{
+		itinerary temp;
+		init_itinerary(temp, i, instance);
+		make_greedy_itinerary(tsp, temp);
+		/* append_itinary() */
+
+		if (temp.length < best.length)
+			best = temp;
+	}
+
+	return best;
+}
+
 void update_itinerary(matrix tsp, itinerary &it)
 {
 	it.data[0].distance = 0;
