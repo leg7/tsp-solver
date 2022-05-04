@@ -60,11 +60,24 @@ void export_itinerary(itinerary it, std::string filename)
 			<< "n'as pas pu être lu" << std::endl;
 }
 
-/* void export_append_itinerary(itinerary it, std::string filename) */
-/* { */
-/* 	std::ofstream file(filename+".out", std::ios::app); */
-/* 	if (file.good()) */
-/* 	{ */
-/* 		while */
-/* } */
-
+void export_append_itinerary(itinerary it, std::string filename)
+{
+	std::ofstream file(filename+".out", std::ios::app);
+	if (file.good())
+	{
+		file << std::endl
+			<< std::endl;
+		for (size_t i = 0; i < it.size; ++i)
+		{
+			file << it.data[i].coord.x
+				<< ' '
+				<< it.data[i].coord.y
+				<< ' '
+				<< it.data[i].id + 1
+				<< std::endl;
+		}
+	}
+	else
+		std::cout << "Erreur : le fichier " << filename
+			<< "n'as pas pu être lu" << std::endl;
+}
