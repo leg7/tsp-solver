@@ -20,9 +20,6 @@ int main()
 	i = find_best_optimized_greedy_itinerary(tsp, instance);
 	print_itinerary(i);
 
-	import_itinerary_coord(i, instance);
-	export_itinerary(i, instance);
-
 	delete[] i.data;
 	delete_matrix(tsp);
 
