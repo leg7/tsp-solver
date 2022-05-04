@@ -43,10 +43,10 @@ destination get_greedy_destination(matrix &tsp, size_t start);
  */
 void make_greedy_itinerary(matrix &tsp, itinerary &it);
 
-itinerary find_best_greedy_itinerary(matrix &tsp, std::string instance);
-
  /* Fonction qui retourne un itineraire optimisé par un échange 2-opt */
 itinerary two_opt_swap(matrix tsp, itinerary it, size_t a, size_t b);
 
 /* optimize un itineraire au maximum avec des echanges 2-opt */
 void two_opt_optimize(matrix tsp, itinerary &it);
+
+itinerary find_best_optimized_greedy_itinerary(matrix &tsp, std::string instance);

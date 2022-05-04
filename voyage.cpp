@@ -17,10 +17,7 @@ int main()
 
 	itinerary i;
 
-	i = find_best_greedy_itinerary(tsp, instance);
-	print_itinerary(i);
-
-	two_opt_optimize(tsp, i);
+	i = find_best_optimized_greedy_itinerary(tsp, instance);
 	print_itinerary(i);
 
 	import_itinerary_coord(i, instance);

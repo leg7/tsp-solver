@@ -110,29 +110,6 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 	update_itinerary(tsp, it);
 }
 
-/* testé ok */
-itinerary find_best_greedy_itinerary(matrix &tsp, std::string instance)
-{
-	itinerary best;
-
-	init_itinerary(best, 0, instance);
-	make_greedy_itinerary(tsp,best);
-	print_itinerary(best);
-
-	for (size_t i = 1; i < tsp.size + 1; ++i)
-	{
-		itinerary temp;
-		init_itinerary(temp, i, instance);
-		make_greedy_itinerary(tsp, temp);
-		/* append_itinary() */
-
-		if (temp.length < best.length)
-			best = temp;
-	}
-
-	return best;
-}
-
 itinerary two_opt_swap(matrix tsp, itinerary it, size_t a, size_t b)
 {
 	if (a == b or a >= it.size or b >= it.size)
@@ -203,3 +180,33 @@ void two_opt_optimize(matrix tsp, itinerary &it)
 			}
 	}
 }
+
+/* testé ok */
+itinerary find_best_optimized_greedy_itinerary(matrix &tsp, std::string instance)
+{
+	itinerary best;
+	init_itinerary(best, 0, instance);
+	make_greedy_itinerary(tsp, best);
+	/* append_itinerary */
+
+	two_opt_optimize(tsp, best);
+	/* append_itinerary */
+
+	for (size_t i = 1; i < tsp.size + 1; ++i)
+	{
+		itinerary temp;
+		init_itinerary(temp, i, instance);
+		make_greedy_itinerary(tsp, temp);
+		/* append_itinerary */
+
+		two_opt_optimize(tsp, temp);
+		/* append_itinerary */
+
+		if (temp.length < best.length)
+			best = temp;
+	}
+
+	return best;
+	/* append_itinerary */
+}
+
