@@ -94,12 +94,19 @@ void make_greedy_itinerary(matrix &tsp, itinerary &it)
 {
 	init_matrix_status(tsp);
 
-	for (size_t k = 1; k < it.size; ++k)
+	for (size_t k = 1; k < it.size - 1; ++k)
 	{
 		it.data[k] = get_greedy_destination(tsp, it.data[k-1].id);
 		it.length += it.data[k].distance;
 		mark_visited(tsp, it.data[k-1].id);
 	}
+
+	/* Pour terminer le cycle hamiltonien */
+	size_t end = it.size - 1;
+	it.data[end].id = it.data[0].id;
+	it.data[end].distance = get_distance(tsp, it.data[end-1].id, it.data[end].id);
+
+	update_itinerary(tsp, it);
 }
 
 void update_itinerary(matrix tsp, itinerary &it)
@@ -169,8 +176,8 @@ void two_opt_optimize(matrix tsp, itinerary &it)
 		improved = false;
 
 		start_over:
-		for (size_t i = 0; i < it.size - 1; ++i)
-			for (size_t j = i + 1; j < it.size; ++j)
+		for (size_t i = 1; i < it.size - 2; ++i)
+			for (size_t j = i + 1; j < it.size - 1; ++j)
 			{
 				optimized = two_opt_swap(tsp, it, i, j);
 

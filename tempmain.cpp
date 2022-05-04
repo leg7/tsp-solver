@@ -6,15 +6,16 @@
 #include <iostream>
 #include <fstream>
 
-void init_itinerary(itinerary &it, std::string instance)
+void init_itinerary(itinerary &it, size_t start, std::string instance)
 {
 	it.length = 0;
 
-	it.size = get_tsp_size(instance);
+	/* + 1 parcequ'il faut revenir au point de depart */
+	it.size = get_tsp_size(instance) + 1;
 
 	it.data = new destination[it.size];
 	it.data[0].distance = 0;
-	it.data[0].id      = 0;
+	it.data[0].id       = start;
 }
 
 void print_itinerary(itinerary it)
@@ -27,7 +28,6 @@ void print_itinerary(itinerary it)
 
 	std::cout << std::endl;
 }
-
 
 void export_itinerary(itinerary it, std::string filename)
 {
@@ -49,17 +49,16 @@ void export_itinerary(itinerary it, std::string filename)
 
 int main()
 {
-	std::string instance = "tsp/att48.tsp";
-	/* std::string instance = "tsp/bayg29.tsp"; */
+	/* std::string instance = "tsp/att48.tsp"; */
+	std::string instance = "tsp/bayg29.tsp";
 
 	matrix tsp;
 	build_matrix(tsp, instance);
 	import_tsp(tsp, instance);
-	print_matrix_distance(tsp);
 
 	itinerary i;
-	init_itinerary(i, instance);
 
+	init_itinerary(i, 0, instance);
 	make_greedy_itinerary(tsp, i);
 	print_itinerary(i);
 
