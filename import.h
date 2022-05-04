@@ -20,6 +20,9 @@ size_t get_tsp_size(std::string filename);
  */
 std::ifstream go_to_target(std::string filename, std::string target, size_t n);
 
+/* Fonction qui renvoie si @target est dans le fichier @filename */
+bool find_target(std::string filename, std::string target);
+
 /*
  * Cette fonction retourne la distance entre deux points @a et @b
  * Elle sert a creer une matrice d'adjacence
@@ -39,11 +42,6 @@ void import_tsp_cord(matrix &tsp, std::string filename);
 void import_tsp_matrix(matrix &tsp, std::string filename);
 
 /*
- * Fonction qui renvoie si @target est dans le fichier @filename
- */
-bool find_target(std::string filename, std::string target);
-
-/*
  * Procedure qui determine le format des données de l'instance tsp et appelle
  * la procedure de creation de matrice approprié.
  * Cette procedure depend de toutes les autres fonctions et procedure du
@@ -51,13 +49,8 @@ bool find_target(std::string filename, std::string target);
  */
 void import_tsp(matrix &tsp, std::string filename);
 
+/* Procedure qui remplit les coordonnées d'un point */
+void import_destination_coord(destination &d, std::string target, std::string filename);
 
-/*
- * Procedure qui trouve les coordonnées des points d'un itinéraire @it
- */
+/* Procedure qui trouve les coordonnées des points d'un itinéraire @it */
 void import_itinerary_coord(itinerary &it, std::string instance);
-
-/*
- * Procedure qui remplit les coordonnées d'un point
-*/
-void get_destination_coord(destination &d, std::string target, std::string filename);
