@@ -42,7 +42,7 @@ void print_itinerary(itinerary it)
 
 void export_itinerary(itinerary it, std::string filename)
 {
-	std::ofstream file(filename+".out");
+	std::ofstream file(filename+".dat");
 	if (file.good())
 	{
 		for (size_t w = 0; w < it.size; ++w)
@@ -62,7 +62,7 @@ void export_itinerary(itinerary it, std::string filename)
 
 void export_append_itinerary(itinerary it, std::string filename)
 {
-	std::ofstream file(filename+".out", std::ios::app);
+	std::ofstream file(filename+".dat", std::ios::app);
 	if (file.good())
 	{
 		file << std::endl
