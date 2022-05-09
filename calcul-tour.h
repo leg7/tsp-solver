@@ -49,4 +49,4 @@ tour two_opt_swap(matrix tsp, tour t, size_t a, size_t b);
 /* optimize un tour au maximum avec des echanges 2-opt */
 void two_opt_optimize(matrix tsp, tour &t);
 
-tour find_best_optimized_greedy_tour(matrix &tsp, std::string instance);
+void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instance);

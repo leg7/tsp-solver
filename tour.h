@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "matrix.h"
+
 struct point
 {
 	double x,
@@ -22,13 +24,23 @@ struct tour
 	double      length; // La longeur du tour
 };
 
+/* Maillon qui contient une iteration de la solution trouvé au tsp */
+struct iteration
+{
+	tour t;
+	iteration *next;
+};
+
+/* liste chaînée qui represente la solution au tsp, utile pour gnuplot */
+using solution = iteration*;
+
 void init_tour(tour &t, size_t start, std::string instance);
-
-/* Procedure qui mets a jour la distance totale d'un tour */
 void update_tour(matrix tsp, tour &t);
-
 void print_tour(tour t);
 
-void export_tour(tour t, std::string filename);
+void insert_to_solution(solution &s, tour t);
+void append_to_solution(solution &s, tour t);
+void print_solution_result(solution s);
 
-void export_append_tour(tour t, std::string filename);
+void make_gnuplot_datafile(std::string filename);
+void build_gnuplot_datafile(solution s, std::string filename);

@@ -182,36 +182,37 @@ void two_opt_optimize(matrix tsp, tour &t)
 }
 
 /* testé ok */
-tour find_best_optimized_greedy_tour(matrix &tsp, std::string instance)
+void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instance)
 {
 	tour best;
 	init_tour(best, 0, instance);
-	make_greedy_tour(tsp, best);
 
-	import_tour_coord(best,instance);
-	export_tour(best,instance);
+	make_greedy_tour(tsp, best);
+	import_tour_coord(best, instance);
+	append_to_solution(s, best);
 
 	two_opt_optimize(tsp, best);
-
-	import_tour_coord(best,instance);
-	export_append_tour(best,instance);
+	import_tour_coord(best, instance);
+	append_to_solution(s, best);
 
 	for (size_t i = 1; i < tsp.size + 1; ++i)
 	{
 		tour temp;
 		init_tour(temp, i, instance);
+
 		make_greedy_tour(tsp, temp);
+		import_tour_coord(temp, instance);
+		append_to_solution(s, temp);
 
 		two_opt_optimize(tsp, temp);
+		import_tour_coord(temp, instance);
+		append_to_solution(s, temp);
 
 		if (temp.length < best.length)
-		{
 			best = temp;
-			import_tour_coord(best,instance);
-			export_append_tour(best,instance);
-		}
 	}
 
-	return best;
+	import_tour_coord(best, instance);
+	append_to_solution(s, best);
 }
 

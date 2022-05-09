@@ -32,19 +32,18 @@ int main(int argc, char *argv[])
 
 	/* bool file_ok = false; */
 
-
 	std::string instance = "tsp/att48.tsp";
 	/* std::string instance = "tsp/bayg29.tsp"; */
 
 	matrix tsp;
 	build_matrix(tsp, instance);
 	import_tsp(tsp, instance);
-	/* print_matrix_distance(tsp); */
 
-	tour t;
+	solution s = nullptr;
+	find_greedy_optimized_solution(s, tsp, instance);
+	print_solution_result(s);
 
-	t = find_best_optimized_greedy_tour(tsp, instance);
-	print_tour(t);
+	delete_matrix(tsp);
 
 	char gnuplot;
 	std::cout << "\tVoulez-vous créer un .gif des résultats ? (y/N) : ";
@@ -57,6 +56,7 @@ int main(int argc, char *argv[])
 	{
 		std::cout << "\tCréation du fichier .gif..." << std::endl;
 		std::string com = "gnuplot -e \"filename = \\\"./" + instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
+		build_gnuplot_datafile(s, instance);
 		system(com.c_str());
 		break;
 	}
@@ -67,9 +67,6 @@ int main(int argc, char *argv[])
 	default:
 		std::cout << "\tJe n'ai pas compris !" << std::endl;
 	}
-
-	delete[] t.data;
-	delete_matrix(tsp);
 
 	return 0;
 }

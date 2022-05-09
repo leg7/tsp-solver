@@ -40,44 +40,77 @@ void print_tour(tour t)
 	std::cout << std::endl;
 }
 
-void export_tour(tour t, std::string filename)
+void insert_to_solution(solution &s, tour t)
+{
+	solution temp = new iteration;
+	temp->t = t;
+	temp->next = s;
+	s = temp;
+}
+
+void append_to_solution(solution &s, tour t)
+{
+	if (s == nullptr)
+		insert_to_solution(s, t);
+	else
+		append_to_solution(s->next, t);
+}
+
+void print_solution_result(solution s)
+{
+	if (s == nullptr)
+		return;
+
+	if (s->next == nullptr)
+		print_tour(s->t);
+	else
+		print_solution_result(s->next);
+}
+
+void make_gnuplot_datafile(std::string filename)
 {
 	std::ofstream file(filename+".dat");
+
 	if (file.good())
-	{
-		for (size_t j = 1; j < t.size; ++j)
-		{
-			for (size_t k = 0; k < j; ++k)
-			{
-				file << t.data[k].coord.x
-					<< ' '
-					<< t.data[k].coord.y
-					<< ' '
-					<< t.data[k].id + 1
-					<< std::endl;
-			}
-			file << std::endl << std::endl;
-		}
-	}
+		file << "";
 	else
 		std::cout << "Erreur : le fichier " << filename
 			<< "n'as pas pu être lu" << std::endl;
 }
 
-void export_append_tour(tour t, std::string filename)
+void build_gnuplot_datafile(solution s, std::string filename)
 {
+	make_gnuplot_datafile(filename);
 	std::ofstream file(filename+".dat", std::ios::app);
 	if (file.good())
 	{
-		file << std::endl << std::endl;
-		for (size_t k = 0; k < t.size; ++k)
+		for (size_t i = 1; i < s->t.size; ++i)
 		{
-			file << t.data[k].coord.x
-				<< ' '
-				<< t.data[k].coord.y
-				<< ' '
-				<< t.data[k].id + 1
-				<< std::endl;
+			for (size_t j = 0; j < i; ++j)
+				file << s->t.data[j].coord.x
+					<< ' '
+					<< s->t.data[j].coord.y
+					<< ' '
+					<< s->t.data[j].id + 1
+					<< std::endl;
+
+			file << std::endl << std::endl;
+		}
+		s = s->next;
+
+		while (s != nullptr)
+		{
+			file << std::endl << std::endl;
+
+			for (size_t k = 0; k < s->t.size; ++k)
+				file << s->t.data[k].coord.x
+					<< ' '
+					<< s->t.data[k].coord.y
+					<< ' '
+					<< s->t.data[k].id + 1
+					<< std::endl;
+
+			s = s->next;
 		}
 	}
 	else
