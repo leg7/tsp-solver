@@ -45,14 +45,18 @@ void export_itinerary(itinerary it, std::string filename)
 	std::ofstream file(filename+".dat");
 	if (file.good())
 	{
-		for (size_t w = 0; w < it.size; ++w)
+		for (size_t j = 1; j < it.size; ++j)
 		{
-			file << it.data[w].coord.x
-				<< ' '
-				<< it.data[w].coord.y
-				<< ' '
-				<< it.data[w].id + 1
-				<< std::endl;
+			for (size_t k = 0; k < j; ++k)
+			{
+				file << it.data[k].coord.x
+					<< ' '
+					<< it.data[k].coord.y
+					<< ' '
+					<< it.data[k].id + 1
+					<< std::endl;
+			}
+			file << std::endl << std::endl;
 		}
 	}
 	else
@@ -65,15 +69,14 @@ void export_append_itinerary(itinerary it, std::string filename)
 	std::ofstream file(filename+".dat", std::ios::app);
 	if (file.good())
 	{
-		file << std::endl
-			<< std::endl;
-		for (size_t i = 0; i < it.size; ++i)
+		file << std::endl << std::endl;
+		for (size_t k = 0; k < it.size; ++k)
 		{
-			file << it.data[i].coord.x
+			file << it.data[k].coord.x
 				<< ' '
-				<< it.data[i].coord.y
+				<< it.data[k].coord.y
 				<< ' '
-				<< it.data[i].id + 1
+				<< it.data[k].id + 1
 				<< std::endl;
 		}
 	}

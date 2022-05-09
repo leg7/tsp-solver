@@ -195,26 +195,23 @@ itinerary find_best_optimized_greedy_itinerary(matrix &tsp, std::string instance
 
 	import_itinerary_coord(best,instance);
 	export_append_itinerary(best,instance);
-	
+
 	for (size_t i = 1; i < tsp.size + 1; ++i)
 	{
 		itinerary temp;
 		init_itinerary(temp, i, instance);
 		make_greedy_itinerary(tsp, temp);
 
-		import_itinerary_coord(temp,instance);
-		export_append_itinerary(temp,instance);
-
 		two_opt_optimize(tsp, temp);
 
-		import_itinerary_coord(temp,instance);
-		export_append_itinerary(temp,instance);
-
 		if (temp.length < best.length)
+		{
 			best = temp;
+			import_itinerary_coord(best,instance);
+			export_append_itinerary(best,instance);
+		}
 	}
 
 	return best;
-	export_append_itinerary(best,instance);
 }
 
