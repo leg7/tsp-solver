@@ -2,9 +2,8 @@
 # la variable filename avec le nom du fichier, par exemple:
 # gnuplot -e "filename = \"bayg29.tsp.out\"" plot.gp
 
-set term gif animate delay 10 size 1200,800
+set term gif animate delay 15 size 1200,800
 set output filename . ".gif"
-# set output ".gif"
 
 stats filename name "A"
 set xrange [A_min_x - 0.05*A_max_x:A_max_x + 0.05*A_max_x]
