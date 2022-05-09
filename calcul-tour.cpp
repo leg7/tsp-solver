@@ -1,7 +1,7 @@
 #include "matrix.h"
 #include "import.h"
-#include "calcul-itineraire.h"
-#include "itineraire.h"
+#include "calcul-tour.h"
+#include "tour.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -91,39 +91,39 @@ destination get_greedy_destination(matrix &tsp, size_t start)
 }
 
 /* testé ok */
-void make_greedy_itinerary(matrix &tsp, itinerary &it)
+void make_greedy_tour(matrix &tsp, tour &t)
 {
 	init_matrix_status(tsp);
 
-	for (size_t k = 1; k < it.size - 1; ++k)
+	for (size_t k = 1; k < t.size - 1; ++k)
 	{
-		it.data[k] = get_greedy_destination(tsp, it.data[k-1].id);
-		it.length += it.data[k].distance;
-		mark_visited(tsp, it.data[k-1].id);
+		t.data[k] = get_greedy_destination(tsp, t.data[k-1].id);
+		t.length += t.data[k].distance;
+		mark_visited(tsp, t.data[k-1].id);
 	}
 
 	/* Pour terminer le cycle hamiltonien */
-	size_t end = it.size - 1;
-	it.data[end].id = it.data[0].id;
-	it.data[end].distance = get_distance(tsp, it.data[end-1].id, it.data[end].id);
+	size_t end = t.size - 1;
+	t.data[end].id = t.data[0].id;
+	t.data[end].distance = get_distance(tsp, t.data[end-1].id, t.data[end].id);
 
-	update_itinerary(tsp, it);
+	update_tour(tsp, t);
 }
 
-itinerary two_opt_swap(matrix tsp, itinerary it, size_t a, size_t b)
+tour two_opt_swap(matrix tsp, tour t, size_t a, size_t b)
 {
-	if (a == b or a >= it.size or b >= it.size)
+	if (a == b or a >= t.size or b >= t.size)
 		throw std::invalid_argument("ta mère");
 
-	itinerary swapped;
-	swapped.size = it.size;
+	tour swapped;
+	swapped.size = t.size;
 	swapped.data = new destination[swapped.size];
 
 	/* On met le debut dans l'ordre */
 	size_t i = 0;
 	while (i < a)
 	{
-		swapped.data[i].id = it.data[i].id;
+		swapped.data[i].id = t.data[i].id;
 		++i;
 	}
 
@@ -131,11 +131,11 @@ itinerary two_opt_swap(matrix tsp, itinerary it, size_t a, size_t b)
 	size_t j = b;
 	while (j >= a)
 	{
-		swapped.data[i].id = it.data[j].id;
+		swapped.data[i].id = t.data[j].id;
 
 		if (j == 0)
 		{
-			++i; // cas particulier si l'on inverse l'itineraire
+			++i; // cas particulier si l'on inverse le tour
 			break;
 		}
 		--j;
@@ -145,20 +145,20 @@ itinerary two_opt_swap(matrix tsp, itinerary it, size_t a, size_t b)
 	/* Puis on mets le reste */
 	while (i < swapped.size)
 	{
-		swapped.data[i].id = it.data[i].id;
+		swapped.data[i].id = t.data[i].id;
 		++i;
 	}
 
-	update_itinerary(tsp, swapped);
+	update_tour(tsp, swapped);
 
 	return swapped;
 }
 
-void two_opt_optimize(matrix tsp, itinerary &it)
+void two_opt_optimize(matrix tsp, tour &t)
 {
-	itinerary optimized;
-	optimized.size = it.size;
-	optimized.data = new destination[it.size];
+	tour optimized;
+	optimized.size = t.size;
+	optimized.data = new destination[t.size];
 
 	bool improved = true;
 	while (improved)
@@ -166,14 +166,14 @@ void two_opt_optimize(matrix tsp, itinerary &it)
 		improved = false;
 
 		start_over:
-		for (size_t i = 1; i < it.size - 2; ++i)
-			for (size_t j = i + 1; j < it.size - 1; ++j)
+		for (size_t i = 1; i < t.size - 2; ++i)
+			for (size_t j = i + 1; j < t.size - 1; ++j)
 			{
-				optimized = two_opt_swap(tsp, it, i, j);
+				optimized = two_opt_swap(tsp, t, i, j);
 
-				if (optimized.length < it.length)
+				if (optimized.length < t.length)
 				{
-					it = optimized;
+					t = optimized;
 					improved = true;
 					goto start_over;
 				}
@@ -182,33 +182,33 @@ void two_opt_optimize(matrix tsp, itinerary &it)
 }
 
 /* testé ok */
-itinerary find_best_optimized_greedy_itinerary(matrix &tsp, std::string instance)
+tour find_best_optimized_greedy_tour(matrix &tsp, std::string instance)
 {
-	itinerary best;
-	init_itinerary(best, 0, instance);
-	make_greedy_itinerary(tsp, best);
+	tour best;
+	init_tour(best, 0, instance);
+	make_greedy_tour(tsp, best);
 
-	import_itinerary_coord(best,instance);
-	export_itinerary(best,instance);
+	import_tour_coord(best,instance);
+	export_tour(best,instance);
 
 	two_opt_optimize(tsp, best);
 
-	import_itinerary_coord(best,instance);
-	export_append_itinerary(best,instance);
+	import_tour_coord(best,instance);
+	export_append_tour(best,instance);
 
 	for (size_t i = 1; i < tsp.size + 1; ++i)
 	{
-		itinerary temp;
-		init_itinerary(temp, i, instance);
-		make_greedy_itinerary(tsp, temp);
+		tour temp;
+		init_tour(temp, i, instance);
+		make_greedy_tour(tsp, temp);
 
 		two_opt_optimize(tsp, temp);
 
 		if (temp.length < best.length)
 		{
 			best = temp;
-			import_itinerary_coord(best,instance);
-			export_append_itinerary(best,instance);
+			import_tour_coord(best,instance);
+			export_append_tour(best,instance);
 		}
 	}
 

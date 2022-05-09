@@ -1,6 +1,6 @@
 #include "import.h"
 #include "matrix.h"
-#include "calcul-itineraire.h"
+#include "calcul-tour.h"
 
 #include <iostream>
 #include <cmath>
@@ -186,17 +186,17 @@ void import_destination_coord(destination &d, std::string target, std::string fi
 	}
 }
 
-void import_itinerary_coord(itinerary &it, std::string filename)
+void import_tour_coord(tour &t, std::string filename)
 {
 	std::ifstream file(filename);
 	if (file.good())
 	{
 		if (find_target(filename, "NODE_COORD_SECTION"))
-			for (size_t i = 0; i < it.size; ++i)
-				import_destination_coord(it.data[i], "NODE_COORD_SECTION", filename);
+			for (size_t i = 0; i < t.size; ++i)
+				import_destination_coord(t.data[i], "NODE_COORD_SECTION", filename);
 		else
-			for (size_t i = 0; i < it.size; ++i)
-				import_destination_coord(it.data[i], "DISPLAY_DATA_SECTION", filename);
+			for (size_t i = 0; i < t.size; ++i)
+				import_destination_coord(t.data[i], "DISPLAY_DATA_SECTION", filename);
 	}
 	else
 		std::cout << "Erreur : le fichier " << filename

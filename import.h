@@ -1,7 +1,7 @@
 #pragma once
 
 #include "matrix.h"
-#include "calcul-itineraire.h"
+#include "calcul-tour.h"
 
 #include <string>
 
@@ -52,5 +52,5 @@ void import_tsp(matrix &tsp, std::string filename);
 /* Procedure qui remplit les coordonnées d'un point */
 void import_destination_coord(destination &d, std::string target, std::string filename);
 
-/* Procedure qui trouve les coordonnées des points d'un itinéraire @it */
-void import_itinerary_coord(itinerary &it, std::string instance);
+/* Procedure qui trouve les coordonnées des points d'un itinéraire @t */
+void import_tour_coord(tour &t, std::string instance);
