@@ -5,7 +5,7 @@ PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 
 # flags
-CPPFLAGS = -O3 -Wall -Wpedantic -Wextra -march=native -std=c++20
+CPPFLAGS = -O3 -Wall -Wpedantic -Wextra -march=native -std=c++20 -fdiagnostics-color=always
 LDFLAGS = -Wl,-O1 -Wl,--as-needed
 
 # compiler
