@@ -1,6 +1,6 @@
 #pragma once
 
-# include <string>
+#include <string>
 
 struct point
 {
@@ -19,7 +19,7 @@ struct tour
 {
 	destination *data;  // Un tableau de destination (e.g un tour)
 	size_t      size;   // Le nombre de destinations du tour
-	double      length; // La longeure du tour
+	double      length; // La longeur du tour
 };
 
 void init_tour(tour &t, size_t start, std::string instance);
