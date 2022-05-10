@@ -207,8 +207,6 @@ void two_opt_optimize(matrix tsp, tour &t)
 	}
 }
 
-
-
 /* testé ok */
 void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instance)
 {
@@ -243,4 +241,3 @@ void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instan
 	import_tour_coord(best, instance);
 	append_to_solution(s, best);
 }
-
