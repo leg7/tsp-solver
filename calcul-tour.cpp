@@ -107,7 +107,7 @@ void make_greedy_tour(matrix &tsp, tour &t)
 	t.data[end].id = t.data[0].id;
 	t.data[end].distance = get_distance(tsp, t.data[end-1].id, t.data[end].id);
 
-	update_tour(tsp, t);
+	update_tour(t, tsp);
 }
 
 void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
@@ -175,8 +175,7 @@ tour two_opt_swap(matrix tsp, tour t, size_t a, size_t b)
 		++i;
 	}
 
-	update_tour(tsp, swapped);
-
+	update_tour(swapped, tsp);
 	return swapped;
 }
 
