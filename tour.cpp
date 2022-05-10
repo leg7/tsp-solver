@@ -35,8 +35,14 @@ void print_tour(tour t)
 		<< " : \n\n";
 
 	for (size_t k = 0; k < t.size; ++k)
-		std::cout << "\t" << t.data[k].id + 1 << std::endl;
-
+	{
+		if (k % 10 == 0)
+			std::cout << "\n\n";
+		if (k != t.size - 1)
+			std::cout << "\t" << t.data[k].id + 1 << "\t==>";
+		else
+			std::cout << "\t" << t.data[k].id + 1 << "\n\n";
+	}
 	std::cout << std::endl;
 }
 
