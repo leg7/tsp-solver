@@ -31,7 +31,7 @@ void update_tour(matrix tsp, tour &t)
 
 void print_tour(tour t)
 {
-	std::cout << "Le tour serait d'une longueur de " << t.length
+	std::cout << "le tour serait d'une longueur de " << t.length
 		<< " : \n\n";
 
 	for (size_t k = 0; k < t.size; ++k)

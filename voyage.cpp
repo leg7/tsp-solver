@@ -13,8 +13,7 @@ int main(int argc, char *argv[])
 	std::string center = "\t\t\t\t\t\t\t\t\t\t";
 
 	std::string clear = "clear";
-	const char *command_clear = clear.c_str();
-	system(command_clear);
+	system(clear.c_str());
 
 	if (argc < 3)
 	{
@@ -98,33 +97,67 @@ int main(int argc, char *argv[])
 	import_tsp(tsp, instance);
 
 	solution s = nullptr;
-	// find_greedy_optimized_solution(s, tsp, instance);
-	// print_solution_result(s);
 
-	// delete_matrix(tsp);
+	if (glouton == true and two_opt == false)
+	{
+		find_greedy_solution(s, tsp, instance);
+		std::cout << "\nVoici le meilleur itinéraire glouton, ";
+	}
 
-	// char gnuplot;
-	// std::cout << "\tVoulez-vous créer un .gif des résultats ? (y/N) : ";
-	// std::cin >> gnuplot;
+	if (glouton == true and two_opt == true)
+	{
+		find_greedy_optimized_solution(s, tsp, instance);
+		std::cout << "\nVoici le meilleur itinéraire glouton avec une optimisation 2-opt, ";
+	}
 
-	// switch (gnuplot)
-	// {
-	// case 'y':
-	// case 'Y':
-	// {
-	// 	std::cout << "\tCréation du fichier .gif..." << std::endl;
-	// 	std::string com = "gnuplot -e \"filename = \\\"./" + instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
-	// 	build_gnuplot_datafile(s, instance);
-	// 	system(com.c_str());
-	// 	break;
-	// }
-	// case 'n':
-	// case 'N':
-	// 	std::cout << "\tLe fichier .gif ne sera pas créé" << std::endl;
-	// 	break;
-	// default:
-	// 	std::cout << "\tJe n'ai pas compris !" << std::endl;
-	// }
+	print_solution_result(s);
+
+	delete_matrix(tsp);
+
+	char gnuplot;
+	std::cout << "\tVoulez-vous créer un .gif des résultats ? (y/N) : ";
+	std::cin >> gnuplot;
+
+	switch (gnuplot)
+	{
+	case 'y':
+	case 'Y':
+	{
+		std::cout << "\tCréation du fichier .gif..." << std::endl;
+		std::string com = "gnuplot -e \"filename = \\\"./" + instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
+		build_gnuplot_datafile(s, instance);
+		system(com.c_str());
+
+		char affichage;
+		std::cout << "\tVoulez-vous afficher le fichier .gif ? (y/N) : ";
+		std::cin >> affichage;
+
+		switch (affichage)
+		{
+		case 'y':
+		case 'Y':
+		{
+			std::cout << "\tAffichage du fichier .gif..." << std::endl;
+			std::string com_open = "xdg-open " + instance + ".dat.gif 2>/dev/null";
+			system(com_open.c_str());
+			break;
+		}
+		case 'n':
+		case 'N':
+			std::cout <<"\tLe gif ne sera pas affiché." << std::endl;
+			break;
+		default:
+			std::cout << "\tJe n'ai pas compris !" << std::endl;
+		}
+		break;
+	}
+	case 'n':
+	case 'N':
+		std::cout << "\tLe fichier .gif ne sera pas créé" << std::endl;
+		break;
+	default:
+		std::cout << "\tJe n'ai pas compris !" << std::endl;
+	}
 
 	return 0;
 }
