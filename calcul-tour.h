@@ -43,6 +43,8 @@ destination get_greedy_destination(matrix &tsp, size_t start);
  */
 void make_greedy_tour(matrix &tsp, tour &t);
 
+void find_greedy_solution(solution &s, matrix &tsp, std::string instance);
+
  /* Fonction qui retourne un tour optimisé par un échange 2-opt */
 tour two_opt_swap(matrix tsp, tour t, size_t a, size_t b);
 
