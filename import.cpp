@@ -32,14 +32,12 @@ size_t get_tsp_size(std::string filename)
 		}
 		if (found == true)
 			return std::stoi(word);
-		else
-			return 1;
 	}
 	else
 		std::cout << "Erreur : le fichier " << filename
 			<< "n'as pas pu être lu" << std::endl;
 
-	return 1;
+	return 0;
 }
 
 /* testé ok */
