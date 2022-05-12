@@ -4,6 +4,8 @@
 #include "import.h"
 #include "tour.h"
 
+extern size_t OPT_SWAPS;
+
 /* echange a et b */
 void swap(auto &a, auto &b);
 

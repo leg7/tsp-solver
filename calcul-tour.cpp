@@ -6,6 +6,8 @@
 #include <iostream>
 #include <stdexcept>
 
+size_t OPT_SWAPS = 0;
+
 /* testé ok */
 void swap(auto &a, auto &b)
 {
@@ -176,6 +178,7 @@ tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b)
 	/* on ne mets pas a jour les coordonées tout de suite
 	 * parceque ça mets bcp trop de temps */
 	update_tour_length(swapped, tsp);
+	++OPT_SWAPS;
 	return swapped;
 }
 
