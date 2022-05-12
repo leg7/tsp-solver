@@ -91,7 +91,7 @@ destination get_greedy_destination(matrix &tsp, size_t start)
 }
 
 /* testé ok */
-void make_greedy_tour(matrix &tsp, tour &t, std::string instance)
+void make_greedy_tour(tour &t, matrix &tsp, std::string instance)
 {
 	init_matrix_status(tsp);
 
@@ -115,7 +115,7 @@ void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
 	tour best;
 	init_tour(best, 0, instance);
 
-	make_greedy_tour(tsp, best, instance);
+	make_greedy_tour(best, tsp, instance);
 	append_to_solution(s, best);
 
 	for (size_t i = 1; i < tsp.size + 1; ++i)
@@ -123,7 +123,7 @@ void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
 		tour temp;
 		init_tour(temp, i, instance);
 
-		make_greedy_tour(tsp, temp, instance);
+		make_greedy_tour(temp, tsp, instance);
 		append_to_solution(s, temp);
 
 		if (temp.length < best.length)
@@ -213,7 +213,7 @@ void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instan
 	tour best;
 	init_tour(best, 0, instance);
 
-	make_greedy_tour(tsp, best, instance);
+	make_greedy_tour(best, tsp, instance);
 	append_to_solution(s, best);
 
 	two_opt_optimize(tsp, best, instance);
@@ -225,7 +225,7 @@ void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instan
 		tour temp;
 		init_tour(temp, i, instance);
 
-		make_greedy_tour(tsp, temp, instance);
+		make_greedy_tour(temp, tsp, instance);
 		append_to_solution(s, temp);
 
 		two_opt_optimize(tsp, temp, instance);
