@@ -5,6 +5,8 @@
 
 #include <fstream>
 #include <iostream>
+#include <string>
+#include <time.h>
 
 void init_tour(tour &t, size_t start, std::string instance)
 {
@@ -41,17 +43,25 @@ void update_tour(tour &t, matrix tsp, std::string instance)
 
 void print_tour(tour t)
 {
+	std::string color = "\033[";
+	std::string end_color = "\033[0m";
+
 	std::cout << "le tour serait d'une longueur de " << t.length
 		<< " : \n\n";
 
 	for (size_t k = 0; k < t.size; ++k)
 	{
-		if (k % 10 == 0)
+		if (k % 7 == 0 and k != 0)
 			std::cout << "\n\n";
+
 		if (k != t.size - 1)
+		{
+			clock_t goal = 100000 + clock();
+			while (goal > clock());
 			std::cout << "\t" << t.data[k].id + 1 << "\t==>";
+		}
 		else
-			std::cout << "\t" << t.data[k].id + 1 << "\n\n";
+			std::cout << "\t" << t.data[k].id + 1 << end_color + "\n\n";
 	}
 	std::cout << std::endl;
 }

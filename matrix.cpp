@@ -23,7 +23,7 @@ void build_matrix(matrix &tsp, std::string filename)
 		}
 	}
 	else
-		std::cout << "Erreur critique : la taille de votre instance "
+		std::cout << "\nErreur critique : la taille de votre instance "
 			<< "est <= 0 donc la matrice n'as pas été faite.\n";
 }
 

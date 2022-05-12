@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
 	std::string red = "\033[1;31m";
 	std::string end_color = "\033[0m";
-	std::string center = "\t\t\t\t\t\t\t\t\t\t";
+	std::string center = "\t\t";
 
 	std::string clear = "clear";
 	system(clear.c_str());
@@ -94,6 +94,13 @@ int main(int argc, char *argv[])
 
 	matrix tsp;
 	build_matrix(tsp, instance);
+	if (tsp.size == 0)
+	{
+		std::cerr << "\n" + center + red + "ERREUR, VOTRE FICHIER N'EST PAS COMPATIBLE,\n"
+				+ center + "VEUILLEZ UTILISER UN AUTRE FICHIER.\n\n" + end_color;
+		goto end;
+	}
+
 	import_tsp(tsp, instance);
 
 	solution s = nullptr;
@@ -161,5 +168,6 @@ int main(int argc, char *argv[])
 		std::cout << "\tJe n'ai pas compris !" << std::endl;
 	}
 
+	end:
 	return 0;
 }
