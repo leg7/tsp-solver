@@ -178,7 +178,7 @@ tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b)
 	return swapped;
 }
 
-void two_opt_optimize(matrix tsp, tour &t, std::string instance)
+void two_opt_optimize(tour &t, matrix tsp, std::string instance)
 {
 	tour optimized;
 	optimized.size = t.size;
@@ -216,7 +216,7 @@ void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instan
 	make_greedy_tour(best, tsp, instance);
 	append_to_solution(s, best);
 
-	two_opt_optimize(tsp, best, instance);
+	two_opt_optimize(best, tsp, instance);
 	append_to_solution(s, best);
 
 	/* find new best */
@@ -228,7 +228,7 @@ void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instan
 		make_greedy_tour(temp, tsp, instance);
 		append_to_solution(s, temp);
 
-		two_opt_optimize(tsp, temp, instance);
+		two_opt_optimize(temp, tsp, instance);
 		append_to_solution(s, temp);
 
 		if (temp.length < best.length)
