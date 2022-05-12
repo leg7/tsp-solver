@@ -45,4 +45,6 @@ void append_to_solution(solution &s, tour t);
 void print_solution_result(solution s);
 
 void make_gnuplot_datafile(std::string filename);
+void append_progressive_iteration(iteration i, std::string filename);
+void append_iteration(iteration i, std::string filename);
 void build_gnuplot_datafile(solution s, std::string filename);
