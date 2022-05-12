@@ -133,7 +133,7 @@ void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
 	append_to_solution(s, best);
 }
 
-tour two_opt_swap(matrix tsp, tour t, size_t a, size_t b)
+tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b)
 {
 	if (a == b or a >= t.size or b >= t.size)
 		throw std::invalid_argument("ta mère");
@@ -193,7 +193,7 @@ void two_opt_optimize(matrix tsp, tour &t, std::string instance)
 		for (size_t i = 1; i < t.size - 2; ++i)
 			for (size_t j = i + 1; j < t.size - 1; ++j)
 			{
-				optimized = two_opt_swap(tsp, t, i, j);
+				optimized = two_opt_swap(t, tsp, i, j);
 
 				if (optimized.length < t.length)
 				{

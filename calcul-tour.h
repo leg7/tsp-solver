@@ -46,7 +46,7 @@ void make_greedy_tour(tour &t, matrix &tsp, std::string instance);
 void find_greedy_solution(solution &s, matrix &tsp, std::string instance);
 
  /* Fonction qui retourne un tour optimisé par un échange 2-opt */
-tour two_opt_swap(matrix tsp, tour t, size_t a, size_t b);
+tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b);
 
 /* optimize un tour au maximum avec des echanges 2-opt */
 void two_opt_optimize(matrix tsp, tour &t, std::string instance);
