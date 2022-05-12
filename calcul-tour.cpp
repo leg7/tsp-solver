@@ -91,7 +91,7 @@ destination get_greedy_destination(matrix &tsp, size_t start)
 }
 
 /* testé ok */
-void make_greedy_tour(matrix &tsp, tour &t)
+void make_greedy_tour(matrix &tsp, tour &t, std::string instance)
 {
 	init_matrix_status(tsp);
 
@@ -107,7 +107,7 @@ void make_greedy_tour(matrix &tsp, tour &t)
 	t.data[end].id = t.data[0].id;
 	t.data[end].distance = get_distance(tsp, t.data[end-1].id, t.data[end].id);
 
-	update_tour(t, tsp);
+	update_tour(t, tsp, instance);
 }
 
 void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
@@ -115,8 +115,7 @@ void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
 	tour best;
 	init_tour(best, 0, instance);
 
-	make_greedy_tour(tsp, best);
-	import_tour_coord(best, instance);
+	make_greedy_tour(tsp, best, instance);
 	append_to_solution(s, best);
 
 	for (size_t i = 1; i < tsp.size + 1; ++i)
@@ -124,15 +123,13 @@ void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
 		tour temp;
 		init_tour(temp, i, instance);
 
-		make_greedy_tour(tsp, temp);
-		import_tour_coord(temp, instance);
+		make_greedy_tour(tsp, temp, instance);
 		append_to_solution(s, temp);
 
 		if (temp.length < best.length)
 			best = temp;
 	}
 
-	import_tour_coord(best, instance);
 	append_to_solution(s, best);
 }
 
@@ -175,11 +172,13 @@ tour two_opt_swap(matrix tsp, tour t, size_t a, size_t b)
 		++i;
 	}
 
-	update_tour(swapped, tsp);
+	/* on ne mets pas a jour les coordonées tout de suite
+	 * parceque ça mets bcp trop de temps */
+	update_tour_length(swapped, tsp);
 	return swapped;
 }
 
-void two_opt_optimize(matrix tsp, tour &t)
+void two_opt_optimize(matrix tsp, tour &t, std::string instance)
 {
 	tour optimized;
 	optimized.size = t.size;
@@ -204,39 +203,37 @@ void two_opt_optimize(matrix tsp, tour &t)
 				}
 			}
 	}
+	import_tour_coord(t, instance);
 }
 
 /* testé ok */
 void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instance)
 {
+	/* init best */
 	tour best;
 	init_tour(best, 0, instance);
 
-	make_greedy_tour(tsp, best);
-	import_tour_coord(best, instance);
+	make_greedy_tour(tsp, best, instance);
 	append_to_solution(s, best);
 
-	two_opt_optimize(tsp, best);
-	import_tour_coord(best, instance);
+	two_opt_optimize(tsp, best, instance);
 	append_to_solution(s, best);
 
+	/* find new best */
 	for (size_t i = 1; i < tsp.size + 1; ++i)
 	{
 		tour temp;
 		init_tour(temp, i, instance);
 
-		make_greedy_tour(tsp, temp);
-		import_tour_coord(temp, instance);
+		make_greedy_tour(tsp, temp, instance);
 		append_to_solution(s, temp);
 
-		two_opt_optimize(tsp, temp);
-		import_tour_coord(temp, instance);
+		two_opt_optimize(tsp, temp, instance);
 		append_to_solution(s, temp);
 
 		if (temp.length < best.length)
 			best = temp;
 	}
 
-	import_tour_coord(best, instance);
 	append_to_solution(s, best);
 }

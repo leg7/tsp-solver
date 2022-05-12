@@ -41,7 +41,7 @@ destination get_greedy_destination(matrix &tsp, size_t start);
  * fonction get_greedy_destination()
  * L'tour @t est calcule à partir d'une matrice d'adjacence @tsp
  */
-void make_greedy_tour(matrix &tsp, tour &t);
+void make_greedy_tour(matrix &tsp, tour &t, std::string instance);
 
 void find_greedy_solution(solution &s, matrix &tsp, std::string instance);
 
@@ -49,6 +49,6 @@ void find_greedy_solution(solution &s, matrix &tsp, std::string instance);
 tour two_opt_swap(matrix tsp, tour t, size_t a, size_t b);
 
 /* optimize un tour au maximum avec des echanges 2-opt */
-void two_opt_optimize(matrix tsp, tour &t);
+void two_opt_optimize(matrix tsp, tour &t, std::string instance);
 
 void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instance);

@@ -36,8 +36,8 @@ using solution = iteration*;
 
 void init_tour(tour &t, size_t start, std::string instance);
 void update_tour_distances(tour &t, matrix tsp);
-void update_tour_length(tour &t);
-void update_tour(tour &t, matrix tsp);
+void update_tour_length(tour &t, matrix tsp);
+void update_tour(tour &t, matrix tsp, std::string instance);
 void print_tour(tour t);
 
 void insert_to_solution(solution &s, tour t);
