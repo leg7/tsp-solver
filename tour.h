@@ -40,8 +40,8 @@ void update_tour_length(tour &t, matrix tsp);
 void update_tour(tour &t, matrix tsp, std::string instance);
 void print_tour(tour t);
 
-void insert_to_solution(solution &s, tour t);
-void append_to_solution(solution &s, tour t);
+void insert_tour_to_solution_head(tour t, solution &s);
+void insert_tour_to_solution_tail(tour t, solution &s);
 void print_solution_result(solution s);
 
 void make_gnuplot_datafile(std::string filename);

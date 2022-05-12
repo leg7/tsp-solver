@@ -56,7 +56,7 @@ void print_tour(tour t)
 	std::cout << std::endl;
 }
 
-void insert_to_solution(solution &s, tour t)
+void insert_tour_to_solution_head(tour t, solution &s)
 {
 	solution temp = new iteration;
 	temp->t = t;
@@ -64,12 +64,12 @@ void insert_to_solution(solution &s, tour t)
 	s = temp;
 }
 
-void append_to_solution(solution &s, tour t)
+void insert_tour_to_solution_tail(tour t, solution &s)
 {
 	if (s == nullptr)
-		insert_to_solution(s, t);
+		insert_tour_to_solution_head(t, s);
 	else
-		append_to_solution(s->next, t);
+		insert_tour_to_solution_tail(t, s->next);
 }
 
 void print_solution_result(solution s)
