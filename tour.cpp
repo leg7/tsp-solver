@@ -100,6 +100,7 @@ void build_gnuplot_datafile(solution s, std::string filename)
 	std::ofstream file(filename+".dat", std::ios::app);
 	if (file.good())
 	{
+		/* affichage "progressif" */
 		for (size_t i = 1; i < s->t.size; ++i)
 		{
 			for (size_t j = 0; j < i; ++j)
@@ -114,8 +115,9 @@ void build_gnuplot_datafile(solution s, std::string filename)
 		}
 		s = s->next;
 
-		while (s != nullptr)
+		while (s->next != nullptr)
 		{
+			/* affichage "brut" */
 			file << std::endl << std::endl;
 
 			for (size_t k = 0; k < s->t.size; ++k)
@@ -127,6 +129,19 @@ void build_gnuplot_datafile(solution s, std::string filename)
 					<< std::endl;
 
 			s = s->next;
+		}
+
+		/* pour que la meilleure solution reste affiché + longtemps */
+		for (size_t i = 0; i < 30; ++i)
+		{
+			file << std::endl << std::endl;
+			for (size_t j = 0; j < s->t.size; ++j)
+				file << s->t.data[j].coord.x
+					<< ' '
+					<< s->t.data[j].coord.y
+					<< ' '
+					<< s->t.data[j].id + 1
+					<< std::endl;
 		}
 	}
 	else
