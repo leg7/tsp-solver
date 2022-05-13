@@ -45,6 +45,13 @@ int main(int argc, char *argv[])
 		goto error;
 	}
 
+	if (get_tsp_size(instance) == 0)
+	{
+		std::cerr << "\n" + center + red + "ERREUR, VOTRE FICHIER N'EST PAS COMPATIBLE,\n"
+				+ center + "VEUILLEZ UTILISER UN AUTRE FICHIER.\n\n" + end_color;
+		return 1;
+	}
+
 
 	bool glouton = false;
 	bool fourmis = false;
@@ -95,12 +102,6 @@ int main(int argc, char *argv[])
 	matrix tsp;
 	build_matrix(tsp, instance);
 	import_tsp(tsp, instance);
-	if (tsp.size == 0)
-	{
-		std::cerr << "\n" + center + red + "ERREUR, VOTRE FICHIER N'EST PAS COMPATIBLE,\n"
-				+ center + "VEUILLEZ UTILISER UN AUTRE FICHIER.\n\n" + end_color;
-		return 1;
-	}
 
 	solution s = nullptr;
 
