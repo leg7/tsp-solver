@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
 	if (argc < 3)
 	{
-		error:
+		help:
 		std::cout << "\n\tUsage : ./voyage [OPTION] [input-file]\n\n"
 
 		<< "\tOptions " + red + "(IMPORTANT : choisissez qu'un seul algorithme !)" + end_color +" :\n"
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 	if (!test.good())
 	{
 		std::cerr << "\n" + center + red + "ERREUR, IMPOSSIBLE DE LIRE LE FICHIER !\n" + end_color;
-		goto error;
+		goto help;
 	}
 
 	if (get_tsp_size(instance) == 0)
@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 		if (interactif + glouton + fourmis + genetique + two_opt + quiet + gif > 1)
 		{
 			std::cerr << "\n" + center + red + "ERREUR, CETTE OPTION DOIT ETRE UTILISEE SEULE !\n" + end_color;
-			goto error;
+			goto help;
 		}
 	}
 
