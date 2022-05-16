@@ -6,14 +6,25 @@
 #include <bits/stdc++.h>
 #include <string>
 
+void make_syscall(std::string com)
+{
+	int sysr = system(com.c_str());
+	if (sysr != 0)
+	{
+		std::cerr << "Error: couldn't execute system call:\n\t"
+			<< com << "\n\n";
+		std::terminate();
+	}
+
+}
+
 int main(int argc, char *argv[])
 {
 	std::string red = "\033[1;31m";
 	std::string end_color = "\033[0m";
 	std::string center = "\t\t";
 
-	std::string clear = "clear";
-	system(clear.c_str());
+	make_syscall("clear");
 
 	/***********************************************************************************
 											TEST
@@ -54,7 +65,7 @@ int main(int argc, char *argv[])
 
 	std::string instance = std::string(argv[argc - 1]);
 	std::ifstream test(instance);
-	
+
 	if (!test.good())
 	{
 		std::cerr << "\n" + center + red + "ERREUR, IMPOSSIBLE DE LIRE LE FICHIER !\n" + end_color;
@@ -243,9 +254,10 @@ int main(int argc, char *argv[])
 		case 'Y':
 		{
 			std::cout << "\tCréation du fichier .gif..." << std::endl;
-			std::string com = "gnuplot -e \"filename = \\\"./" + instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
 			build_gnuplot_datafile(s, instance);
-			system(com.c_str());
+			std::string com = "gnuplot -e \"filename = \\\"./" +
+					instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
+			make_syscall(com);
 
 			chance = 0;
 
@@ -261,7 +273,7 @@ int main(int argc, char *argv[])
 			{
 				std::cout << "\tAffichage du fichier .gif..." << std::endl;
 				std::string com_open = "xdg-open " + instance + ".dat.gif 2>/dev/null";
-				system(com_open.c_str());
+				make_syscall(com_open);
 				break;
 			}
 			case 'n':
@@ -303,8 +315,8 @@ int main(int argc, char *argv[])
 	}
 
 	delete_matrix(tsp);
-	
-	
+
+
 
 	return 0;
 }
