@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <limits>
+#include <cstdlib>
 
 size_t OPT_SWAPS = 0;
 
@@ -75,7 +77,7 @@ destination get_greedy_destination(matrix &tsp, size_t start)
 	if (start > tsp.size)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
-	double double_max = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0000000000000000;
+	double double_max = std::numeric_limits<double>::max();
 
 	destination d;
 	d.distance = double_max;
