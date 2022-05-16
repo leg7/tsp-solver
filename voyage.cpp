@@ -53,6 +53,10 @@ int main(int argc, char *argv[])
 		<< "\t\tUtilisation général " + red + "(IMPORTANT : nécessite un tour !)" + end_color + ":\n"
 		<< "\t\t\t-q , --quiet\n"
 		<< "\t\t\t\tN'affiche rien mais l'éxécution du programme est réalisé\n"
+		<< "\t\t\t--gif\n"
+		<< "\t\t\t\tModelise la solution avec gnuplot sous format animé .gif\n"
+		<< "\t\t\t--open-gif"
+		<< "\t\t\t\tOuvre le gif produit par --gif"
 		<< "\t\t\t-i , --interactif\n"
 		<< "\t\t\t\tLe mode intéractif est mis par défault" + red + " (Cette option doit être utilisée SEULE !) "
 		<< end_color + "\n"
@@ -65,7 +69,6 @@ int main(int argc, char *argv[])
 
 	std::string instance = std::string(argv[argc - 1]);
 	std::ifstream test(instance);
-
 	if (!test.good())
 	{
 		std::cerr << "\n" + center + red + "ERREUR, IMPOSSIBLE DE LIRE LE FICHIER !\n" + end_color;
@@ -79,15 +82,20 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
+	/* --------- *
+	 * RECUP ARG *
+	 * --------- */
 
-	bool glouton = false;
-	bool fourmis = false;
-	bool genetique = false;
-	bool two_opt = false;
+	bool glouton    = false;
+	bool fourmis    = false;
+	bool genetique  = false;
+	bool two_opt    = false;
+	bool print      = true;
 
-	bool quiet = false;
-	bool gif = false;
+	bool quiet      = false;
+	bool gif        = false;
 	bool interactif = false;
+	bool open_gif   = false;
 
 	int i = 0;
 	while (i < argc - 1)
@@ -124,6 +132,11 @@ int main(int argc, char *argv[])
 			gif = true;
 			++i;
 		}
+		else if (std::string(argv[i]) == "--open-gif")
+		{
+			open_gif = true;
+			++i;
+		}
 		else if (std::string(argv[i]) == "-i" or std::string(argv[i]) == "--interactif")
 		{
 			interactif = true;
@@ -133,6 +146,10 @@ int main(int argc, char *argv[])
 			++i;
 	}
 
+	/* --------------- *
+	 * MODE INTERACTIF *
+	 * --------------- */
+
 	if (interactif)
 	{
 		if (interactif + glouton + fourmis + genetique + two_opt + quiet + gif > 1)
@@ -140,11 +157,206 @@ int main(int argc, char *argv[])
 			std::cerr << "\n" + center + red + "ERREUR, CETTE OPTION DOIT ETRE UTILISEE SEULE !\n" + end_color;
 			goto help;
 		}
+
+		glouton   = false;
+		fourmis   = false;
+		genetique = false;
+		two_opt   = false;
+		print     = true;
+
+		gif       = false;
+		open_gif  = false;  // pour l'interactif
+		                   //
+		int chance = 3;
+		while (fourmis + glouton + genetique == 0)
+		{
+			int algo;
+			std::cout << "\tQuelle algorithme voulez-vous utiliser ?\n"
+					<< "\t\t1 = glouton\n"
+					<< "\t\t2 = fourmis\n"
+					<< "\t\t3 = genetique\n"
+					<< "\t: ";
+			std::cin >> algo;
+
+			switch (algo)
+			{
+			case 1:
+				glouton = true;
+				break;
+			case 2:
+				fourmis = true;
+				break;
+			case 3:
+				genetique = true;
+				break;
+			default:
+				if (chance > 0)
+				{
+					std::cout << "Je n'ai pas compris votre reponse.\n";
+					--chance;
+				}
+				else
+				{
+					std::cout << "Je ne comprends pas ce que vous voulez "
+						<< "donc je vais choisir l'algorithme glouton par default.\n";
+					glouton = true;
+				}
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
+
+		chance = 3;
+		while (chance >= 0)
+		{
+			char opti = 0;
+			std::cout << "\tVoulez-vous faire une optimisation ? (y,N) : ";
+			std::cin >> opti;
+
+			switch (opti)
+			{
+			case 'y':
+			case 'Y':
+				two_opt = true;
+				chance = -1;
+				break;
+			case 'n':
+			case 'N':
+				chance = -1;
+				break;
+			default:
+				if (chance > 0)
+				{
+					std::cout << "Pas compris !\n";
+					--chance;
+				}
+				else if (chance == 0)
+				{
+					std::cout << "Je ne comprends pas ce que vous voulez "
+						<< "donc je ne vais pas faire d'optimisation par default.\n";
+					--chance;
+				}
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
+
+		chance = 3;
+		while (chance >= 0)
+		{
+			char aff = 0;
+			std::cout << "\tVoulez-vous afficher le résultat ? (y,N) : ";
+			std::cin >> aff;
+
+			switch (aff)
+			{
+			case 'y':
+			case 'Y':
+				chance = -1;
+				break;
+			case 'n':
+			case 'N':
+				print = "false";
+				chance = -1;
+				break;
+			default:
+				if (chance > 0)
+				{
+					std::cout << "\tJe n'ai pas compris !\n\n";
+					--chance;
+				}
+				else if (chance == 0)
+				{
+					std::cout << "\tJe ne comprends toujours pas, "
+						<< "je vais supposer que vous ne voulez pas l'afficher.\n\n";
+					--chance;
+				}
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
+
+		chance = 3;
+		while (chance >= 0)
+		{
+			char gnuplot = 0;
+			std::cout << "\tVoulez-vous créer un .gif des résultats ? (y/N) : ";
+			std::cin >> gnuplot;
+
+			switch (gnuplot)
+			{
+			case 'y':
+			case 'Y':
+				gif = true;
+				chance = -1;
+				break;
+			case 'n':
+			case 'N':
+				std::cout << "\tLe fichier .gif ne sera pas créé" << std::endl;
+				chance = -1;
+				break;
+			default:
+				if (chance > 0)
+				{
+					std::cout << "\tJe n'ai pas compris !\n";
+					--chance;
+				}
+				else if (chance == 0)
+				{
+					std::cout << "\tJe ne comprends toujours pas, "
+						<< "je suppose que vous ne voulez pas l'afficher\n";
+					--chance;
+				}
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
+
+		if (gif)
+		{
+			chance = 3;
+			while (chance >= 0)
+			{
+				char aff = 0;
+				std::cout << "\tVoulez-vous afficher le fichier .gif ? (y/N) : ";
+				std::cin >> aff;
+
+				switch (aff)
+				{
+				case 'y':
+				case 'Y':
+					open_gif = true;
+					chance = -1;
+					break;
+				case 'n':
+				case 'N':
+					std::cout <<"\tLe gif ne sera pas affiché.\n";
+					chance = -1;
+					break;
+				default:
+					if (chance > 0)
+					{
+						std::cout << "\tJe n'ai pas compris !\n";
+						--chance;
+					}
+					else if (chance == 0)
+					{
+						std::cout << "\tJe ne comprends pas, "
+							<< "Je suppose que vous ne voulez pas l'afficher.\n";
+						--chance;
+					}
+				}
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
 	}
 
 	/* ---------------------- *
 	 * EXECUTION DU PROGRAMME *
 	 * ---------------------- */
+
+	//init
 
 	matrix tsp;
 	build_matrix(tsp, instance);
@@ -152,171 +364,59 @@ int main(int argc, char *argv[])
 
 	solution s = nullptr;
 
-	if (interactif)
+	//tests
+
+	if (glouton + fourmis + genetique > 1)
 	{
-		int chance = 1;
-		int chance_opti = 1;
+		std::cerr << "\n" + center + red +"ERREUR CHOISISSEZ QU'UN SEUL ALGORITHME !\n " + end_color;
+		goto help;
+	}
 
-		int algo;
-		chance_algorithme:
-		std::cout << "\tQuelle algorithme voulez-vous utiliser ?\n"
-				<< "\t\t1 = glouton\n"
-				<< "\t\t2 = fourmis\n"
-				<< "\t\t3 = genetique\n"
-				<< "\t: ";
-		std::cin >> algo;
+	if (glouton + fourmis + genetique == 0)
+	{
+		std::cerr << "\n" + center + red + "ERREUR, VOUS N'AVEZ PAS CHOISIT D'ALGORITHME !\n" + end_color;
+		goto help;
+	}
 
-		char opti;
-		chance_optimisation:
-		std::cout << "\n\tVoulez-vous faire une optimisation ? (y,N) : ";
-		std::cin >> opti;
-
-		switch (algo)
+	if (glouton == true and two_opt == true)
+	{
+		find_greedy_optimized_solution(s, tsp, instance);
+		if (!quiet)
 		{
-		case 1:
-			if (opti == 'y' or opti == 'Y')
-				find_greedy_optimized_solution(s, tsp, instance);
-			if (opti == 'n' or opti  == 'N')
-				find_greedy_solution(s, tsp, instance);
-			if (opti != 'y' and opti != 'Y' and opti != 'n' and opti != 'N')
-			{
-				if (chance_opti < 3)
-				{
-					std::cout << "\tJe n'ai pas compris !\n\n";
-					++chance_opti;
-					goto chance_optimisation;
-				}
-				else
-				{
-					std::cout << "\tVous vous êtes trompé trop de fois de suite !\n\n";
-					return 1;
-				}
-			}
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		default:
-			if (chance < 3)
-			{
-				std::cout << "\tJe n'ai pas compris !\n\n";
-				++chance;
-				goto chance_algorithme;
-			}
-			else
-			{
-				std::cout << "\tVous vous êtes trompé trop de fois de suite !\n\n";
-				return 1;
-			}
+			std::cout << "\nVoici le meilleur itinéraire glouton avec une optimisation 2-opt, "
+				  << "Pour le trouver " << OPT_SWAPS
+				  << " échanges 2-opt ont étés realisés\n";
 		}
+	}
+	else if (glouton == true and two_opt == false)
+	{
+		find_greedy_solution(s, tsp, instance);
+		if (!quiet)
+			std::cout << "\nVoici le meilleur itinéraire glouton";
+	}
 
-		chance = 0;
+	if (print and !quiet)
+		print_solution_result(s);
 
-		char affi;
-		chance_affichage:
-		std::cout << "\tVoulez-vous afficher le résultat ? (y,N) : ";
-		std::cin >> affi;
-
-		switch (affi)
-		{
-		case 'y':
-		case 'Y':
-			print_solution_result(s);
-			break;
-		case 'n':
-		case 'N':
-			break;
-		default:
-			if (chance < 3)
-			{
-				std::cout << "\tJe n'ai pas compris !\n\n";
-				++chance;
-				goto chance_affichage;
-			}
-			else
-			{
-				std::cout << "\tVous vous êtes trompé trop de fois de suite !\n\n";
-				return 1;
-			}
-		}
-
-		chance = 0;
-
-		char gnuplot;
-		chance_gnuplot:
-		std::cout << "\tVoulez-vous créer un .gif des résultats ? (y/N) : ";
-		std::cin >> gnuplot;
-
-		switch (gnuplot)
-		{
-		case 'y':
-		case 'Y':
-		{
+	if (gif)
+	{
+		if (!quiet)
 			std::cout << "\tCréation du fichier .gif..." << std::endl;
-			build_gnuplot_datafile(s, instance);
-			std::string com = "gnuplot -e \"filename = \\\"./" +
-					instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
-			make_syscall(com);
+		build_gnuplot_datafile(s, instance);
+		std::string com = "gnuplot -e \"filename = \\\"./" +
+				instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
+		make_syscall(com);
+	}
 
-			chance = 0;
-
-			char affichage;
-			chance_affichage_gnuplot:
-			std::cout << "\tVoulez-vous afficher le fichier .gif ? (y/N) : ";
-			std::cin >> affichage;
-
-			switch (affichage)
-			{
-			case 'y':
-			case 'Y':
-			{
-				std::cout << "\tAffichage du fichier .gif..." << std::endl;
-				std::string com_open = "xdg-open " + instance + ".dat.gif 2>/dev/null";
-				make_syscall(com_open);
-				break;
-			}
-			case 'n':
-			case 'N':
-				std::cout <<"\tLe gif ne sera pas affiché." << std::endl;
-				break;
-			default:
-				if (chance < 3)
-				{
-					std::cout << "\tJe n'ai pas compris !\n\n";
-					++chance;
-					goto chance_affichage_gnuplot;
-				}
-				else
-				{
-					std::cout << "\tVous vous êtes trompé trop de fois de suite !\n\n";
-					return 1;
-				}
-			}
-			break;
-		}
-		case 'n':
-		case 'N':
-			std::cout << "\tLe fichier .gif ne sera pas créé" << std::endl;
-			break;
-		default:
-			if (chance < 3)
-			{
-				std::cout << "\tJe n'ai pas compris !\n\n";
-				++chance;
-				goto chance_gnuplot;
-			}
-			else
-			{
-				std::cout << "\tVous vous êtes trompé trop de fois de suite !\n\n";
-				return 1;
-			}
-		}
+	if (open_gif)
+	{
+		if (!quiet)
+			std::cout << "\tAffichage du fichier .gif...\n";
+		std::string com_open = "xdg-open " + instance + ".dat.gif 2>/dev/null";
+		make_syscall(com_open);
 	}
 
 	delete_matrix(tsp);
-
-
 
 	return 0;
 }
