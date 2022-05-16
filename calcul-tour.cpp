@@ -244,3 +244,74 @@ void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instan
 
 	insert_tour_to_solution_tail(best, s);
 }
+
+size_t pick_random_neighbor(size_t a, tour t)
+{
+	size_t neighbor = 0;
+	int n = 0;
+	for (int i = 0; i < t.size; ++i)
+	{
+		if (t.data[i].id == a)
+		{
+			n = (rand()%1 == 0) ? -1 : 1;
+			neighbor = t.data[i + n].id;
+
+			if (i + n >= t.size)
+			{
+				n = (rand()%1 == 0) ? 0 : t.size - 2;
+				neighbor = t.data[n].id;
+			}
+			else if (i + n < 0)
+				neighbor = t.data[t.size - 1].id;
+		}
+	}
+	return neighbor;
+}
+
+bool should_make_random_swap(int ti, int t)
+{
+	float probability = rand() % ti;
+	return (probability < t);
+}
+
+void swap_random_neighbors(tour &t, matrix tsp)
+{
+	size_t s1, s2;
+
+	s1 = rand() % tsp.size + 1;
+	s2 = pick_random_neighbor(s1, t);
+
+	t = two_opt_swap(t, tsp, s1, s2);
+}
+
+void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
+{
+	srand(time(NULL));
+
+	tour b;
+	init_tour(b, rand() % tsp.size + 1, instance);
+	make_greedy_tour(b, tsp, instance);
+
+	int ti = 300,
+	    t  = ti;
+
+	while (t >= 0)
+	{
+		if (should_make_random_swap(ti, t))
+			swap_random_neighbors(b, tsp);
+		else
+		{
+			tour tmp;
+			for (size_t i = 1; i < b.size - 2; ++i)
+				for (size_t j = i + 1; j < b.size - 1; ++j)
+				{
+					tmp = two_opt_swap(b, tsp, i, j);
+					if (tmp.length < b.length)
+						b = tmp;
+				}
+		}
+		import_tour_coord(b, instance);
+		insert_tour_to_solution_tail(b, s);
+		--t;
+	}
+}

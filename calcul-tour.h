@@ -52,3 +52,9 @@ tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b);
 void two_opt_optimize(tour &t, matrix tsp, std::string instance);
 
 void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instance);
+
+/* recuit simulé */
+size_t pick_random_neighbor(size_t a, tour t);
+bool should_make_random_swap(int ti, int t);
+void swap_random_neighbors(tour &t, matrix tsp);
+void simmulated_annealing(solution &s, matrix &tsp, std::string instance);
