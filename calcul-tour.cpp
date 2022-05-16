@@ -249,14 +249,14 @@ size_t pick_random_neighbor(size_t a, tour t)
 {
 	size_t neighbor = 0;
 	int n = 0;
-	for (int i = 0; i < t.size; ++i)
+	for (int i = 0; i < int(t.size); ++i)
 	{
 		if (t.data[i].id == a)
 		{
 			n = (rand()%1 == 0) ? -1 : 1;
 			neighbor = t.data[i + n].id;
 
-			if (i + n >= t.size)
+			if (i + n >= int(t.size))
 			{
 				n = (rand()%1 == 0) ? 0 : t.size - 2;
 				neighbor = t.data[n].id;
