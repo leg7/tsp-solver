@@ -36,6 +36,12 @@ void init_matrix_status(matrix &tsp)
 	}
 }
 
+void init_matrix_data(matrix &tsp)
+{
+	init_matrix_distances(tsp);
+	init_matrix_status(tsp);
+}
+
 void init_matrix(matrix &tsp, std::string filename)
 {
 	init_matrix_size(tsp, filename);
@@ -49,8 +55,7 @@ void init_matrix(matrix &tsp, std::string filename)
 			tsp.data[i] = new matrix_data[x];
 			--x;
 		}
-		init_matrix_status(tsp);
-		init_matrix_distances(tsp);
+		init_matrix_data(tsp);
 	}
 	else
 		std::cout << "\nErreur critique : la taille de votre instance "

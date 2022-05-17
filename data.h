@@ -2,7 +2,6 @@
 
 #include <string>
 
-
 struct matrix_data
 {
 	double distance;        // La distance
@@ -47,6 +46,7 @@ using solution = iteration*;
 void init_matrix_size(matrix &tsp, std::string filename);
 void init_matrix_distances(matrix &tsp);
 void init_matrix_status(matrix &tsp);
+void init_matrix_data(matrix &tsp);
 void init_matrix(matrix &tsp, std::string filename);
 void print_matrix_status(matrix &tsp);
 void print_matrix_distance(matrix tsp);
