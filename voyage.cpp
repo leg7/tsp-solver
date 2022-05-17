@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
 		int chance = 2;
 		while (fourmis + glouton + genetique == 0)
 		{
-			int algo;
+			char algo = 0;
 			std::cout << "\tQuelle algorithme voulez-vous utiliser ?\n"
 					<< "\t\t1 = glouton\n"
 					<< "\t\t2 = fourmis\n"
@@ -176,15 +176,16 @@ int main(int argc, char *argv[])
 					<< "\t: ";
 			std::cin >> algo;
 
+
 			switch (algo)
 			{
-			case 1:
+			case '1':
 				glouton = true;
 				break;
-			case 2:
+			case '2':
 				fourmis = true;
 				break;
-			case 3:
+			case '3':
 				genetique = true;
 				break;
 			default:
