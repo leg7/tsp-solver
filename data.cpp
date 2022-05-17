@@ -14,6 +14,17 @@ void init_matrix_size(matrix &tsp, std::string filename)
 	--tsp.size;
 }
 
+void init_matrix_distances(matrix &tsp)
+{
+	size_t x = tsp.size;
+	for (size_t i = 0; i < tsp.size; ++i)
+	{
+		for (size_t j = 0; j < x; ++j)
+			tsp.data[i][j].distance = 0;
+		--x;
+	}
+}
+
 void init_matrix_status(matrix &tsp)
 {
 	size_t x = tsp.size;
