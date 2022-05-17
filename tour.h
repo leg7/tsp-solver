@@ -45,9 +45,3 @@ void print_tour(tour t);
 void insert_tour_to_solution_head(tour t, solution &s);
 void insert_tour_to_solution_tail(tour t, solution &s);
 void print_solution_result(solution s);
-
-/* fonctions pour exporter une solution dans un fichier .dat pour gnuplot */
-void make_gnuplot_datafile(std::string filename);
-void append_progressive_iteration(iteration i, std::string filename);
-void append_iteration(iteration i, std::string filename);
-void build_gnuplot_datafile(solution s, std::string filename);
