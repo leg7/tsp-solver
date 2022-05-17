@@ -50,6 +50,7 @@ void build_matrix(matrix &tsp, std::string filename)
 			--x;
 		}
 		init_matrix_status(tsp);
+		init_matrix_distances(tsp);
 	}
 	else
 		std::cout << "\nErreur critique : la taille de votre instance "
