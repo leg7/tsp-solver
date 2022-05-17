@@ -88,7 +88,6 @@ int main(int argc, char *argv[])
 	bool fourmis    = false;
 	bool genetique  = false;
 	bool two_opt    = false;
-	bool print      = true;
 
 	bool quiet      = false;
 	bool gif        = false;
@@ -160,7 +159,6 @@ int main(int argc, char *argv[])
 		fourmis   = false;
 		genetique = false;
 		two_opt   = false;
-		print     = true;
 
 		gif       = false;
 		open_gif  = false;  // pour l'interactif
@@ -175,7 +173,6 @@ int main(int argc, char *argv[])
 					<< "\t\t3 = genetique\n"
 					<< "\t: ";
 			std::cin >> algo;
-
 
 			switch (algo)
 			{
@@ -255,7 +252,7 @@ int main(int argc, char *argv[])
 				break;
 			case 'n':
 			case 'N':
-				print = "false";
+				quiet = true;
 				chance = -1;
 				break;
 			default:
@@ -392,7 +389,7 @@ int main(int argc, char *argv[])
 			std::cout << "Voici le meilleur itinéraire glouton\n";
 	}
 
-	if (print and !quiet)
+	if (!quiet)
 		print_solution_result(s);
 
 	if (gif)
