@@ -355,15 +355,13 @@ int main(int argc, char *argv[])
 	 * ---------------------- */
 
 	//init
-
 	matrix tsp;
-	build_matrix(tsp, instance);
+	init_matrix(tsp, instance);
 	import_tsp(tsp, instance);
 
 	solution s = nullptr;
 
 	//tests
-
 	if (glouton + fourmis + genetique > 1)
 	{
 		std::cerr << "\n" + center + red +"ERREUR CHOISISSEZ QU'UN SEUL ALGORITHME !\n " + end_color;

@@ -36,7 +36,7 @@ void init_matrix_status(matrix &tsp)
 	}
 }
 
-void build_matrix(matrix &tsp, std::string filename)
+void init_matrix(matrix &tsp, std::string filename)
 {
 	init_matrix_size(tsp, filename);
 	if (tsp.size > 0)
