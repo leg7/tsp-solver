@@ -14,6 +14,17 @@ void init_matrix_size(matrix &tsp, std::string filename)
 	--tsp.size;
 }
 
+void init_matrix_status(matrix &tsp)
+{
+	size_t x = tsp.size;
+	for (size_t i = 0; i < tsp.size; ++i)
+	{
+		for (size_t j = 0; j < x; ++j)
+			tsp.data[i][j].visited = false;
+		--x;
+	}
+}
+
 void build_matrix(matrix &tsp, std::string filename)
 {
 	init_matrix_size(tsp, filename);
@@ -27,21 +38,11 @@ void build_matrix(matrix &tsp, std::string filename)
 			tsp.data[i] = new matrix_data[x];
 			--x;
 		}
+		init_matrix_status(tsp);
 	}
 	else
 		std::cout << "\nErreur critique : la taille de votre instance "
 			<< "est <= 0 donc la matrice n'as pas été faite.\n";
-}
-
-void init_matrix_status(matrix &tsp)
-{
-	size_t x = tsp.size;
-	for (size_t i = 0; i < tsp.size; ++i)
-	{
-		for (size_t j = 0; j < x; ++j)
-			tsp.data[i][j].visited = false;
-		--x;
-	}
 }
 
 void print_matrix_status(matrix &tsp)

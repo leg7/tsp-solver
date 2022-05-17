@@ -45,8 +45,8 @@ using solution = iteration*;
 
 /* manipulation de matrice d'adjacence */
 void init_matrix_size(matrix &tsp, std::string filename);
-void build_matrix(matrix &tsp, std::string filename);
 void init_matrix_status(matrix &tsp);
+void build_matrix(matrix &tsp, std::string filename);
 void print_matrix_status(matrix &tsp);
 void print_matrix_distance(matrix tsp);
 void delete_matrix(matrix &tsp);
