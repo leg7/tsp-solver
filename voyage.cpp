@@ -417,7 +417,7 @@ int main(int argc, char *argv[])
 	{
 		simmulated_annealing(s, tsp, instance);
 		if (!quiet)
-			std::cout << "Voici le meilleur itinéraire trouvé avec l'algorithme de recuit simulé";
+			std::cout << "Voici le meilleur itinéraire trouvé avec l'algorithme de recuit simulé\n";
 	}
 
 	if (!quiet)
