@@ -173,7 +173,8 @@ tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b)
 
 	/* on ne mets pas a jour les coordonées tout de suite
 	 * parceque ça mets bcp trop de temps */
-	update_tour_length(swapped, tsp);
+	update_tour_distances(swapped, tsp);
+	update_tour_length(swapped);
 	++OPT_SWAPS;
 	return swapped;
 }

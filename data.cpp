@@ -135,7 +135,7 @@ void update_tour_distances(tour &t, matrix tsp)
 		t.data[k].distance = get_distance(tsp, t.data[k-1].id , t.data[k].id);
 }
 
-void update_tour_length(tour &t, matrix tsp)
+void update_tour_length(tour &t)
 {
 	t.length = 0;
 	for (size_t k = 0; k < t.size; ++k)
@@ -145,7 +145,7 @@ void update_tour_length(tour &t, matrix tsp)
 void update_tour(tour &t, matrix tsp, std::string instance)
 {
 	update_tour_distances(t, tsp);
-	update_tour_length(t, tsp);
+	update_tour_length(t);
 	import_tour_coord(t, instance);
 }
 
