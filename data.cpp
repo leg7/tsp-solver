@@ -90,16 +90,37 @@ void delete_matrix(matrix &tsp)
 	delete[] tsp.data;
 }
 
-void init_tour(tour &t, size_t start, std::string instance)
+void init_tour_length(tour &t)
 {
 	t.length = 0;
+}
 
+void init_tour_size(tour &t, std::string instance)
+{
 	/* + 1 parcequ'il faut revenir au point de depart */
 	t.size = get_tsp_size(instance) + 1;
+}
 
+void init_tour_data(tour &t, size_t start)
+{
 	t.data = new destination[t.size];
 	t.data[0].distance = 0;
 	t.data[0].id       = start;
+
+	for (size_t i = 1; i < t.size; ++i)
+	{
+		t.data[i].distance = 0;
+		t.data[i].id       = 0;
+		t.data[i].coord.x  = 0;
+		t.data[i].coord.y  = 0;
+	}
+}
+
+void init_tour(tour &t, size_t start, std::string instance)
+{
+	init_tour_length(t);
+	init_tour_size(t, instance);
+	init_tour_data(t, start);
 }
 
 void update_tour_distances(tour &t, matrix tsp)
