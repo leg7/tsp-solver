@@ -379,7 +379,7 @@ int main(int argc, char *argv[])
 		find_greedy_optimized_solution(s, tsp, instance);
 		if (!quiet)
 		{
-			std::cout << "\nVoici le meilleur itinéraire glouton avec une optimisation 2-opt, "
+			std::cout << "Voici le meilleur itinéraire glouton avec une optimisation 2-opt, "
 				  << "Pour le trouver " << OPT_SWAPS
 				  << " échanges 2-opt ont étés realisés\n";
 		}
@@ -388,7 +388,7 @@ int main(int argc, char *argv[])
 	{
 		find_greedy_solution(s, tsp, instance);
 		if (!quiet)
-			std::cout << "\nVoici le meilleur itinéraire glouton";
+			std::cout << "Voici le meilleur itinéraire glouton\n";
 	}
 
 	if (print and !quiet)
