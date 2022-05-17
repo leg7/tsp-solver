@@ -2,8 +2,5 @@
 *.out
 *.gif
 *.dat
-*.mp4
-*.mkv
 voyage
-docs/bayg29.opt.tour
-
+docs/
