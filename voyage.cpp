@@ -106,7 +106,6 @@ int main(int argc, char *argv[])
 			glouton = true;
 			++i;
 		}
-
 		else if (std::string(argv[i]) == "-r" or
 		         std::string(argv[i]) == "--recuit-simule")
 		{
@@ -119,7 +118,6 @@ int main(int argc, char *argv[])
 			fourmis = true;
 			++i;
 		}
-
 		else if (std::string(argv[i]) == "-G" or
 		         std::string(argv[i]) == "--genetique")
 		{
@@ -412,7 +410,6 @@ int main(int argc, char *argv[])
 		if (!quiet)
 			std::cout << "Voici le meilleur itinéraire glouton\n";
 	}
-
 	if (recuit == true)
 	{
 		simmulated_annealing(s, tsp, instance);
@@ -432,7 +429,6 @@ int main(int argc, char *argv[])
 				instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
 		make_syscall(com);
 	}
-
 	if (open_gif)
 	{
 		if (!quiet)
