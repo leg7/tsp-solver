@@ -13,8 +13,8 @@ struct point
 struct destination
 {
 	size_t  id;         // Le numero de ville de la destination
-	point   coord;      // coordonnées du point
 	double  distance;   // La distance pour aller à cette ville
+	point   coord;      // coordonnées du point (pour l'export gnuplot)
 };
 
 struct tour
@@ -31,19 +31,22 @@ struct iteration
 	iteration *next;
 };
 
-/* liste chaînée qui represente la solution au tsp, utile pour gnuplot */
+/* liste chaînée qui represente la solution du tsp, utile pour gnuplot */
 using solution = iteration*;
 
+/* manipulation d'un tour */
 void init_tour(tour &t, size_t start, std::string instance);
 void update_tour_distances(tour &t, matrix tsp);
 void update_tour_length(tour &t, matrix tsp);
 void update_tour(tour &t, matrix tsp, std::string instance);
 void print_tour(tour t);
 
+/* manipulation d'une solution */
 void insert_tour_to_solution_head(tour t, solution &s);
 void insert_tour_to_solution_tail(tour t, solution &s);
 void print_solution_result(solution s);
 
+/* fonctions pour exporter une solution dans un fichier .dat pour gnuplot */
 void make_gnuplot_datafile(std::string filename);
 void append_progressive_iteration(iteration i, std::string filename);
 void append_iteration(iteration i, std::string filename);
