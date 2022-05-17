@@ -2,15 +2,15 @@
 
 include config.mk
 
-SRC = import.cpp export.cpp data.cpp calcul-tour.cpp voyage.cpp
+SRC = import.cpp export.cpp data.cpp calcul-tour.cpp tsp-solver.cpp
 OBJ = ${SRC:.cpp=.o}
 
-all: voyage
+all: tsp-solver
 
 ${OBJ}: import.h export.h data.h calcul-tour.h config.mk
 
-voyage: ${OBJ}
+tsp-solver: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -f voyage ${OBJ} *.out
+	rm -f tsp-solver ${OBJ} *.out
