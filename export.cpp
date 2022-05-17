@@ -1,9 +1,9 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 #include "export.h"
-#include "tour.h"
+#include "data.h"
 
 void make_gnuplot_datafile(std::string filename)
 {

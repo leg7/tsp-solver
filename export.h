@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "tour.h"
+#include "data.h"
 
 /* fonctions pour exporter une solution dans un fichier .dat pour gnuplot */
 void make_gnuplot_datafile(std::string filename);

@@ -2,7 +2,19 @@
 
 #include <string>
 
-#include "matrix.h"
+
+struct matrix_data
+{
+	double distance;        // La distance
+	bool   visited;         // Si la ville à été visité
+};
+
+/* Ceci est une matrice d'adjacence utilisé pour "resoudre" l'instance tsp */
+struct matrix
+{
+	matrix_data **data;
+	size_t      size;
+};
 
 struct point
 {
@@ -24,15 +36,19 @@ struct tour
 	double      length; // La longeur du tour
 };
 
-/* Maillon qui contient une iteration de la solution trouvé au tsp */
 struct iteration
 {
 	tour t;
 	iteration *next;
 };
-
-/* liste chaînée qui represente la solution du tsp, utile pour gnuplot */
 using solution = iteration*;
+
+/* manipulation de matrice d'adjacence */
+void build_matrix(matrix &tsp, std::string filename);
+void init_matrix_status(matrix &tsp);
+void print_matrix_status(matrix &tsp);
+void print_matrix_distance(matrix tsp);
+void delete_matrix(matrix &tsp);
 
 /* manipulation d'un tour */
 void init_tour(tour &t, size_t start, std::string instance);

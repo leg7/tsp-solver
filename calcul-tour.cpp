@@ -1,12 +1,11 @@
-#include "matrix.h"
-#include "import.h"
-#include "calcul-tour.h"
-#include "tour.h"
-
-#include <iostream>
-#include <stdexcept>
-#include <limits>
 #include <cstdlib>
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+
+#include "calcul-tour.h"
+#include "data.h"
+#include "import.h"
 
 size_t OPT_SWAPS = 0;
 

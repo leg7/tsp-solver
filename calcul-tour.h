@@ -1,8 +1,6 @@
 #pragma once
 
-#include "matrix.h"
-#include "import.h"
-#include "tour.h"
+#include "data.h"
 
 /* compteur d'echanges opt */
 extern size_t OPT_SWAPS;

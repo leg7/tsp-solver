@@ -1,11 +1,10 @@
-#include "matrix.h"
-#include "import.h"
-#include "tour.h"
-#include "calcul-tour.h"
-#include "export.h"
-
 #include <bits/stdc++.h>
 #include <string>
+
+#include "calcul-tour.h"
+#include "data.h"
+#include "export.h"
+#include "import.h"
 
 void make_syscall(std::string com)
 {

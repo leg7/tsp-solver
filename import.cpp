@@ -1,10 +1,9 @@
-#include "import.h"
-#include "matrix.h"
-#include "calcul-tour.h"
-
-#include <iostream>
 #include <cmath>
 #include <fstream>
+#include <iostream>
+
+#include "data.h"
+#include "import.h"
 
 size_t get_tsp_size(std::string filename)
 {
