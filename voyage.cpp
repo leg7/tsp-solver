@@ -55,13 +55,11 @@ int main(int argc, char *argv[])
 		<< "\t\t\t\tN'affiche rien mais l'éxécution du programme est réalisé\n"
 		<< "\t\t\t--gif\n"
 		<< "\t\t\t\tModelise la solution avec gnuplot sous format animé .gif\n"
-		<< "\t\t\t--open-gif"
-		<< "\t\t\t\tOuvre le gif produit par --gif"
+		<< "\t\t\t--open-gif\n"
+		<< "\t\t\t\tOuvre le gif produit par --gif\n"
 		<< "\t\t\t-i , --interactif\n"
 		<< "\t\t\t\tLe mode intéractif est mis par défault" + red + " (Cette option doit être utilisée SEULE !) "
 		<< end_color + "\n"
-		<< "\t\t\t--gif\n"
-		<< "\t\t\t\tCréation d'un gif des résultats\n"
 		<< std::endl;
 
 		return 1;
@@ -167,7 +165,7 @@ int main(int argc, char *argv[])
 		gif       = false;
 		open_gif  = false;  // pour l'interactif
 		                   //
-		int chance = 3;
+		int chance = 2;
 		while (fourmis + glouton + genetique == 0)
 		{
 			int algo;
@@ -206,7 +204,7 @@ int main(int argc, char *argv[])
 		}
 		std::cout << std::endl;
 
-		chance = 3;
+		chance = 2;
 		while (chance >= 0)
 		{
 			char opti = 0;
@@ -241,7 +239,7 @@ int main(int argc, char *argv[])
 		}
 		std::cout << std::endl;
 
-		chance = 3;
+		chance = 2;
 		while (chance >= 0)
 		{
 			char aff = 0;
@@ -276,7 +274,7 @@ int main(int argc, char *argv[])
 		}
 		std::cout << std::endl;
 
-		chance = 3;
+		chance = 2;
 		while (chance >= 0)
 		{
 			char gnuplot = 0;
@@ -314,7 +312,7 @@ int main(int argc, char *argv[])
 
 		if (gif)
 		{
-			chance = 3;
+			chance = 2;
 			while (chance >= 0)
 			{
 				char aff = 0;
