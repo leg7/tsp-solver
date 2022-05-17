@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
 		<< "\t\tCréation d'un tour :\n"
 		<< "\t\t\t-g , --glouton\n"
 		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme Glouton\n"
+		<< "\t\t\t-r , --recuit-simule\n"
+		<< "\t\t\t\tTrouve un itinéraire avec un algorithme de recuit simulé\n"
 		<< "\t\t\t-f , --fourmis (WIP)\n"
 		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme des fourmis (WIP)\n"
 		<< "\t\t\t-G , --genetique\n"
@@ -85,6 +87,7 @@ int main(int argc, char *argv[])
 	 * --------- */
 
 	bool glouton    = false;
+	bool recuit     = false;
 	bool fourmis    = false;
 	bool genetique  = false;
 	bool two_opt    = false;
@@ -104,6 +107,12 @@ int main(int argc, char *argv[])
 			++i;
 		}
 
+		else if (std::string(argv[i]) == "-r" or
+		         std::string(argv[i]) == "--recuit-simule")
+		{
+			recuit = true;
+			++i;
+		}
 		else if (std::string(argv[i]) == "-f" or
 		         std::string(argv[i]) == "--fourmis")
 		{
@@ -162,6 +171,7 @@ int main(int argc, char *argv[])
 		}
 
 		glouton   = false;
+		recuit    = false;
 		fourmis   = false;
 		genetique = false;
 		two_opt   = false;
@@ -170,13 +180,14 @@ int main(int argc, char *argv[])
 		open_gif  = false;  // pour l'interactif
 		                   //
 		int chance = 2;
-		while (fourmis + glouton + genetique == 0)
+		while (glouton + recuit + fourmis + genetique == 0)
 		{
 			char algo = 0;
 			std::cout << "\tQuelle algorithme voulez-vous utiliser ?\n"
 					<< "\t\t1 = glouton\n"
-					<< "\t\t2 = fourmis (WIP)\n"
-					<< "\t\t3 = genetique\n"
+					<< "\t\t2 = recuit simulé\n"
+					<< "\t\t3 = fourmis (WIP)\n"
+					<< "\t\t4 = genetique\n"
 					<< "\t: ";
 			std::cin >> algo;
 
@@ -186,9 +197,12 @@ int main(int argc, char *argv[])
 				glouton = true;
 				break;
 			case '2':
-				fourmis = true;
+				recuit = true;
 				break;
 			case '3':
+				fourmis = true;
+				break;
+			case '4':
 				genetique = true;
 				break;
 			default:
@@ -366,12 +380,12 @@ int main(int argc, char *argv[])
 	solution s = nullptr;
 
 	//tests
-	if (glouton + fourmis + genetique > 1)
+	if (glouton + recuit + fourmis + genetique > 1)
 	{
 		std::cerr << "\n" + center + red +"ERREUR CHOISISSEZ QU'UN SEUL ALGORITHME !\n " + end_color;
 		goto help;
 	}
-	if (glouton + fourmis + genetique == 0)
+	if (glouton + recuit + fourmis + genetique == 0)
 	{
 		std::cerr << "\n" + center + red + "ERREUR, VOUS N'AVEZ PAS CHOISIT D'ALGORITHME !\n" + end_color;
 		goto help;
@@ -397,6 +411,13 @@ int main(int argc, char *argv[])
 		find_greedy_solution(s, tsp, instance);
 		if (!quiet)
 			std::cout << "Voici le meilleur itinéraire glouton\n";
+	}
+
+	if (recuit == true)
+	{
+		simmulated_annealing(s, tsp, instance);
+		if (!quiet)
+			std::cout << "Voici le meilleur itinéraire trouvé avec l'algorithme de recuit simulé";
 	}
 
 	if (!quiet)
