@@ -6,7 +6,6 @@
 #include <cmath>
 #include <fstream>
 
-/* testé ok */
 size_t get_tsp_size(std::string filename)
 {
 	std::ifstream file(filename);
