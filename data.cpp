@@ -7,12 +7,16 @@
 #include "data.h"
 #include "import.h"
 
-void build_matrix(matrix &tsp, std::string filename)
+void init_matrix_size(matrix &tsp, std::string filename)
 {
 	tsp.size = get_tsp_size(filename);
-
+	// parceque la derniere ville ne figure pas dans la matrice d'adjacence
 	--tsp.size;
+}
 
+void build_matrix(matrix &tsp, std::string filename)
+{
+	init_matrix_size(tsp, filename);
 	if (tsp.size > 0)
 	{
 		tsp.data = new matrix_data*[tsp.size];
