@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 
-/* testé ok */
 void build_matrix(matrix &tsp, std::string filename)
 {
 	tsp.size = get_tsp_size(filename);
@@ -51,7 +50,6 @@ void print_matrix_status(matrix &tsp)
 	std::cout << std::endl;
 }
 
-/* testé ok */
 void print_matrix_distance(matrix tsp)
 {
 	size_t x = tsp.size;
