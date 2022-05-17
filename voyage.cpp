@@ -97,29 +97,34 @@ int main(int argc, char *argv[])
 	int i = 0;
 	while (i < argc - 1)
 	{
-		if (std::string(argv[i]) == "-g" or std::string(argv[i]) == "--glouton")
+		if (std::string(argv[i]) == "-g" or
+		    std::string(argv[i]) == "--glouton")
 		{
 			glouton = true;
 			++i;
 		}
 
-		else if (std::string(argv[i]) == "-f" or std::string(argv[i]) == "--fourmis")
+		else if (std::string(argv[i]) == "-f" or
+		         std::string(argv[i]) == "--fourmis")
 		{
 			fourmis = true;
 			++i;
 		}
 
-		else if (std::string(argv[i]) == "-G" or std::string(argv[i]) == "--genetique")
+		else if (std::string(argv[i]) == "-G" or
+		         std::string(argv[i]) == "--genetique")
 		{
 			genetique = true;
 			++i;
 		}
-		else if (std::string(argv[i]) == "-o" or std::string(argv[i]) == "--2-opt")
+		else if (std::string(argv[i]) == "-o" or
+		         std::string(argv[i]) == "--2-opt")
 		{
 			two_opt = true;
 			++i;
 		}
-		else if (std::string(argv[i]) == "-q" or std::string(argv[i]) == "--quiet")
+		else if (std::string(argv[i]) == "-q" or
+		         std::string(argv[i]) == "--quiet")
 		{
 			quiet = true;
 			++i;
@@ -134,7 +139,8 @@ int main(int argc, char *argv[])
 			open_gif = true;
 			++i;
 		}
-		else if (std::string(argv[i]) == "-i" or std::string(argv[i]) == "--interactif")
+		else if (std::string(argv[i]) == "-i" or
+		         std::string(argv[i]) == "--interactif")
 		{
 			interactif = true;
 			++i;
