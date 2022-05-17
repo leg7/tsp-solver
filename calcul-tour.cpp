@@ -10,7 +10,6 @@
 
 size_t OPT_SWAPS = 0;
 
-/* testé ok */
 void swap(auto &a, auto &b)
 {
 	auto temp = a;
@@ -18,7 +17,6 @@ void swap(auto &a, auto &b)
 	b = temp;
 }
 
-/* testé ok */
 double get_distance(matrix tsp, size_t start, size_t end)
 {
 	if (start > tsp.size or end > tsp.size)
@@ -33,22 +31,6 @@ double get_distance(matrix tsp, size_t start, size_t end)
 	return tsp.data[start][end-start-1].distance;
 }
 
-/* testé ok */
-bool is_valid_path(matrix tsp, size_t start, size_t end)
-{
-	if (end > tsp.size or start > tsp.size)
-		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
-
-	if (start == end)
-		return false;
-
-	if (start > end)
-		swap(start, end);
-
-	return (tsp.data[start][end-start-1].visited == false);
-}
-
-/* testé ok */
 void mark_visited(matrix &tsp, size_t city)
 {
 	if (city > tsp.size)
@@ -71,7 +53,20 @@ void mark_visited(matrix &tsp, size_t city)
 	}
 }
 
-/* testé ok */
+bool is_valid_path(matrix tsp, size_t start, size_t end)
+{
+	if (end > tsp.size or start > tsp.size)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
+	if (start == end)
+		return false;
+
+	if (start > end)
+		swap(start, end);
+
+	return (tsp.data[start][end-start-1].visited == false);
+}
+
 destination get_greedy_destination(matrix &tsp, size_t start)
 {
 	if (start > tsp.size)
@@ -96,7 +91,6 @@ destination get_greedy_destination(matrix &tsp, size_t start)
 	return d;
 }
 
-/* testé ok */
 void make_greedy_tour(tour &t, matrix &tsp, std::string instance)
 {
 	init_matrix_status(tsp);
@@ -213,7 +207,6 @@ void two_opt_optimize(tour &t, matrix tsp, std::string instance)
 	import_tour_coord(t, instance);
 }
 
-/* testé ok */
 void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instance)
 {
 	/* init best */
@@ -245,6 +238,12 @@ void find_greedy_optimized_solution(solution &s, matrix &tsp, std::string instan
 	insert_tour_to_solution_tail(best, s);
 }
 
+bool should_make_random_swap(int ti, int t)
+{
+	float probability = rand() % ti;
+	return (probability < t);
+}
+
 size_t pick_random_neighbor(size_t a, tour t)
 {
 	size_t neighbor = 0;
@@ -266,12 +265,6 @@ size_t pick_random_neighbor(size_t a, tour t)
 		}
 	}
 	return neighbor;
-}
-
-bool should_make_random_swap(int ti, int t)
-{
-	float probability = rand() % ti;
-	return (probability < t);
 }
 
 void swap_random_neighbors(tour &t, matrix tsp)
