@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
 		<< "\t\tCréation d'un tour :\n"
 		<< "\t\t\t-g , --glouton\n"
 		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme Glouton\n"
-		<< "\t\t\t-f , --fourmis\n"
-		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme des fourmis\n"
+		<< "\t\t\t-f , --fourmis (WIP)\n"
+		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme des fourmis (WIP)\n"
 		<< "\t\t\t-G , --genetique\n"
 		<< "\t\t\t\tTrouve un itinéraire avec un algorithme génétique\n"
 		<< std::endl
@@ -175,7 +175,7 @@ int main(int argc, char *argv[])
 			char algo = 0;
 			std::cout << "\tQuelle algorithme voulez-vous utiliser ?\n"
 					<< "\t\t1 = glouton\n"
-					<< "\t\t2 = fourmis\n"
+					<< "\t\t2 = fourmis (WIP)\n"
 					<< "\t\t3 = genetique\n"
 					<< "\t: ";
 			std::cin >> algo;
@@ -371,10 +371,14 @@ int main(int argc, char *argv[])
 		std::cerr << "\n" + center + red +"ERREUR CHOISISSEZ QU'UN SEUL ALGORITHME !\n " + end_color;
 		goto help;
 	}
-
 	if (glouton + fourmis + genetique == 0)
 	{
 		std::cerr << "\n" + center + red + "ERREUR, VOUS N'AVEZ PAS CHOISIT D'ALGORITHME !\n" + end_color;
+		goto help;
+	}
+	if (fourmis)
+	{
+		std::cout << red + "L'algorithme des fourmis est en cours de developpement et n'est pas fonctionel\n" + end_color;
 		goto help;
 	}
 
