@@ -2,13 +2,18 @@
 
 #include <string>
 
+/*
+ * IMPORTANT: D'après la specification TSPLIB95 les distances doivent être
+ * des entiers, cependant tous les calculs avec des réels doivent
+ * imperativement être faits en double précision.
+ */
 struct matrix_data
 {
-	double distance;        // La distance
+	size_t distance;        // Distance entière
 	bool   visited;         // Si la ville à été visité
 };
 
-/* Ceci est une matrice d'adjacence utilisé pour "resoudre" l'instance tsp */
+// Ceci est une matrice d'adjacence utilisé pour "resoudre" l'instance tsp
 struct matrix
 {
 	matrix_data **data;
@@ -24,7 +29,7 @@ struct point
 struct destination
 {
 	size_t  id;         // Le numero de ville de la destination
-	double  distance;   // La distance pour aller à cette ville
+	size_t  distance;   // La distance pour aller à cette ville
 	point   coord;      // coordonnées du point (pour l'export gnuplot)
 };
 
@@ -32,7 +37,7 @@ struct tour
 {
 	destination *data;  // Un tableau de destination (e.g un tour)
 	size_t      size;   // Le nombre de destinations du tour
-	double      length; // La longeur du tour
+	size_t      length; // La longeur du tour
 };
 
 struct iteration

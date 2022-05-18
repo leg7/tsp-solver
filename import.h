@@ -13,7 +13,7 @@ std::ifstream go_to_target(std::string filename, std::string target, size_t n);
 bool find_target(std::string filename, std::string target);
 
 /* import des données tsplib dans la matrice d'adjacence */
-double distance(point a, point b);
+size_t distance(point a, point b);
 void import_tsp_cord(matrix &tsp, std::string filename);
 void import_tsp_matrix(matrix &tsp, std::string filename);
 void import_tsp(matrix &tsp, std::string filename);

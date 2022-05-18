@@ -16,7 +16,7 @@ void swap(auto &a, auto &b)
 	b = temp;
 }
 
-double get_distance(matrix tsp, size_t start, size_t end)
+size_t get_distance(matrix tsp, size_t start, size_t end)
 {
 	if (start > tsp.size or end > tsp.size)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
@@ -71,10 +71,10 @@ destination get_greedy_destination(matrix &tsp, size_t start)
 	if (start > tsp.size)
 		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
 
-	double double_max = std::numeric_limits<double>::max();
+	size_t size_t_max = std::numeric_limits<size_t>::max();
 
 	destination d;
-	d.distance = double_max;
+	d.distance = size_t_max;
 
 	for (size_t i = 0; i <= tsp.size; ++i)
 	{

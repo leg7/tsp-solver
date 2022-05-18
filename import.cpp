@@ -81,7 +81,7 @@ bool find_target(std::string filename, std::string target)
 }
 
 /* testé ok */
-double distance(point a, point b)
+size_t distance(point a, point b)
 {
     return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
 }

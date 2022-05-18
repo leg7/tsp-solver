@@ -7,7 +7,7 @@ extern size_t OPT_SWAPS;
 
 /* operations elementaires necessaires pour "resoudre" le tsp */
 void swap(auto &a, auto &b);
-double get_distance(matrix tsp, size_t start, size_t end);
+size_t get_distance(matrix tsp, size_t start, size_t end);
 void mark_visited(matrix &tsp, size_t city);
 bool is_valid_path(matrix tsp, size_t start, size_t end);
 
