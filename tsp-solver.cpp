@@ -433,7 +433,7 @@ int main(int argc, char *argv[])
 		filename = p.replace_extension("");
 		std::string com = "gnuplot -e \"filename = '" +
 		                  filename + "'\"" +
-		                  " ./tsp/plot.gp  2>/dev/null";
+		                  " plot.gp  2>/dev/null";
 		make_syscall(com);
 	}
 	if (open_gif)
