@@ -404,24 +404,31 @@ int main(int argc, char *argv[])
 		goto help;
 	}
 
-	if (glouton == true and two_opt == true)
+	if (glouton)
 	{
-		find_greedy_optimized_solution(s, tsp, instance);
-		if (!quiet)
+		if (two_opt)
 		{
-			std::cout << "Voici le meilleur itinéraire glouton avec une optimisation 2-opt, "
-				  << "Pour le trouver " << OPT_SWAPS
-				  << " échanges 2-opt ont étés realisés\n";
+			find_greedy_optimized_solution(s, tsp, instance);
+			if (!quiet)
+			{
+				std::cout << "Voici le meilleur itinéraire glouton avec une optimisation 2-opt, "
+					  << "Pour le trouver " << OPT_SWAPS
+					  << " échanges 2-opt ont étés realisés\n";
+			}
+		}
+		else
+		{
+			find_greedy_solution(s, tsp, instance);
+			if (!quiet)
+				std::cout << "Voici le meilleur itinéraire glouton\n";
 		}
 	}
-	else if (glouton == true and two_opt == false)
+	if (recuit)
 	{
-		find_greedy_solution(s, tsp, instance);
-		if (!quiet)
-			std::cout << "Voici le meilleur itinéraire glouton\n";
-	}
-	if (recuit == true)
-	{
+		if (two_opt)
+			std::cout << red + "Attention l'option les optimizations deux opt n'ont pas d'effet"
+				  << " avec l'algroithme de recuit simulé\n\n" + end_color;
+
 		simmulated_annealing(s, tsp, instance);
 		if (!quiet)
 			std::cout << "Voici le meilleur itinéraire trouvé avec l'algorithme de recuit simulé\n";
