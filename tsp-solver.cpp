@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 	bool interactif = false;
 	bool open_gif   = false;
 
-	int i = 0;
+	int i = 1;
 	while (i < argc - 1)
 	{
 		if (std::string(argv[i]) == "-g" or
@@ -154,7 +154,11 @@ int main(int argc, char *argv[])
 			++i;
 		}
 		else
-			++i;
+		{
+			std::cerr << red + "Erreur : l'option " << argv[i] << " n'existe pas !\n" + end_color;
+			goto help;
+		}
+
 	}
 
 	/* --------------- *
