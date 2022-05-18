@@ -435,13 +435,18 @@ int main(int argc, char *argv[])
 		                  filename + "'\"" +
 		                  " plot.gp  2>/dev/null";
 		make_syscall(com);
-	}
-	if (open_gif)
-	{
-		if (!quiet)
-			std::cout << "\tAffichage du fichier .gif...\n";
-		std::string com_open = "xdg-open " + instance + ".dat.gif 2>/dev/null";
-		make_syscall(com_open);
+
+		if (open_gif)
+		{
+			if (!quiet)
+				std::cout << "\tAffichage du fichier .gif...\n";
+
+			std::filesystem::path p(instance);
+			std::string filename = p.replace_extension(".gif");
+			std::cout << filename;
+			std::string com_open = "xdg-open " + filename + " 2>/dev/null";
+			make_syscall(com_open);
+		}
 	}
 
 	delete_matrix(tsp);
