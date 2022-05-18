@@ -14,7 +14,9 @@ bool find_target(std::string filename, std::string target);
 
 /* import des données tsplib dans la matrice d'adjacence */
 size_t distance(point a, point b);
-void import_tsp_cord(matrix &tsp, std::string filename);
+size_t att_distance(point i, point j);
+bool is_att_instance(std::string filename);
+void import_att_instance(matrix &tsp, std::string filename);
 void import_tsp_matrix(matrix &tsp, std::string filename);
 void import_tsp(matrix &tsp, std::string filename);
 

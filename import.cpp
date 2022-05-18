@@ -1,6 +1,7 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 
 #include "data.h"
 #include "import.h"
@@ -86,9 +87,35 @@ size_t distance(point a, point b)
     return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
 }
 
-/* testé ok */
-void import_tsp_cord(matrix &tsp, std::string filename)
+/*
+ * fonction de calcul de distances "pseudo-euclidienne" pour les instances
+ * avec "EDGE_WEIGHT_TYPE : ATT".
+ * Cette fonction est copié de la specification tsplib95.
+ */
+size_t att_distance(point i, point j)
 {
+	int xd = i.x - j.x;
+	int yd = i.y - j.y;
+	double rij = sqrt((xd*xd + yd*yd) / 10.0);
+	size_t tij = size_t(rij);
+
+	if (tij < rij)
+		return tij + 1;
+	else
+		return tij;
+}
+
+bool is_att_instance(std::string filename)
+{
+	return find_target(filename, "EDGE_WEIGHT_TYPE : ATT");
+}
+
+/* testé ok */
+void import_att_instance(matrix &tsp, std::string filename)
+{
+	if (!is_att_instance(filename))
+		throw std::invalid_argument("Instance pas de type ATT");
+
 	std::ifstream file(filename);
 	if (file.good())
 	{
@@ -130,7 +157,7 @@ void import_tsp_cord(matrix &tsp, std::string filename)
 				file >> number;
 				b.y = std::stoi(number);
 
-				tsp.data[i][j].distance = distance(a, b);
+				tsp.data[i][j].distance = att_distance(a, b);
 			}
 		}
 	}
@@ -165,8 +192,8 @@ void import_tsp(matrix &tsp, std::string filename)
 	std::ifstream file(filename);
 	if (file.good())
 	{
-		if (find_target(filename, "NODE_COORD_SECTION"))
-			import_tsp_cord(tsp, filename);
+		if (is_att_instance(filename))
+			import_att_instance(tsp, filename);
 		else
 			import_tsp_matrix(tsp, filename);
 	}
