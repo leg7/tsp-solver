@@ -244,37 +244,37 @@ bool should_make_random_swap(int ti, int t)
 	return (probability < t);
 }
 
-size_t pick_random_neighbor(size_t a, tour t)
+size_t pick_random_neighbor(size_t i, tour t)
 {
-	size_t neighbor = 0;
-	int n = 0;
-	for (int i = 0; i < int(t.size); ++i)
-	{
-		if (t.data[i].id == a)
-		{
-			n = (rand()%1 == 0) ? -1 : 1;
-			neighbor = t.data[i + n].id;
+	size_t n   = 0, // le voisin choisi
+	       prv = 0, // le voisin prècedant
+	       nxt = 0; // le voisin suivant
 
-			if (i + n >= int(t.size))
-			{
-				n = (rand()%1 == 0) ? 0 : t.size - 2;
-				neighbor = t.data[n].id;
-			}
-			else if (i + n < 0)
-				neighbor = t.data[t.size - 1].id;
-		}
+	if (i == 1)
+	{
+		prv = t.size - 2;
+		nxt = 2;
 	}
-	return neighbor;
+	else if (i == t.size - 2)
+	{
+		prv = t.size - 3;
+		nxt = 1;
+	}
+	else
+	{
+		prv = --i;
+		nxt = ++i;
+	}
+	n = (rand() % 2 == 0) ? prv : nxt;
+
+	return n;
 }
 
-void swap_random_neighbors(tour &t, matrix tsp)
+void swap_random_neighbors(tour &t)
 {
-	size_t s1, s2;
-
-	s1 = rand() % tsp.size + 1;
-	s2 = pick_random_neighbor(s1, t);
-
-	t = two_opt_swap(t, tsp, s1, s2);
+	size_t i = rand() % (t.size - 2) + 1;
+	size_t j = pick_random_neighbor(i, t);
+	swap(t.data[i].id, t.data[j].id);
 }
 
 void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
@@ -282,7 +282,8 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 	srand(time(NULL));
 
 	tour b;
-	init_tour(b, rand() % tsp.size + 1, instance);
+	/* init_tour(b, rand() % tsp.size + 1, instance); */
+	init_tour(b, 0, instance);
 	make_greedy_tour(b, tsp, instance);
 
 	int ti = 300,
@@ -291,7 +292,7 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 	while (t >= 0)
 	{
 		if (should_make_random_swap(ti, t))
-			swap_random_neighbors(b, tsp);
+			swap_random_neighbors(b);
 		else
 		{
 			tour tmp;
@@ -303,8 +304,9 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 						b = tmp;
 				}
 		}
-		import_tour_coord(b, instance);
+		update_tour(b, tsp, instance);
 		insert_tour_to_solution_tail(b, s);
 		--t;
 	}
+	two_opt_optimize(b, tsp, instance);
 }
