@@ -25,8 +25,6 @@ int main(int argc, char *argv[])
 	std::string end_color = "\033[0m";
 	std::string center = "\t\t";
 
-	make_syscall("clear");
-
 	/*--------- *
 	 * TEST ARG *
 	 * -------- */
