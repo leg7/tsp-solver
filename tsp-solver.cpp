@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <filesystem>
 #include <string>
 
 #include "calcul-tour.h"
@@ -424,9 +425,15 @@ int main(int argc, char *argv[])
 	{
 		if (!quiet)
 			std::cout << "\tCréation du fichier .gif..." << std::endl;
-		build_gnuplot_datafile(s, instance);
-		std::string com = "gnuplot -e \"filename = \\\"./" +
-				instance + ".dat\\\"\" ./tsp/plot.gp  2>/dev/null";
+
+		std::filesystem::path p(instance);
+		std::string filename = p.replace_extension(".dat");
+		build_gnuplot_datafile(s, filename);
+
+		filename = p.replace_extension("");
+		std::string com = "gnuplot -e \"filename = '" +
+		                  filename + "'\"" +
+		                  " ./tsp/plot.gp  2>/dev/null";
 		make_syscall(com);
 	}
 	if (open_gif)

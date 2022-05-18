@@ -7,8 +7,7 @@
 
 void make_gnuplot_datafile(std::string filename)
 {
-	std::ofstream file(filename+".dat");
-
+	std::ofstream file(filename);
 	if (file.good())
 		file << "";
 	else
@@ -18,7 +17,7 @@ void make_gnuplot_datafile(std::string filename)
 
 void append_progressive_iteration(iteration i, std::string filename)
 {
-	std::ofstream file(filename+".dat", std::ios::app);
+	std::ofstream file(filename, std::ios::app);
 	if (file.good())
 	{
 		for (size_t j = 1; j < i.t.size; ++j)
@@ -34,7 +33,7 @@ void append_progressive_iteration(iteration i, std::string filename)
 
 void append_iteration(iteration i, std::string filename)
 {
-	std::ofstream file(filename+".dat", std::ios::app);
+	std::ofstream file(filename, std::ios::app);
 	if (file.good())
 	{
 		file << std::endl << std::endl;
@@ -54,7 +53,7 @@ void build_gnuplot_datafile(solution s, std::string filename)
 	}
 
 	make_gnuplot_datafile(filename);
-	std::ofstream file(filename+".dat", std::ios::app);
+	std::ofstream file(filename, std::ios::app);
 	if (file.good())
 	{
 		/* affichage "progressif" */
