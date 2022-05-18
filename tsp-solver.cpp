@@ -394,6 +394,11 @@ int main(int argc, char *argv[])
 		std::cout << red + "L'algorithme des fourmis est en cours de developpement et n'est pas fonctionel\n" + end_color;
 		goto help;
 	}
+	if (open_gif and !gif)
+	{
+		std::cerr << red + "Vous devez faire un gif avec --gif pour pouvoir l'ouvrire avec l'option --open-gif\n" + end_color;
+		goto help;
+	}
 
 	if (glouton == true and two_opt == true)
 	{
