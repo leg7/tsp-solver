@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	if (argc < 3)
 	{
 		help:
-		std::cout << "\n\tUsage : ./voyage [OPTION] [input-file]\n\n"
+		std::cout << "\n\tUsage : ./tsp-solver [OPTION] [input-file]\n\n"
 
 		<< "\tOptions " + red + "(IMPORTANT : choisissez qu'un seul algorithme !)" + end_color +" :\n"
 		<< "\t\tCréation d'un tour :\n"
