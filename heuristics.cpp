@@ -333,3 +333,12 @@ tour make_random_tour(matrix tsp)
 
 	return t;
 }
+
+void make_random_generation(generation &g, size_t size, matrix tsp)
+{
+	g.size = size;
+	g.member = new tour[g.size];
+
+	for (size_t i = 0; i < g.size; ++i)
+		g.member[i] = make_random_tour(tsp);
+}

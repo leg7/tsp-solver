@@ -29,3 +29,4 @@ void find_simmulated_annealing_solution(solution &s, matrix &tsp, std::string in
 
 /* algo genetique */
 tour make_random_tour(matrix tsp);
+void make_random_generation(generation &g, size_t size, matrix tsp);

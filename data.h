@@ -51,6 +51,17 @@ struct iteration
 };
 using solution = iteration*;
 
+/*
+ * Tableau de tours utilisé pour les algo genetiques.
+ * Ce tableau représente generation (dans les sens humain)
+ * et chaque membre de cette generation est un tour.
+ */
+struct generation
+{
+	tour *member;
+	size_t size;
+};
+
 /* manipulation de matrice d'adjacence */
 void init_matrix_size(matrix &tsp, std::string filename);
 void init_matrix_distances(matrix &tsp);

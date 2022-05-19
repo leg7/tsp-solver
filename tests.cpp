@@ -30,3 +30,28 @@ bool test_make_random_tour(matrix tsp)
 	return (tour_data_is_valid(t));
 	delete[] t.data;
 }
+
+bool test_make_random_generation(matrix tsp)
+{
+	generation g;
+	size_t test_size = 100;
+	make_random_generation(g, test_size, tsp);
+
+	if (g.size != test_size)
+	{
+		std::cerr << "Generation size invalid\n";
+		return false;
+	}
+
+	if (g.member[0].size != tsp.size + 2)
+	{
+		std::cerr << "Member size invalid\n";
+		return false;
+	}
+
+	for (size_t i = 0; i < g.size; ++i)
+		if (!tour_data_is_valid(g.member[i]))
+			return false;
+
+	return true;
+}
