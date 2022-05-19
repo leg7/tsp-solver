@@ -180,20 +180,16 @@ tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b)
 
 void two_opt_optimize(tour &t, matrix tsp, std::string instance)
 {
-	tour optimized;
-	optimized.size = t.size;
-
 	bool improved = true;
 	while (improved)
 	{
 		improved = false;
 
 		start_over:
-		optimized.data = new destination[t.size];
 		for (size_t i = 1; i < t.size - 2; ++i)
 			for (size_t j = i + 1; j < t.size - 1; ++j)
 			{
-				optimized = two_opt_swap(t, tsp, i, j);
+				tour optimized = two_opt_swap(t, tsp, i, j);
 
 				if (optimized.length < t.length)
 				{
