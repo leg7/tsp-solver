@@ -345,3 +345,33 @@ void make_random_generation(generation &g, size_t size, matrix tsp)
 	for (size_t i = 0; i < g.size; ++i)
 		g.member[i] = make_random_tour(tsp);
 }
+
+int lomuto_partition(generation &g, int start, int end)
+{
+	int j = start;
+	size_t p = g.member[end].length;
+	for (int i = start; i < end; ++i)
+		if (g.member[i].length <= p)
+		{
+			std::swap(g.member[i], g.member[j]);
+			++j;
+		}
+	std::swap(g.member[j], g.member[end]);
+
+	return j;
+}
+
+void sort_generation(generation &g, int start, int end)
+{
+	if (end - start > 0)
+	{
+		int k = lomuto_partition(g, start, end);
+		sort_generation(g, start, k-1);
+		sort_generation(g, k+1, end);
+	}
+}
+
+void sort_generation(generation &g)
+{
+	sort_generation(g, 0, int(g.size));
+}

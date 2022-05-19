@@ -36,9 +36,11 @@ int main(int argc, char *argv[])
 	// test d'heuristiques genetiques
 	bool g1 = test_make_random_tour(test_matrix);
 	bool g2 = test_make_random_generation(test_matrix);
+	bool g3 = test_sort_generation(test_matrix);
 
 	std::cout << "test_make_random_tour : " << (g1 ? "OK" : "NOT OK") << std::endl;
 	std::cout << "test_make_random_generation : " << (g2 ? "OK" : "NOT OK") << std::endl;
+	std::cout << "test_sort_generation : " << (g3 ? "OK" : "NOT OK") << std::endl;
 
 	std::cout << std::endl;
 	delete_matrix(test_matrix);
