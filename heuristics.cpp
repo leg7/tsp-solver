@@ -312,7 +312,7 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 void find_simmulated_annealing_solution(solution &s, matrix &tsp, std::string instance)
 {
 	simmulated_annealing(s, tsp, instance);
-	for (size_t i = 0; i < 30; ++i)
+	for (size_t i = 0; i < 15; ++i)
 	{
 		solution tmp = nullptr;
 		simmulated_annealing(tmp, tsp, instance);
