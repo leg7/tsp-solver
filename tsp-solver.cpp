@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <cstdlib>
 #include <filesystem>
 #include <string>
 
@@ -427,6 +428,7 @@ int main(int argc, char *argv[])
 			std::cout << red + "Attention l'option les optimizations deux opt n'ont pas d'effet"
 				  << " avec l'algroithme de recuit simulé\n\n" + end_color;
 
+		srand(time(NULL));
 		simmulated_annealing(s, tsp, instance);
 		if (!quiet)
 			std::cout << "Voici le meilleur itinéraire trouvé avec l'algorithme de recuit simulé\n";

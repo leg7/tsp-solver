@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
@@ -279,15 +278,12 @@ void swap_random_neighbors(tour &t)
 
 void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 {
-	srand(time(NULL));
-
 	tour b;
 	init_tour(b, rand() % tsp.size + 1, instance);
 	make_greedy_tour(b, tsp, instance);
 
 	int ti = 300,
 	    t  = ti;
-
 	while (t >= 0)
 	{
 		if (should_make_random_swap(ti, t))
