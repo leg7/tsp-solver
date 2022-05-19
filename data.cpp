@@ -106,6 +106,11 @@ void init_tour_size(tour &t, std::string instance)
 	t.size = get_tsp_size(instance) + 1;
 }
 
+void init_tour_size(tour &t, matrix tsp)
+{
+	t.size = tsp.size + 2;
+}
+
 void init_tour_data(tour &t, size_t start)
 {
 	t.data = new destination[t.size];
@@ -125,6 +130,13 @@ void init_tour(tour &t, size_t start, std::string instance)
 {
 	init_tour_length(t);
 	init_tour_size(t, instance);
+	init_tour_data(t, start);
+}
+
+void init_tour(tour &t, size_t start, matrix tsp)
+{
+	init_tour_length(t);
+	init_tour_size(t, tsp);
 	init_tour_data(t, start);
 }
 

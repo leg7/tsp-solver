@@ -60,8 +60,10 @@ void delete_matrix(matrix &tsp);
 /* manipulation d'un tour */
 void init_tour_length(tour &t);
 void init_tour_size(tour &t, std::string instance);
+void init_tour_size(tour &t, matrix tsp);
 void init_tour_data(tour &t, size_t start, std::string instance);
 void init_tour(tour &t, size_t start, std::string instance);
+void init_tour(tour &t, size_t start, matrix tsp);
 void update_tour_distances(tour &t, matrix tsp);
 void update_tour_length(tour &t);
 void update_tour(tour &t, matrix tsp, std::string instance);
