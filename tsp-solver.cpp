@@ -429,7 +429,7 @@ int main(int argc, char *argv[])
 				  << " avec l'algroithme de recuit simulé\n\n" + end_color;
 
 		srand(time(NULL));
-		simmulated_annealing(s, tsp, instance);
+		find_simmulated_annealing_solution(s, tsp, instance);
 		if (!quiet)
 			std::cout << "Voici le meilleur itinéraire trouvé avec l'algorithme de recuit simulé\n";
 	}
