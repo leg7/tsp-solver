@@ -134,7 +134,7 @@ void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
 tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b)
 {
 	if (a == b or a >= t.size or b >= t.size)
-		throw std::invalid_argument("ta mère");
+		throw std::invalid_argument("2-opt-swap impossible");
 
 	tour swapped;
 	swapped.size = t.size;
