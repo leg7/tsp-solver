@@ -261,8 +261,8 @@ size_t pick_random_neighbor(size_t i, tour t)
 	}
 	else
 	{
-		prv = --i;
-		nxt = ++i;
+		prv = i - 1;
+		nxt = i + 1;
 	}
 	n = (rand() % 2 == 0) ? prv : nxt;
 
