@@ -305,3 +305,19 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 	}
 	two_opt_optimize(b, tsp, instance);
 }
+
+void find_simmulated_annealing_solution(solution &s, matrix &tsp, std::string instance)
+{
+	simmulated_annealing(s, tsp, instance);
+	for (size_t i = 0; i < 100; ++i)
+	{
+		solution tmp = nullptr;
+		simmulated_annealing(tmp, tsp, instance);
+
+		if (get_solution_result_length(tmp) < get_solution_result_length(s))
+		{
+			delete_solution(s);
+			s = tmp;
+		}
+	}
+}

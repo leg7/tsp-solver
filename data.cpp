@@ -201,6 +201,14 @@ void print_solution_result(solution s)
 		print_solution_result(s->next);
 }
 
+size_t get_solution_result_length(solution s)
+{
+	if (s->next != nullptr)
+		return get_solution_result_length(s->next);
+	else
+		return s->t.length;
+}
+
 void delete_solution(solution &s)
 {
 	while (s != nullptr)
