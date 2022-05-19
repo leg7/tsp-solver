@@ -8,13 +8,6 @@
 
 size_t OPT_SWAPS = 0;
 
-void swap(auto &a, auto &b)
-{
-	auto temp = a;
-	a = b;
-	b = temp;
-}
-
 size_t get_distance(matrix tsp, size_t start, size_t end)
 {
 	if (start > tsp.size or end > tsp.size)
@@ -24,7 +17,7 @@ size_t get_distance(matrix tsp, size_t start, size_t end)
 		return 0;
 
 	if (start > end)
-		swap(start, end);
+		std::swap(start, end);
 
 	return tsp.data[start][end-start-1].distance;
 }
@@ -60,7 +53,7 @@ bool is_valid_path(matrix tsp, size_t start, size_t end)
 		return false;
 
 	if (start > end)
-		swap(start, end);
+		std::swap(start, end);
 
 	return (tsp.data[start][end-start-1].visited == false);
 }
@@ -270,7 +263,7 @@ void swap_random_neighbors(tour &t)
 {
 	size_t i = rand() % (t.size - 2) + 1;
 	size_t j = pick_random_neighbor(i, t);
-	swap(t.data[i].id, t.data[j].id);
+	std::swap(t.data[i].id, t.data[j].id);
 }
 
 void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
