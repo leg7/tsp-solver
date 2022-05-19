@@ -203,11 +203,11 @@ void print_solution_result(solution s)
 
 void delete_solution(solution &s)
 {
-	if (s != nullptr)
+	while (s != nullptr)
 	{
-		delete_solution(s->next);
+		solution next = s->next;
 		delete s;
+		s = next;
 	}
-	else
-		delete s;
+	s = nullptr;
 }
