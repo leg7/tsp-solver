@@ -182,7 +182,6 @@ void two_opt_optimize(tour &t, matrix tsp, std::string instance)
 {
 	tour optimized;
 	optimized.size = t.size;
-	optimized.data = new destination[t.size];
 
 	bool improved = true;
 	while (improved)
@@ -190,6 +189,7 @@ void two_opt_optimize(tour &t, matrix tsp, std::string instance)
 		improved = false;
 
 		start_over:
+		optimized.data = new destination[t.size];
 		for (size_t i = 1; i < t.size - 2; ++i)
 			for (size_t j = i + 1; j < t.size - 1; ++j)
 			{
@@ -201,6 +201,7 @@ void two_opt_optimize(tour &t, matrix tsp, std::string instance)
 					improved = true;
 					goto start_over;
 				}
+				delete[] optimized.data;
 			}
 	}
 	import_tour_coord(t, instance);
