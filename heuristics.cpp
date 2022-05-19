@@ -331,6 +331,9 @@ tour make_random_tour(matrix tsp)
 
 	t.data[t.size - 1] = t.data[0];
 
+	update_tour_distances(t, tsp);
+	update_tour_length(t);
+
 	return t;
 }
 

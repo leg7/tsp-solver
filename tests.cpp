@@ -51,7 +51,22 @@ bool test_make_random_generation(matrix tsp)
 
 	for (size_t i = 0; i < g.size; ++i)
 		if (!tour_data_is_valid(g.member[i]))
+		{
+			std::cerr << "Tour data invalid\n";
 			return false;
+		}
+
+	for (size_t i = 0; i < g.size; ++i)
+	{
+		size_t backup = g.member[i].length;
+		update_tour_distances(g.member[i], tsp);
+		update_tour_length(g.member[i]);
+		if (backup != g.member[i].length)
+		{
+			std::cerr << "Invalid tour length\n";
+			return false;
+		}
+	}
 
 	return true;
 }
