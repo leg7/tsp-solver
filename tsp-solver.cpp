@@ -7,6 +7,7 @@
 #include "data.h"
 #include "export.h"
 #include "import.h"
+#include "tests.h"
 
 void make_syscall(std::string com)
 {
@@ -22,13 +23,30 @@ void make_syscall(std::string com)
 
 int main(int argc, char *argv[])
 {
-	std::string red = "\033[1;31m";
-	std::string end_color = "\033[0m";
-	std::string center = "\t\t";
+	srand(time(NULL));
+
+	/* ---------- *
+	 * UNIT TESTS *
+	 * ---------- */
+	matrix test_matrix;
+	std::string test_instance = "./tsp/bayg29.tsp";
+	init_matrix(test_matrix, test_instance);
+	import_tsp(test_matrix, test_instance);
+
+	bool test_random_tour = test_make_random_tour(test_matrix);
+
+	std::cout << "test_make_random_tour : " << (test_random_tour ? "OK" : "NOT OK") << std::endl;
+
+	std::cout << std::endl;
+	delete_matrix(test_matrix);
 
 	/*--------- *
 	 * TEST ARG *
 	 * -------- */
+
+	std::string red = "\033[1;31m";
+	std::string end_color = "\033[0m";
+	std::string center = "\t\t";
 
 	if (argc < 3)
 	{
@@ -428,7 +446,6 @@ int main(int argc, char *argv[])
 			std::cout << red + "Attention l'option les optimizations deux opt n'ont pas d'effet"
 				  << " avec l'algroithme de recuit simulé\n\n" + end_color;
 
-		srand(time(NULL));
 		find_simmulated_annealing_solution(s, tsp, instance);
 		if (!quiet)
 			std::cout << "Voici le meilleur itinéraire trouvé avec l'algorithme de recuit simulé\n";

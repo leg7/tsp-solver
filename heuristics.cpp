@@ -324,3 +324,19 @@ void find_simmulated_annealing_solution(solution &s, matrix &tsp, std::string in
 		}
 	}
 }
+
+tour make_random_tour(matrix tsp)
+{
+	tour t;
+	t.size = tsp.size + 2;
+	t.data = new destination[t.size];
+
+	for (size_t i = 0; i < t.size - 1; ++i)
+		t.data[i].id = i;
+	for (size_t i = 0; i < t.size - 1; ++i)
+		std::swap(t.data[i].id, t.data[rand() % (t.size - 1)].id);
+
+	t.data[t.size - 1] = t.data[0];
+
+	return t;
+}
