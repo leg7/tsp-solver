@@ -464,6 +464,7 @@ int main(int argc, char *argv[])
 	}
 
 	delete_matrix(tsp);
+	delete_solution(s);
 
 	return 0;
 }

@@ -71,3 +71,4 @@ void print_tour(tour t);
 void insert_tour_to_solution_head(tour t, solution &s);
 void insert_tour_to_solution_tail(tour t, solution &s);
 void print_solution_result(solution s);
+void delete_solution(solution &s);

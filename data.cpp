@@ -200,3 +200,14 @@ void print_solution_result(solution s)
 	else
 		print_solution_result(s->next);
 }
+
+void delete_solution(solution &s)
+{
+	if (s != nullptr)
+	{
+		delete_solution(s->next);
+		delete s;
+	}
+	else
+		delete s;
+}
