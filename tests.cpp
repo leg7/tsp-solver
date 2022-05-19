@@ -68,18 +68,27 @@ bool test_make_random_generation(matrix tsp)
 		}
 	}
 
+
+
 	return true;
 }
 
 bool test_sort_generation(matrix tsp)
 {
 	generation g;
-	make_random_generation(g, 100, tsp);
+	make_random_generation(g, 1000, tsp);
 	sort_generation(g);
 
 	for (size_t i = 0; i < g.size - 1; ++i)
 		if (g.member[i].length > g.member[i + 1].length)
 			return false;
+
+	for (size_t i = 0; i < g.size; ++i)
+		if (!tour_data_is_valid(g.member[i]))
+		{
+			std::cerr << "Tour data invalid\n";
+			return false;
+		}
 
 	return true;
 }
