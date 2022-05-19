@@ -40,6 +40,10 @@ struct tour
 	size_t      length; // La longeur du tour
 };
 
+/*
+ * Liste chainée utilisé pour exporter une solution dans un fichier
+ * mais aussi faire une gif de chaque iteration avec gnuplot.
+ */
 struct iteration
 {
 	tour t;
