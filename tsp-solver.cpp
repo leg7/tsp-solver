@@ -448,7 +448,7 @@ int main(int argc, char *argv[])
 	if (recuit)
 	{
 		if (two_opt)
-			std::cout << red + "Attention l'option les optimizations deux opt n'ont pas d'effet"
+			std::cout << red + "Attention les optimizations deux opt n'ont pas d'effet"
 				  << " avec l'algroithme de recuit simulé\n\n" + end_color;
 
 		find_simmulated_annealing_solution(s, tsp, instance);
