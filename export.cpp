@@ -1,17 +1,50 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <filesystem>
 
+#include "import.h"
 #include "export.h"
 #include "data.h"
 
-void export_solution_header(std::string filename)
+void export_solution_header(solution s, std::string filename)
 {
-	int tmp;
+	std::filesystem::path p(filename);
+	std::string export_file = std::string(p.replace_extension(".solution"));
+
+	std::ofstream file(export_file);
+	if (file.good())
+	{
+		file << "NAME : " + std::string(p.filename()) + '\n'
+			<< "COMMENT : Best solution found by tsp-solver of "
+			<< std::string(p.stem()) + '\n'
+			<< "TYPE : TOUR\n"
+			<< "DIMENSION : " << get_tsp_size(filename) << '\n'
+			<< "LENGTH : " << get_solution_result_length(s) << '\n'
+			<< "TOUR SECTION\n";
+	}
+}
+
+void export_solution_data(solution s, std::string filename)
+{
+	std::filesystem::path p(filename);
+	filename = p.replace_extension(".solution");
+	std::ofstream file(filename, std::ios::app);
+	if (file.good())
+	{
+		go_to_target(filename, "TOUR SECTION", 1);
+
+		while (s->next != nullptr)
+			s = s->next;
+		for (size_t i = 0; i < s->t.size; ++i)
+			file << s->t.data[i].id + 1 << '\n';
+	}
 }
 
 void export_solution(solution s, std::string filename)
 {
+	export_solution_header(s,filename);
+	export_solution_data(s,filename);
 }
 
 void make_gnuplot_datafile(std::string filename)

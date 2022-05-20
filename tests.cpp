@@ -3,6 +3,7 @@
 #include <string>
 
 #include "import.h"
+#include "export.h"
 #include "data.h"
 #include "heuristics.h"
 #include "tests.h"
@@ -22,44 +23,113 @@ void print_test(bool test, std::string message)
 		<< end_color << std::endl;
 }
 
-bool test_export_solution_header(std::string filename)
+bool test_export_solution_header(solution s, std::string filename)
 {
+	export_solution_header(s, filename);
+
 	std::filesystem::path p(filename);
-	filename = p.replace_extension(".solution");
+	filename = std::string(p.replace_extension(".solution"));
 	std::ifstream file(filename);
 
+	std::string name = "test_export_solution_header: ";
+
 	if (!file.good())
+	{
+		std::cerr << name + "Can't open file\n";
 		return false;
+	}
 
 	std::string line = "";
 	std::getline(file, line);
-	if (line != "NAME : " + filename)
+	if (line != "NAME : " + std::string(p.filename()))
+	{
+		std::cerr << name + "NAME incorrect\n";
 		return false;
+	}
 
 	std::getline(file, line);
 	std::string comment ="COMMENT : Best solution found by tsp-solver of ";
 	if (line != comment + std::string(p.stem()))
+	{
+		std::cerr << name + "COMMENT incorrect\n";
 		return false;
+	}
 
 	std::getline(file, line);
 	if (line != "TYPE : TOUR")
+	{
+		std::cerr << name + "TYPE incorrect\n";
 		return false;
+	}
 
 	std::getline(file, line);
 	p.replace_extension(".tsp");
-	if (line != "DIMENSION : " + get_tsp_size(std::string(p)))
+	std::string size = std::to_string(get_tsp_size(std::string(p)));
+	if (line != "DIMENSION : " + size)
+	{
+		std::cerr << name + "DIMENSION incorrect\n";
 		return false;
+	}
+
+	std::getline(file, line);
+	size = std::to_string(get_solution_result_length(s));
+	if (line != "LENGTH : " + size )
+	{
+		std::cerr << name + "LENGTH incorrect\n";
+		return false;
+	}
 
 	std::getline(file, line);
 	if (line != "TOUR SECTION")
+	{
+		std::cerr << name + "TOUR SECTION incorrect\n";
 		return false;
+	}
+
+	return true;
+}
+
+bool test_export_solution_data(solution s, std::string filename)
+{
+	export_solution_data(s, filename);
+
+	std::string name = "test_export_solution_data : ";
+
+	if (s == nullptr)
+	{
+		std::cerr << name + "Solution empty\n";
+		return false;
+	}
+
+	std::filesystem::path p(filename);
+	filename = p.replace_extension(".solution");
+	std::ifstream file(filename);
+	file = go_to_target(filename, "TOUR SECTION", 0);
+
+	while (s->next != nullptr)
+		s = s->next;
+
+	std::string line = "";
+	for (size_t i = 0; i < s->t.size; ++i)
+	{
+		std::getline(file, line);
+		if (std::to_string(s->t.data[i].id + 1) != line)
+		{
+			std::cerr << name + "Exported solution is not the best\n";
+			return false;
+		}
+	}
 
 	return true;
 }
 
 bool test_export_solution(solution s, std::string filename)
 {
-	if (!test_export_solution_header(filename))
+	export_solution(s, filename);
+
+	if (!test_export_solution_header(s, filename))
+		return false;
+	if (!test_export_solution_data(s, filename))
 		return false;
 
 	return true;
@@ -207,9 +277,14 @@ int main()
 
 	std::cout << title + "\n\nEXPORT :\n\n" + end_color;
 
-	bool e1 = test_export_solution_header(instance);
+	bool e1 = test_export_solution_header(s, instance);
 	print_test(e1, "test_export_solution_header : ");
+	bool e2 = test_export_solution_data(s, instance);
+	print_test(e2, "test_export_solution_data : ");
+	bool e3 = test_export_solution(s, instance);
+	print_test(e3, "test_export_solution : ");
 
+	// Cleanup
 	std::cout << std::endl;
 	delete_matrix(tsp);
 	delete_solution(s);

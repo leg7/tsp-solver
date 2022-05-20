@@ -40,13 +40,13 @@ int main(int argc, char *argv[])
 
 		<< "\tOptions " + red + "(IMPORTANT : choisissez qu'un seul algorithme !)" + end_color +" :\n"
 		<< "\t\tCréation d'un tour :\n"
-		<< "\t\t\t-g , --glouton\n"
+		<< "\t\t\t-g, --glouton\n"
 		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme Glouton\n"
-		<< "\t\t\t-r , --recuit-simule\n"
+		<< "\t\t\t-r, --recuit-simule\n"
 		<< "\t\t\t\tTrouve un itinéraire avec un algorithme de recuit simulé\n"
-		<< "\t\t\t-f , --fourmis (WIP)\n"
+		<< "\t\t\t-f, --fourmis (WIP)\n"
 		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme des fourmis (WIP)\n"
-		<< "\t\t\t-G , --genetique\n"
+		<< "\t\t\t-G, --genetique\n"
 		<< "\t\t\t\tTrouve un itinéraire avec un algorithme génétique\n"
 		<< std::endl
 
@@ -56,15 +56,16 @@ int main(int argc, char *argv[])
 		<< std::endl
 
 		<< "\t\tUtilisation général " + red + "(IMPORTANT : nécessite un tour !)" + end_color + ":\n"
-		<< "\t\t\t-q , --quiet\n"
+		<< "\t\t\t-q, --quiet\n"
 		<< "\t\t\t\tN'affiche rien mais l'éxécution du programme est réalisé\n"
 		<< "\t\t\t--gif\n"
 		<< "\t\t\t\tModelise la solution avec gnuplot sous format animé .gif\n"
 		<< "\t\t\t--open-gif\n"
 		<< "\t\t\t\tOuvre le gif produit par --gif\n"
-		<< "\t\t\t-i , --interactif\n"
-		<< "\t\t\t\tLe mode intéractif est mis par défault" + red + " (Cette option doit être utilisée SEULE !) "
-		<< end_color + "\n"
+		<< "\t\t\t-i, --interactif\n"
+		<< "\t\t\t\tLe mode intéractif est mis par défault" + red + " (Cette option doit être utilisée SEULE !)\n" + end_color
+		<< "\t\t\t--no-export\n"
+		<< "\t\t\t\tN'exporte pas la solution trouvé dans un fichier .solution\n"
 		<< std::endl;
 
 		return 1;
@@ -99,6 +100,7 @@ int main(int argc, char *argv[])
 	bool gif        = false;
 	bool interactif = false;
 	bool open_gif   = false;
+	bool no_export  = false;
 
 	int i = 1;
 	while (i < argc - 1)
@@ -155,6 +157,11 @@ int main(int argc, char *argv[])
 			interactif = true;
 			++i;
 		}
+		else if (std::string(argv[i]) == "--no-export")
+		{
+			no_export = true;
+			++i;
+		}
 		else
 		{
 			std::cerr << red + "Erreur : l'option " << argv[i] << " n'existe pas !\n" + end_color;
@@ -183,7 +190,8 @@ int main(int argc, char *argv[])
 
 		gif       = false;
 		open_gif  = false;  // pour l'interactif
-		                   //
+		no_export = false;
+
 		int chance = 2;
 		while (glouton + recuit + fourmis + genetique == 0)
 		{
@@ -290,6 +298,42 @@ int main(int argc, char *argv[])
 				{
 					std::cout << "\tJe ne comprends toujours pas, "
 						<< "je vais supposer que vous ne voulez pas l'afficher.\n\n";
+					--chance;
+				}
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
+
+		chance = 2;
+		while (chance >= 0)
+		{
+			char e = 0;
+			std::cout << "\tVoulez-vous exporter la solution dans un fichier .solution? (y/N) : ";
+			std::cin >> e;
+
+			switch (e)
+			{
+			case 'y':
+			case 'Y':
+				chance = -1;
+				break;
+			case 'n':
+			case 'N':
+				chance = -1;
+				no_export = true;
+				break;
+			default:
+				if (chance > 0)
+				{
+					std::cout << "\tJe n'ai pas compris !\n";
+					--chance;
+				}
+				else if (chance == 0)
+				{
+					std::cout << "\tJe ne comprends toujours pas, "
+						<< "je suppose que vous ne voulez pas l'exporter\n";
+					no_export = true;
 					--chance;
 				}
 			}
@@ -438,6 +482,13 @@ int main(int argc, char *argv[])
 
 	if (!quiet)
 		print_solution_result(s);
+
+	if (!no_export)
+	{
+		std::cout << "Export du fichier solution en cours...\n";
+		export_solution(s, instance);
+		std::cout << "Export reussi !\n";
+	}
 
 	if (gif)
 	{

@@ -6,7 +6,8 @@ void print_test(bool test);
 bool test_tour_data(tour t);
 
 // test d'export du fichier .solution
-bool test_export_solution_header(std::string filename);
+bool test_export_solution_header(solution s, std::string filename);
+bool test_export_solution_data(solution s, std::string filename);
 bool test_export_solution(solution s, std::string filename);
 
 // tests d'heuristiques genetique
