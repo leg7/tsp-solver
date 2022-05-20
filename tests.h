@@ -1,7 +1,10 @@
 #include "data.h"
 
-
 bool test_tour_data(tour t);
+
+// test d'export du fichier .solution
+bool test_export_solution_header(std::string filename);
+bool test_export_solution(solution s, std::string filename);
 
 // tests d'heuristiques genetique
 bool test_make_random_tour(matrix tsp);

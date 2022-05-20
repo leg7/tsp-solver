@@ -2,15 +2,31 @@
 
 include config.mk
 
-SRC = import.cpp export.cpp data.cpp heuristics.cpp tsp-solver.cpp tests.cpp
+SRC = import.cpp export.cpp data.cpp heuristics.cpp
 OBJ = ${SRC:.cpp=.o}
 
 all: tsp-solver
 
-${OBJ}: import.h export.h data.h heuristics.h tests.h config.mk
+# Test
 
-tsp-solver: ${OBJ}
-	${CC} -o $@ ${OBJ} ${LDFLAGS}
+T = ${SRC} tests.cpp
+TO = ${OBJ} tests.o
+
+${TO}: ${T:.cpp=.h}
+
+tests: ${TO}
+	${CC} -o $@ ${TO} ${LDFLAGS}
+	./tests
+
+# Main program
+
+M = ${SRC} tsp-solver.cpp
+MO = ${OBJ} tsp-solver.o
+
+${MO}: ${SRC:.cpp=.h}
+
+tsp-solver: tests ${MO}
+	${CC} -o $@ ${MO} ${LDFLAGS}
 
 clean:
-	rm -f tsp-solver ${OBJ} *.out
+	rm -f tsp-solver tests ${MO} ${TO} *.out

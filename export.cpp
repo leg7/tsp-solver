@@ -5,6 +5,15 @@
 #include "export.h"
 #include "data.h"
 
+void export_solution_header(std::string filename)
+{
+	int tmp;
+}
+
+void export_solution(solution s, std::string filename)
+{
+}
+
 void make_gnuplot_datafile(std::string filename)
 {
 	std::ofstream file(filename);

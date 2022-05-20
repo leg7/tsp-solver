@@ -1,9 +1,53 @@
 #include <iostream>
+#include <filesystem>
 
 #include "import.h"
 #include "data.h"
 #include "heuristics.h"
 #include "tests.h"
+
+bool test_export_solution_header(std::string filename)
+{
+	std::filesystem::path p(filename);
+	filename = p.replace_extension(".solution");
+	std::ifstream file(filename);
+
+	if (!file.good())
+		return false;
+
+	std::string line = "";
+	std::getline(file, line);
+	if (line != "NAME : " + filename)
+		return false;
+
+	std::getline(file, line);
+	std::string comment ="COMMENT : Best solution found by tsp-solver of ";
+	if (line != comment + std::string(p.stem()))
+		return false;
+
+	std::getline(file, line);
+	if (line != "TYPE : TOUR")
+		return false;
+
+	std::getline(file, line);
+	p.replace_extension(".tsp");
+	if (line != "DIMENSION : " + get_tsp_size(std::string(p)))
+		return false;
+
+	std::getline(file, line);
+	if (line != "TOUR SECTION")
+		return false;
+
+	return true;
+}
+
+bool test_export_solution(solution s, std::string filename)
+{
+	if (!test_export_solution_header(filename))
+		return false;
+
+	return true;
+}
 
 bool test_tour_data(tour t)
 {
@@ -112,4 +156,40 @@ bool test_sort_generation(matrix tsp)
 		return false;
 
 	return true;
+}
+
+int main()
+{
+	/* ---------- *
+	 * UNIT TESTS *
+	 * ---------- */
+	matrix test_matrix;
+	std::string test_instance = "./tsp/bayg29.tsp";
+	init_matrix(test_matrix, test_instance);
+	import_tsp(test_matrix, test_instance);
+
+	// test d'heuristiques genetiques
+	bool g1 = test_make_random_tour(test_matrix);
+	bool g2 = test_make_random_generation(test_matrix);
+	/* bool g3 = test_sort_generation(test_matrix); */
+
+	std::cout << "\n\nHEURISTICS\n\n";
+	std::cout << "test_make_random_tour : " << (g1 ? "OK" : "NOT OK") << std::endl;
+	std::cout << "test_make_random_generation : " << (g2 ? "OK" : "NOT OK") << std::endl;
+	/* std::cout << "test_sort_generation : " << (g3 ? "OK" : "NOT OK") << std::endl; */
+
+	// test d'export
+
+	solution test_s = nullptr;
+	find_greedy_optimized_solution(test_s, test_matrix, test_instance);
+
+	bool e1 = test_export_solution_header(test_instance);
+
+	std::cout << "\n\nEXPORT\n\n";
+	std::cout << "test_export_solution_header : " << (e1 ? "OK" : "NOT OK") << std::endl;
+
+	std::cout << std::endl;
+	delete_matrix(test_matrix);
+
+	return 0;
 }

@@ -4,7 +4,11 @@
 
 #include "data.h"
 
-/* fonctions pour exporter une solution dans un fichier .dat pour gnuplot */
+// exporter meilleure tour dans un fichier .solution
+void export_solution_header(std::string filename);
+void export_solution(std::string filename);
+
+// fonctions pour exporter une solution dans un fichier .dat pour gnuplot
 void make_gnuplot_datafile(std::string filename);
 void append_progressive_iteration(iteration i, std::string filename);
 void append_iteration(iteration i, std::string filename);

@@ -3,4 +3,5 @@
 *.gif
 *.dat
 tsp-solver
+tests
 docs/
