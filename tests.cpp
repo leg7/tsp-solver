@@ -3,8 +3,9 @@
 #include "import.h"
 #include "data.h"
 #include "heuristics.h"
+#include "tests.h"
 
-bool tour_data_is_valid(tour t)
+bool test_tour_data(tour t)
 {
 	if (t.data[0].id != t.data[t.size - 1].id)
 	{
@@ -27,8 +28,39 @@ bool tour_data_is_valid(tour t)
 bool test_make_random_tour(matrix tsp)
 {
 	tour t = make_random_tour(tsp);
-	return (tour_data_is_valid(t));
+	bool valid = (test_tour_data(t));
 	delete[] t.data;
+
+	return valid;
+}
+
+bool test_generation_data(generation g)
+{
+	for (size_t i = 0; i < g.size; ++i)
+		if (!test_tour_data(g.member[i]))
+		{
+			std::cerr << "Tour data invalid\n";
+			return false;
+		}
+
+	return true;
+}
+
+bool test_generation_lengths(generation g, matrix tsp)
+{
+	for (size_t i = 0; i < g.size; ++i)
+	{
+		size_t backup = g.member[i].length;
+		update_tour_distances(g.member[i], tsp);
+		update_tour_length(g.member[i]);
+		if (backup != g.member[i].length)
+		{
+			std::cerr << "Invalid tour length\n";
+			return false;
+		}
+	}
+
+	return true;
 }
 
 bool test_make_random_generation(matrix tsp)
@@ -49,26 +81,20 @@ bool test_make_random_generation(matrix tsp)
 		return false;
 	}
 
-	for (size_t i = 0; i < g.size; ++i)
-		if (!tour_data_is_valid(g.member[i]))
-		{
-			std::cerr << "Tour data invalid\n";
+	if (!test_generation_data(g))
+		return false;
+
+	if (!test_generation_lengths(g, tsp))
+		return false;
+
+	return true;
+}
+
+bool generation_is_sorted(generation g)
+{
+	for (size_t i = 0; i < g.size - 1; ++i)
+		if (g.member[i].length > g.member[i + 1].length)
 			return false;
-		}
-
-	for (size_t i = 0; i < g.size; ++i)
-	{
-		size_t backup = g.member[i].length;
-		update_tour_distances(g.member[i], tsp);
-		update_tour_length(g.member[i]);
-		if (backup != g.member[i].length)
-		{
-			std::cerr << "Invalid tour length\n";
-			return false;
-		}
-	}
-
-
 
 	return true;
 }
@@ -79,16 +105,11 @@ bool test_sort_generation(matrix tsp)
 	make_random_generation(g, 1000, tsp);
 	sort_generation(g);
 
-	for (size_t i = 0; i < g.size - 1; ++i)
-		if (g.member[i].length > g.member[i + 1].length)
-			return false;
+	if (!generation_is_sorted(g))
+		return false;
 
-	for (size_t i = 0; i < g.size; ++i)
-		if (!tour_data_is_valid(g.member[i]))
-		{
-			std::cerr << "Tour data invalid\n";
-			return false;
-		}
+	if (!test_generation_data(g))
+		return false;
 
 	return true;
 }
