@@ -8,56 +8,7 @@
 
 size_t OPT_SWAPS = 0;
 
-size_t get_distance(matrix tsp, size_t start, size_t end)
-{
-	if (start > tsp.size or end > tsp.size)
-		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
-
-	if (start == end)
-		return 0;
-
-	if (start > end)
-		std::swap(start, end);
-
-	return tsp.data[start][end-start-1].distance;
-}
-
-void mark_visited(matrix &tsp, size_t city)
-{
-	if (city > tsp.size)
-		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
-
-	for (size_t j = 0; j < tsp.size - city; ++j)
-		tsp.data[city][j].visited = true;
-
-	/* min diagonale */
-	if (city > 0)
-	{
-		int i = city - 1;
-		int j = 0;
-		while (i >= 0)
-		{
-			tsp.data[i][j].visited = true;
-			--i;
-			++j;
-		}
-	}
-}
-
-bool is_valid_path(matrix tsp, size_t start, size_t end)
-{
-	if (end > tsp.size or start > tsp.size)
-		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
-
-	if (start == end)
-		return false;
-
-	if (start > end)
-		std::swap(start, end);
-
-	return (tsp.data[start][end-start-1].visited == false);
-}
-
+// renvoie la destination la plus proche de @start dans @tsp
 destination get_greedy_destination(matrix &tsp, size_t start)
 {
 	if (start > tsp.size)
@@ -124,6 +75,7 @@ void find_greedy_solution(solution &s, matrix &tsp, std::string instance)
 	insert_tour_to_solution_tail(best, s);
 }
 
+// Fait un échange 2-opt entre @a et @b dans un tour @t
 tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b)
 {
 	if (a == b or a >= t.size or b >= t.size)
@@ -171,6 +123,7 @@ tour two_opt_swap(tour t, matrix tsp, size_t a, size_t b)
 	return swapped;
 }
 
+// optimiise un tour au maximum avec des échanges 2-opt
 void two_opt_optimize(tour &t, matrix tsp, std::string instance)
 {
 	bool improved = true;
@@ -321,6 +274,7 @@ void find_simmulated_annealing_solution(solution &s, matrix &tsp, std::string in
 	delete_duplicates(s);
 }
 
+// crée un individu aléatoirement pour l'algo gen
 tour make_random_tour(matrix tsp)
 {
 	tour t;
@@ -340,7 +294,7 @@ tour make_random_tour(matrix tsp)
 	return t;
 }
 
-// initialisation de la population
+// initialisation de la population pour l'algo gen
 void make_random_generation(generation &g, size_t size, matrix tsp)
 {
 	g.size = size;
@@ -366,6 +320,7 @@ int lomuto_partition(generation &g, int start, int end)
 	return j;
 }
 
+// le tri n'est pas totallement fonctionnel, la case 0 contient n'importe quoi
 void sort_generation(generation &g, int start, int end)
 {
 	if (end - start > 0)

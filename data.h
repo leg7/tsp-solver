@@ -13,7 +13,7 @@ struct matrix_data
 	bool   visited;         // Si la ville à été visité
 };
 
-// Ceci est une matrice d'adjacence utilisé pour "resoudre" l'instance tsp
+// Ceci est une matrice d'adjacence utilisé pour resoudre l'instance tsp
 struct matrix
 {
 	matrix_data **data;
@@ -25,6 +25,7 @@ struct point
 	double x,
 	       y;
 };
+
 
 struct destination
 {
@@ -41,8 +42,8 @@ struct tour
 };
 
 /*
- * Liste chainée utilisé pour exporter une solution dans un fichier
- * mais aussi faire une gif de chaque iteration avec gnuplot.
+ * Liste chainée utilisée pour exporter une solution dans un fichier
+ * mais aussi pour faire un gif de chaque iteration avec gnuplot.
  */
 struct iteration
 {
@@ -62,7 +63,7 @@ struct generation
 	size_t size;
 };
 
-/* manipulation de matrice d'adjacence */
+// manipulation de matrice d'adjacence
 void init_matrix_size(matrix &tsp, std::string filename);
 void init_matrix_distances(matrix &tsp);
 void init_matrix_status(matrix &tsp);
@@ -70,6 +71,9 @@ void init_matrix_data(matrix &tsp);
 void init_matrix(matrix &tsp, std::string filename);
 void print_matrix_status(matrix &tsp);
 void print_matrix_distance(matrix tsp);
+size_t get_distance(matrix tsp, size_t start, size_t end);
+void mark_visited(matrix &tsp, size_t city);
+bool is_valid_path(matrix tsp, size_t start, size_t end);
 void delete_matrix(matrix &tsp);
 
 /* manipulation d'un tour */

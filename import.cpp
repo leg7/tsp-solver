@@ -39,7 +39,6 @@ size_t get_tsp_size(std::string filename)
 	return 0;
 }
 
-/* testé ok */
 std::ifstream go_to_target(std::string filename, std::string target, size_t n)
 {
 	std::ifstream file(filename);
@@ -81,7 +80,6 @@ bool find_target(std::string filename, std::string target)
 	return false;
 }
 
-/* testé ok */
 size_t distance(point a, point b)
 {
     return sqrt(pow(b.y - a.y , 2) + pow(b.x - a.x , 2));
@@ -110,7 +108,6 @@ bool is_att_instance(std::string filename)
 	return find_target(filename, "EDGE_WEIGHT_TYPE : ATT");
 }
 
-/* testé ok */
 void import_att_instance(matrix &tsp, std::string filename)
 {
 	if (!is_att_instance(filename))
@@ -163,7 +160,6 @@ void import_att_instance(matrix &tsp, std::string filename)
 	}
 }
 
-/* testé ok */
 void import_tsp_matrix(matrix &tsp, std::string filename)
 {
 	std::ifstream file(filename);
@@ -186,7 +182,6 @@ void import_tsp_matrix(matrix &tsp, std::string filename)
 	}
 }
 
-/* pas testé */
 void import_tsp(matrix &tsp, std::string filename)
 {
 	std::ifstream file(filename);

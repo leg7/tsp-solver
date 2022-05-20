@@ -62,6 +62,7 @@ void init_matrix(matrix &tsp, std::string filename)
 			<< "est <= 0 donc la matrice n'as pas été faite.\n";
 }
 
+// Pour debugger
 void print_matrix_status(matrix &tsp)
 {
 	size_t x = tsp.size;
@@ -75,6 +76,7 @@ void print_matrix_status(matrix &tsp)
 	std::cout << std::endl;
 }
 
+// Pour debugger
 void print_matrix_distance(matrix tsp)
 {
 	size_t x = tsp.size;
@@ -86,6 +88,56 @@ void print_matrix_distance(matrix tsp)
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
+}
+
+size_t get_distance(matrix tsp, size_t start, size_t end)
+{
+	if (start > tsp.size or end > tsp.size)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
+	if (start == end)
+		return 0;
+
+	if (start > end)
+		std::swap(start, end);
+
+	return tsp.data[start][end-start-1].distance;
+}
+
+void mark_visited(matrix &tsp, size_t city)
+{
+	if (city > tsp.size)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
+	for (size_t j = 0; j < tsp.size - city; ++j)
+		tsp.data[city][j].visited = true;
+
+	/* min diagonale */
+	if (city > 0)
+	{
+		int i = city - 1;
+		int j = 0;
+		while (i >= 0)
+		{
+			tsp.data[i][j].visited = true;
+			--i;
+			++j;
+		}
+	}
+}
+
+bool is_valid_path(matrix tsp, size_t start, size_t end)
+{
+	if (end > tsp.size or start > tsp.size)
+		throw std::invalid_argument("Cette ligne n'appartient pas à la matrice");
+
+	if (start == end)
+		return false;
+
+	if (start > end)
+		std::swap(start, end);
+
+	return (tsp.data[start][end-start-1].visited == false);
 }
 
 void delete_matrix(matrix &tsp)
@@ -231,7 +283,8 @@ void delete_solution(solution &s)
 
 /*
  * Cette fonction sert a supprimer des iterations redondantes
- * de la solution pour que l'animation gnuplot soit coherente
+ * dans la solution produite par le recuit simmulé pour que
+ * pour que l'animation gnuplot soit plus coherente
  */
 void delete_duplicates(solution &s)
 {

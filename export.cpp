@@ -7,6 +7,7 @@
 #include "export.h"
 #include "data.h"
 
+// Sert a exporter l'entete d'un fichier .solution
 void export_solution_header(solution s, std::string filename)
 {
 	std::filesystem::path p(filename);
@@ -25,6 +26,7 @@ void export_solution_header(solution s, std::string filename)
 	}
 }
 
+// Sert a exporter le meilleure tour dans le fichier .solution
 void export_solution_data(solution s, std::string filename)
 {
 	std::filesystem::path p(filename);
@@ -57,6 +59,7 @@ void make_gnuplot_datafile(std::string filename)
 			<< "n'as pas pu être lu" << std::endl;
 }
 
+// Exporte une iteration pour que gnuplot l'affiche de manière animé
 void append_progressive_iteration(iteration i, std::string filename)
 {
 	std::ofstream file(filename, std::ios::app);
@@ -73,6 +76,7 @@ void append_progressive_iteration(iteration i, std::string filename)
 	}
 }
 
+// Exporte une iteration pour que gnuplot ne l'animé pas
 void append_iteration(iteration i, std::string filename)
 {
 	std::ofstream file(filename, std::ios::app);
