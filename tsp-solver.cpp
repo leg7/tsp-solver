@@ -43,11 +43,11 @@ int main(int argc, char *argv[])
 		<< "\t\t\t-g, --glouton\n"
 		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme Glouton\n"
 		<< "\t\t\t-r, --recuit-simule\n"
-		<< "\t\t\t\tTrouve un itinéraire avec un algorithme de recuit simulé\n"
-		<< "\t\t\t-f, --fourmis (WIP)\n"
-		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme des fourmis (WIP)\n"
-		<< "\t\t\t-G, --genetique\n"
+		<< "\t\t\t\tTrouve un itinéraire avec un algorithme de recuit simulé (Meilleur algorithme actuellement)\n"
+		<< "\t\t\t-G, --genetique (WIP)\n"
 		<< "\t\t\t\tTrouve un itinéraire avec un algorithme génétique\n"
+		<< "\t\t\t-f, --fourmis (WIP)\n"
+		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme des fourmis\n"
 		<< std::endl
 
 		<< "\t\tOptimisation du tour " + red + "(IMPORTANT : nécessite un tour !)" + end_color +" :\n"
@@ -94,8 +94,8 @@ int main(int argc, char *argv[])
 
 	bool glouton    = false;
 	bool recuit     = false;
-	bool fourmis    = false;
 	bool genetique  = false;
+	bool fourmis    = false;
 	bool two_opt    = false;
 
 	bool quiet      = false;
@@ -119,16 +119,16 @@ int main(int argc, char *argv[])
 			recuit = true;
 			++i;
 		}
-		else if (std::string(argv[i]) == "-f" or
-		         std::string(argv[i]) == "--fourmis")
-		{
-			fourmis = true;
-			++i;
-		}
 		else if (std::string(argv[i]) == "-G" or
 		         std::string(argv[i]) == "--genetique")
 		{
 			genetique = true;
+			++i;
+		}
+		else if (std::string(argv[i]) == "-f" or
+		         std::string(argv[i]) == "--fourmis")
+		{
+			fourmis = true;
 			++i;
 		}
 		else if (std::string(argv[i]) == "-o" or
@@ -191,8 +191,8 @@ int main(int argc, char *argv[])
 
 		glouton   = false;
 		recuit    = false;
-		fourmis   = false;
 		genetique = false;
+		fourmis   = false;
 		two_opt   = false;
 
 		gif       = false;
@@ -206,8 +206,8 @@ int main(int argc, char *argv[])
 			std::cout << "\tQuelle algorithme voulez-vous utiliser ?\n"
 					<< "\t\t1 = glouton\n"
 					<< "\t\t2 = recuit simulé\n"
-					<< "\t\t3 = fourmis (WIP)\n"
-					<< "\t\t4 = genetique\n"
+					<< "\t\t3 = genetique (WIP)\n"
+					<< "\t\t4 = fourmis (WIP)\n"
 					<< "\t: ";
 			std::cin >> algo;
 
@@ -220,10 +220,10 @@ int main(int argc, char *argv[])
 				recuit = true;
 				break;
 			case '3':
-				fourmis = true;
+				genetique = true;
 				break;
 			case '4':
-				genetique = true;
+				fourmis = true;
 				break;
 			default:
 				if (chance > 0)
@@ -446,9 +446,14 @@ int main(int argc, char *argv[])
 		std::cerr << "\n" + center + red + "ERREUR, VOUS N'AVEZ PAS CHOISIT D'ALGORITHME !\n" + end_color;
 		goto help;
 	}
+	if (genetique)
+	{
+		std::cout << red + "L'algorithme genetique est en cours de développement et n'est pas fonctionnel\n" + end_color;
+		goto help;
+	}
 	if (fourmis)
 	{
-		std::cout << red + "L'algorithme des fourmis est en cours de developpement et n'est pas fonctionel\n" + end_color;
+		std::cout << red + "L'algorithme des fourmis est en cours de développement et n'est pas fonctionel\n" + end_color;
 		goto help;
 	}
 	if (open_gif and !gif)
