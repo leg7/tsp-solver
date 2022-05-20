@@ -1,10 +1,26 @@
 #include <iostream>
 #include <filesystem>
+#include <string>
 
 #include "import.h"
 #include "data.h"
 #include "heuristics.h"
 #include "tests.h"
+
+void print_test(bool test, std::string message)
+{
+	std::string error = "\033[1;97;101m";
+	std::string blink = "\033[5;97;101m";
+	std::string pass = "\033[1;32m";
+	std::string end_color = "\033[0m";
+
+	if (!test)
+		std::cout << error + message;
+	else
+		std::cout << pass + message;
+	std::cout << (test ? + "OK" : blink + "NOT OK")
+		<< end_color << std::endl;
+}
 
 bool test_export_solution_header(std::string filename)
 {
@@ -160,36 +176,43 @@ bool test_sort_generation(matrix tsp)
 
 int main()
 {
-	/* ---------- *
-	 * UNIT TESTS *
-	 * ---------- */
-	matrix test_matrix;
-	std::string test_instance = "./tsp/bayg29.tsp";
-	init_matrix(test_matrix, test_instance);
-	import_tsp(test_matrix, test_instance);
+	std::string title = "\033[1;97m";
+	std::string end_color = "\033[0m";
 
-	// test d'heuristiques genetiques
-	bool g1 = test_make_random_tour(test_matrix);
-	bool g2 = test_make_random_generation(test_matrix);
-	/* bool g3 = test_sort_generation(test_matrix); */
+	std::cout << title + "------------------\n" +
+		"=== UNIT TESTS ===\n" +
+		"------------------\n" + end_color;
 
-	std::cout << "\n\nHEURISTICS\n\n";
-	std::cout << "test_make_random_tour : " << (g1 ? "OK" : "NOT OK") << std::endl;
-	std::cout << "test_make_random_generation : " << (g2 ? "OK" : "NOT OK") << std::endl;
-	/* std::cout << "test_sort_generation : " << (g3 ? "OK" : "NOT OK") << std::endl; */
+	matrix tsp;
+	std::string instance = "./tsp/bayg29.tsp";
+	init_matrix(tsp, instance);
+	import_tsp(tsp, instance);
 
-	// test d'export
+	// test heuristiques
+	std::cout << title + "\n\nHEURISTICS :\n\n" + end_color;
 
-	solution test_s = nullptr;
-	find_greedy_optimized_solution(test_s, test_matrix, test_instance);
+	bool g1 = test_make_random_tour(tsp);
+	print_test(g1, "test_make_random_tour : ");
 
-	bool e1 = test_export_solution_header(test_instance);
+	bool g2 = test_make_random_generation(tsp);
+	print_test(g2, "test_make_random_generation : ");
 
-	std::cout << "\n\nEXPORT\n\n";
-	std::cout << "test_export_solution_header : " << (e1 ? "OK" : "NOT OK") << std::endl;
+	// bool g3 = test_sort_generation(test_matrix);
+	// print_test(g3, "test_sort_generation : ");
+
+
+	// test expport
+	solution s = nullptr;
+	find_greedy_optimized_solution(s, tsp, instance);
+
+	std::cout << title + "\n\nEXPORT :\n\n" + end_color;
+
+	bool e1 = test_export_solution_header(instance);
+	print_test(e1, "test_export_solution_header : ");
 
 	std::cout << std::endl;
-	delete_matrix(test_matrix);
+	delete_matrix(tsp);
+	delete_solution(s);
 
 	return 0;
 }

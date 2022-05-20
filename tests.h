@@ -1,5 +1,8 @@
 #include "data.h"
 
+void print_test(bool test);
+
+// test tour
 bool test_tour_data(tour t);
 
 // test d'export du fichier .solution
