@@ -56,6 +56,8 @@ int main(int argc, char *argv[])
 		<< std::endl
 
 		<< "\t\tUtilisation général " + red + "(IMPORTANT : nécessite un tour !)" + end_color + ":\n"
+		<< "\t\t\t-h, --help\n"
+		<< "\t\t\t\tAffiche ce menu d'aide\n"
 		<< "\t\t\t-q, --quiet\n"
 		<< "\t\t\t\tN'affiche rien mais l'éxécution du programme est réalisé\n"
 		<< "\t\t\t--gif\n"
@@ -134,6 +136,11 @@ int main(int argc, char *argv[])
 		{
 			two_opt = true;
 			++i;
+		}
+		else if (std::string(argv[i]) == "-h" or
+			std::string (argv[i]) == "--help")
+		{
+			goto help;
 		}
 		else if (std::string(argv[i]) == "-q" or
 		         std::string(argv[i]) == "--quiet")
