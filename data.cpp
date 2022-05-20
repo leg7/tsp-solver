@@ -163,9 +163,6 @@ void update_tour(tour &t, matrix tsp, std::string instance)
 
 void print_tour(tour t)
 {
-	std::string color = "\033[";
-	std::string end_color = "\033[0m";
-
 	std::cout << "le tour serait d'une longueur de " << t.length
 		<< " : \n\n";
 
@@ -176,7 +173,7 @@ void print_tour(tour t)
 		if (k != t.size - 1)
 			std::cout << "\t" << t.data[k].id + 1 << "\t==>";
 		else
-			std::cout << "\t" << t.data[k].id + 1 << end_color + "\n\n";
+			std::cout << "\t" << t.data[k].id + 1 <<  "\n\n";
 
 		std::cout.flush();
 		usleep(30000);
