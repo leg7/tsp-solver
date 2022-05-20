@@ -2,6 +2,7 @@
 *.out
 *.gif
 *.dat
+*.solution
 tsp-solver
 tests
 docs/
