@@ -292,7 +292,8 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 						b = tmp;
 						import_tour_coord(b, instance);
 					}
-					/* delete[] tmp.data; */
+					else
+						delete[] tmp.data;
 				}
 		}
 		insert_tour_to_solution_tail(b, s);
@@ -305,7 +306,7 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 void find_simmulated_annealing_solution(solution &s, matrix &tsp, std::string instance)
 {
 	simmulated_annealing(s, tsp, instance);
-	for (size_t i = 0; i < 15; ++i)
+	for (size_t i = 0; i < 300; ++i)
 	{
 		solution tmp = nullptr;
 		simmulated_annealing(tmp, tsp, instance);
@@ -337,6 +338,7 @@ tour make_random_tour(matrix tsp)
 	return t;
 }
 
+// initialisation de la population
 void make_random_generation(generation &g, size_t size, matrix tsp)
 {
 	g.size = size;
@@ -346,6 +348,7 @@ void make_random_generation(generation &g, size_t size, matrix tsp)
 		g.member[i] = make_random_tour(tsp);
 }
 
+// tri rapide pour selectioner les meilleures tours
 int lomuto_partition(generation &g, int start, int end)
 {
 	int j = start;
