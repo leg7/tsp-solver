@@ -62,18 +62,18 @@ le dossier tsp-solver.**
 
 ## FAQ
 
-* Où sont stockés les résultats et gif créés par le programme ?
+* **Où sont stockés les résultats et gif créés par le programme ?**
 
 Ils sont au même endroit que le fichier d'instance passé en paramètre.
 
-* Pourquoi l'algorithme génétique et celui des fourmis ne marchent pas?
+* **Pourquoi l'algorithme génétique et celui des fourmis ne marchent pas?**
 
 Ces algorithmes sont en cours de développement.
 
-* Ça prend longtemps de faire le gif avec gnuplot, est-ce que le programme est buggé?
+* **Ça prend longtemps de faire le gif avec gnuplot, est-ce que le programme est buggé?**
 
 Non. Faire un gif avec gnuplot peut prendre un temps considérable.
 
-* Certaines instances TSPLIB95 ne marchent pas !?!??? 🦍
+* **Certaines instances TSPLIB95 ne marchent pas !?!??? 🦍**
 
 Tous les types d'instances ne sont pas encore supportés.
