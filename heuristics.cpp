@@ -277,12 +277,11 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 	    t  = ti;
 	while (t >= 0)
 	{
-		bool changed = false;
 		if (should_make_random_swap(ti, t))
 		{
 			swap_random_neighbors(b);
-			changed = true;
-			update_tour(b, tsp, instance);
+			update_tour_distances(b, tsp);
+			update_tour_length(b);
 		}
 		else
 		{
@@ -291,17 +290,13 @@ void simmulated_annealing(solution &s, matrix &tsp, std::string instance)
 				{
 					tour tmp = two_opt_swap(b, tsp, i, j);
 					if (tmp.length < b.length)
-					{
 						b = tmp;
-						changed = true;
-						import_tour_coord(b, instance);
-					}
 					else
 						delete[] tmp.data;
 				}
 		}
-		if (changed)
-			insert_tour_to_solution_tail(b, s);
+		import_tour_coord(b, instance);
+		insert_tour_to_solution_tail(b, s);
 
 		--t;
 	}
@@ -323,6 +318,7 @@ void find_simmulated_annealing_solution(solution &s, matrix &tsp, std::string in
 			s = tmp;
 		}
 	}
+	delete_duplicates(s);
 }
 
 tour make_random_tour(matrix tsp)

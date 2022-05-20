@@ -89,4 +89,6 @@ void insert_tour_to_solution_head(tour t, solution &s);
 void insert_tour_to_solution_tail(tour t, solution &s);
 void print_solution_result(solution s);
 size_t get_solution_result_length(solution s);
+void delete_iteration(solution &s);
 void delete_solution(solution &s);
+void delete_duplicates(solution &s);

@@ -216,13 +216,42 @@ size_t get_solution_result_length(solution s)
 		return s->t.length;
 }
 
+void delete_iteration(solution &s)
+{
+	solution next = s->next;
+	delete s;
+	s = next;
+}
+
 void delete_solution(solution &s)
 {
 	while (s != nullptr)
+		delete_iteration(s);
+}
+
+/*
+ * Cette fonction sert a supprimer des iterations redondantes
+ * de la solution pour que l'animation gnuplot soit coherente
+ */
+void delete_duplicates(solution &s)
+{
+	if (s->next != nullptr)
 	{
-		solution next = s->next;
-		delete s;
-		s = next;
+		bool twin = true;
+		size_t i = 0;
+		while (i < s->t.size and twin)
+		{
+			if (s->t.data[i].id != s->next->t.data[i].id)
+				twin = false;
+			++i;
+		}
+
+		if (twin == true)
+		{
+			delete_iteration(s);
+			delete_duplicates(s);
+		}
+		else
+			delete_duplicates(s->next);
 	}
-	s = nullptr;
 }
