@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <time.h>
+#include <unistd.h>
 
 #include "heuristics.h"
 #include "data.h"
@@ -173,15 +173,13 @@ void print_tour(tour t)
 	{
 		if (k % 7 == 0 and k != 0)
 			std::cout << "\n\n";
-
 		if (k != t.size - 1)
-		{
-			clock_t goal = 100000 + clock();
-			while (goal > clock());
 			std::cout << "\t" << t.data[k].id + 1 << "\t==>";
-		}
 		else
 			std::cout << "\t" << t.data[k].id + 1 << end_color + "\n\n";
+
+		std::cout.flush();
+		usleep(30000);
 	}
 	std::cout << std::endl;
 }
