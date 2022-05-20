@@ -16,7 +16,8 @@ bool find_target(std::string filename, std::string target);
 size_t distance(point a, point b);
 size_t att_distance(point i, point j);
 bool is_att_instance(std::string filename);
-void import_att_instance(matrix &tsp, std::string filename);
+bool is_euc2d_instance(std::string filename);
+void import_coord_instance(matrix &tsp, std::string filename);
 void import_tsp_matrix(matrix &tsp, std::string filename);
 void import_tsp(matrix &tsp, std::string filename);
 

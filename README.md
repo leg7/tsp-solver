@@ -14,6 +14,7 @@ court circuit qui passe par chaque ville une et une seule fois.
 
 * Resoudre des instances tsplib95 de type :
 	* EDGE_WEIGHT_TYPE : ATT
+	* EDGE_WEIGHT_TYPE : EUC_2D
 	* EDGE_WEIGHT_TYPE: EXPLICIT
 	  EDGE_WEIGHT_FORMAT: UPPER_ROW
 * Plusieurs algorithmes/heuristiques de resolution differents

@@ -108,11 +108,13 @@ bool is_att_instance(std::string filename)
 	return find_target(filename, "EDGE_WEIGHT_TYPE : ATT");
 }
 
-void import_att_instance(matrix &tsp, std::string filename)
+bool is_euc2d_instance(std::string filename)
 {
-	if (!is_att_instance(filename))
-		throw std::invalid_argument("Instance pas de type ATT");
+	return find_target(filename, "EDGE_WEIGHT_TYPE : EUC_2D");
+}
 
+void import_coord_instance(matrix &tsp, std::string filename)
+{
 	std::ifstream file(filename);
 	if (file.good())
 	{
@@ -126,13 +128,17 @@ void import_att_instance(matrix &tsp, std::string filename)
 			file >> ignore;
 
 			/* on prend le premier numero */
-			std::string number;
-			file >> number;
 			point a;
+			std::string number;
+			do
+				file >> number;
+			while(number.length() == 0);
 			a.x = std::stoi(number);
 
 			/* le deuxième */
-			file >> number;
+			do
+				file >> number;
+			while(number.length() == 0);
 			a.y = std::stoi(number);
 
 			/* on passe a la ligne */
@@ -146,15 +152,22 @@ void import_att_instance(matrix &tsp, std::string filename)
 					break;
 
 				/* on prend le premier numero */
-				file >> number;
+				do
+					file >> number;
+				while(number.length() == 0);
 				point b;
 				b.x = std::stoi(number);
 
 				/* le deuxième */
-				file >> number;
+				do
+					file >> number;
+				while(number.length() == 0);
 				b.y = std::stoi(number);
 
-				tsp.data[i][j].distance = att_distance(a, b);
+				if (is_att_instance(filename))
+					tsp.data[i][j].distance = att_distance(a, b);
+				else
+					tsp.data[i][j].distance = distance(a, b);
 			}
 		}
 	}
@@ -187,8 +200,8 @@ void import_tsp(matrix &tsp, std::string filename)
 	std::ifstream file(filename);
 	if (file.good())
 	{
-		if (is_att_instance(filename))
-			import_att_instance(tsp, filename);
+		if (is_att_instance(filename) or is_euc2d_instance(filename))
+			import_coord_instance(tsp, filename);
 		else
 			import_tsp_matrix(tsp, filename);
 	}
