@@ -32,14 +32,15 @@ int main(int argc, char *argv[])
 	std::string red = "\033[1;31m";
 	std::string end_color = "\033[0m";
 	std::string center = "\t\t";
+	std::string underline = "\033[4m";
 
 	if (argc < 3)
 	{
 		help:
 		std::cout << "\n\tUsage : ./tsp-solver [OPTION] [input-file]\n\n"
 
-		<< "\tOptions " + red + "(IMPORTANT : choisissez qu'un seul algorithme !)" + end_color +" :\n"
-		<< "\t\tCréation d'un tour :\n"
+		<< "\tOptions " + red + "(IMPORTANT : choisissez qu'un seul algorithme !)" + end_color +" :\n\n"
+		<< underline + "\t\tCréation d'un tour" + end_color + " :\n\n"
 		<< "\t\t\t-g, --glouton\n"
 		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme Glouton\n"
 		<< "\t\t\t-r, --recuit-simule\n"
@@ -50,12 +51,12 @@ int main(int argc, char *argv[])
 		<< "\t\t\t\tTrouve un itinéraire avec l'algorithme des fourmis\n"
 		<< std::endl
 
-		<< "\t\tOptimisation du tour " + red + "(IMPORTANT : nécessite un tour !)" + end_color +" :\n"
+		<< underline + "\t\tOptimisation du tour" + end_color + red + " (IMPORTANT : nécessite un tour !)" + end_color +" :\n\n"
 		<< "\t\t\t-o , --2-opt\n"
 		<< "\t\t\t\tOptimise un tour par méthode 2-opt\n"
 		<< std::endl
 
-		<< "\t\tUtilisation général " + red + "(IMPORTANT : nécessite un tour !)" + end_color + ":\n"
+		<< underline + "\t\tUtilisation générale" + end_color + red + " (IMPORTANT : nécessite un tour !)" + end_color + " :\n\n"
 		<< "\t\t\t-h, --help\n"
 		<< "\t\t\t\tAffiche ce menu d'aide\n"
 		<< "\t\t\t-q, --quiet\n"
